@@ -154,8 +154,12 @@ pnpm dev
         - モーダルダイアログに使用
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
         - アイコンに使用
+    - [React Hook Form](https://react-hook-form.com/)
+        - フォームの状態管理、入力チェックに使用
+    - [React Hook Form Resolvers](https://github.com/react-hook-form/resolvers)
+        - ZodとReact Hook Formを連携するために使用
     - [Zod](https://zod.dev/)
-        - 入力チェックに使用
+        - 入力チェック（スキーマバリデーション）に使用
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
 
@@ -279,6 +283,12 @@ pnpm install @headlessui/react
 
 # Heroicons
 pnpm install @heroicons/react
+
+# React Hook Form
+pnpm install react-hook-form
+
+# React Hook Form Resolvers
+pnpm install @hookform/resolvers
 
 # Zod
 pnpm install zod
