@@ -162,6 +162,12 @@ pnpm dev
 - React関連ライブラリ（追加検討中）
     - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
         - エラーハンドリングに使用する可能性
+    - [SWR](https://swr.vercel.app/ja/docs/getting-started)
+        - データフェッチングに使用する可能性
+    - [Jotai](https://jotai.org/)
+        - 状態管理に使用する可能性
+    - [Zustand](https://zustand-demo.pmnd.rs/)
+        - 状態管理に使用する可能性
     - [MUI (Material-UI)](https://mui.com/)
         - UIコンポーネントのライブラリとして使用する可能性
     - [Material Icons](https://mui.com/material-ui/material-icons/)
@@ -300,6 +306,26 @@ pnpm add zod
 
 # uuid
 pnpm add uuid
+```
+
+- 以下は、サンプルでの利用可否を検討中
+
+```sh
+# SWR
+pnpm add swr
+```
+
+- 以下は、いずれかの利用を検討中
+
+```sh
+# Jotai
+pnpm add jotai
+```
+
+
+```sh
+# Zustand
+pnpm add zustand
 ```
 
 - 以下は、いずれかの利用を検討中
