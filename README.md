@@ -147,7 +147,7 @@ pnpm dev
 > [!WARNING]
 > 今後対応予定
 
-- React関連
+- React関連ライブラリ
     - [Next.js (App Router)](https://nextjs.org/docs)
         - Reactのフルスタックフレームワーク
     - [React Hook Form](https://react-hook-form.com/)
@@ -159,17 +159,22 @@ pnpm dev
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
 
-- React関連（追加検討中）
+- React関連ライブラリ（追加検討中）
     - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
         - エラーハンドリングに使用する可能性
     - [MUI (Material-UI)](https://mui.com/)
         - UIコンポーネントのライブラリとして使用する可能性
     - [Material Icons](https://mui.com/material-ui/material-icons/)
         - アイコンに使用する可能性
+    - [Tailwind Forms](https://tailwindforms.com/)
+        - フォーム部品のスタイリングに使用する可能性
     - [Headless UI](https://headlessui.com/v1/react)
         - モーダルダイアログに使用する可能性
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
         - アイコンに使用する可能性
+    
+- Tailwind CSSプラグイン
+    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
 
 - Storybook
     - [Storybook](https://storybook.js.org/)
@@ -179,9 +184,7 @@ pnpm dev
     - [Vitest](https://vitest.dev/)
     - [MSW（Mock Service Worker）](https://mswjs.io/)
         - APIのモックサーバーを立てるために使用
-    
-- Tailwind CSSプラグイン
-    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
+
 
 ## (参考) ブランクプロジェクトのセットアップ方法
 - Vue.jsとTailwind CSSを使ったブランクプロジェクトの作成手順は以下の通り
@@ -202,7 +205,7 @@ pnpm create next-app@latest sample-nextjs-tailwind
 - 以下のコマンドを実行
 
 ```sh
-pnpm install -D @tailwindcss/forms
+pnpm add -D @tailwindcss/forms
 ```
 
 - app/global.cssに以下を追記
@@ -236,11 +239,11 @@ npx storybook@latest add @storybook/addon-styling-webpack
 
 ```sh
 # MSW(Mock Service Worker)
-pnpm install msw@latest --save-dev
+pnpm add msw@latest --save-dev
 npx msw init public --save
 
 # msw-storybook-addon
-pnpm install msw-storybook-addon -D
+pnpm add msw-storybook-addon -D
 ```
 
 - .storybook/preview.jsに、以下を追記
