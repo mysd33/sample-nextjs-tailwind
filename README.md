@@ -147,13 +147,9 @@ pnpm dev
 > [!WARNING]
 > 今後対応予定
 
-- Reactフレームワーク
+- React関連
     - [Next.js (App Router)](https://nextjs.org/docs)
         - Reactのフルスタックフレームワーク
-    - [Headless UI](https://headlessui.com/v1/react)
-        - モーダルダイアログに使用
-    - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
-        - アイコンに使用
     - [React Hook Form](https://react-hook-form.com/)
         - フォームの状態管理、入力チェックに使用
     - [React Hook Form Resolvers](https://github.com/react-hook-form/resolvers)
@@ -162,6 +158,18 @@ pnpm dev
         - 入力チェック（スキーマバリデーション）に使用
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
+
+- React関連（追加検討中）
+    - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
+        - エラーハンドリングに使用する可能性
+    - [MUI (Material-UI)](https://mui.com/)
+        - UIコンポーネントのライブラリとして使用する可能性
+    - [Material Icons](https://mui.com/material-ui/material-icons/)
+        - アイコンに使用する可能性
+    - [Headless UI](https://headlessui.com/v1/react)
+        - モーダルダイアログに使用する可能性
+    - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
+        - アイコンに使用する可能性
 
 - Storybook
     - [Storybook](https://storybook.js.org/)
@@ -278,32 +286,32 @@ export default config
 - 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
     
 ```sh
-# Headlress UI
-pnpm install @headlessui/react
-
-# Heroicons
-pnpm install @heroicons/react
-
 # React Hook Form
-pnpm install react-hook-form
+pnpm add react-hook-form
 
 # React Hook Form Resolvers
-pnpm install @hookform/resolvers
+pnpm add @hookform/resolvers
 
 # Zod
-pnpm install zod
+pnpm add zod
 
 # uuid
-pnpm install uuid
+pnpm add uuid
 ```
 
-- main.tsに以下を追記
+- 以下は、いずれかの利用を検討中
 
-```ts
-// Pinia Plugin Persistedstateプラグインの設定を追加するよう修正
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-app.use(pinia)
+```sh
+# MUI (Material-UI)、Material Icons
+pnpm add @mui/material @emotion/react @emotion/styled
+```
+
+```sh
+# Headlress UI
+pnpm add @headlessui/react
+
+# Heroicons
+pnpm add @heroicons/react
 ```
 
 ## (参考) gitの設定
