@@ -302,8 +302,8 @@ pnpm add uuid
 - 以下は、いずれかの利用を検討中
 
 ```sh
-# MUI (Material-UI)、Material Icons
-pnpm add @mui/material @emotion/react @emotion/styled
+# MUI (Material-UI required Emotion packages) Material Icons
+pnpm add @mui/icons-material @mui/material @emotion/styled @emotion/react
 ```
 
 ```sh
