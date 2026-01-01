@@ -159,6 +159,13 @@ pnpm dev
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
 
+> ![NOTE]
+> 簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用するとよい。
+> 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していない。
+
+- Tailwind CSSプラグイン
+    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
+
 - React関連ライブラリ（追加検討中）
     - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
         - エラーハンドリングに使用する可能性
@@ -168,19 +175,11 @@ pnpm dev
         - 状態管理に使用する可能性
     - [Zustand](https://zustand-demo.pmnd.rs/)
         - 状態管理に使用する可能性
-    - [MUI (Material-UI)](https://mui.com/)
-        - UIコンポーネントのライブラリとして使用する可能性
-    - [Material Icons](https://mui.com/material-ui/material-icons/)
-        - アイコンに使用する可能性
-    - [Tailwind Forms](https://tailwindforms.com/)
-        - フォーム部品のスタイリングに使用する可能性
     - [Headless UI](https://headlessui.com/v1/react)
         - モーダルダイアログに使用する可能性
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
         - アイコンに使用する可能性
-    
-- Tailwind CSSプラグイン
-    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
+       
 
 - Storybook
     - [Storybook](https://storybook.js.org/)
@@ -205,9 +204,6 @@ pnpm create next-app@latest sample-nextjs-tailwind
 ```
 
 ### tailwindcss/formsのインストール
-> [!WARNING]
-> 今後対応予定
-
 - 以下のコマンドを実行
 
 ```sh
@@ -289,9 +285,6 @@ export default config
             - 本サンプルでは「[https://mysd33.github.io/sample-vue-tailwind](https://mysd33.github.io/sample-vue-tailwind)」というURLで公開されている
 
 ### その他、ライブラリインストール
-> [!WARNING]
-> 今後対応予定
-
 - 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
     
 ```sh
@@ -306,9 +299,23 @@ pnpm add zod
 
 # uuid
 pnpm add uuid
+
+# Headlress UI
+pnpm add @headlessui/react
+
+# Heroicons
+pnpm add @heroicons/react
 ```
 
-- 以下は、サンプルでの利用可否を検討中
+> [!WARNING]
+> 今後対応予定
+
+- 以下は、それぞれ、サンプルでの利用可否を検討中
+
+```sh
+# react-error-boundary
+pnpm add react-error-boundary
+```
 
 ```sh
 # SWR
@@ -328,20 +335,6 @@ pnpm add jotai
 pnpm add zustand
 ```
 
-- 以下は、いずれかの利用を検討中
-
-```sh
-# MUI (Material-UI required Emotion packages) Material Icons
-pnpm add @mui/icons-material @mui/material @emotion/styled @emotion/react
-```
-
-```sh
-# Headlress UI
-pnpm add @headlessui/react
-
-# Heroicons
-pnpm add @heroicons/react
-```
 
 ## (参考) gitの設定
 - TypeScriptでは一般的にファイル名をキャメルケースが良いとされている。Vueのコンポーネントはパスカルケースが一般的である。
