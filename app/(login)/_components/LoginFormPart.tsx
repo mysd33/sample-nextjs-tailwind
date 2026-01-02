@@ -1,4 +1,4 @@
-// Form部分はクライアントコンポーネントとして切り出し
+// Form部分は、react-hook-formを使用するためクライアントコンポーネントとして切り出し
 "use client";
 import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";
@@ -20,14 +20,17 @@ export default function LoginFormPart() {
   const [validationErrorMessages, setValidationErrorMessages] = useState<
     string[]
   >([]);
+  // App RouterのuseRouter
   const router = useRouter();
 
+  // react-hook-formの定義
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<FormInput>();
 
+  // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
   const [message, setMessage] = useState<string>("");
 
@@ -41,19 +44,13 @@ export default function LoginFormPart() {
 
     // ビジネスロジックの呼び出し
     login(data.userId, data.password).then(() => {
-      // ログイン成功時にメニュー画面へ遷移
+      // ログイン成功時にはメニュー画面へ遷移
       router.push("/menu");
     });
   };
 
   // 入力エラー時
   const onInvalidSubmit = (errors: FieldErrors<FormInput>) => {
-    // TODO: 入力エラー時のバナー表示
-    console.log(
-      "Validation Errors:",
-      errors.userId?.message,
-      errors.password?.message
-    );
     // 入力エラーメッセージの設定
     const validationErrorMessages = [
       errors.userId?.message,
