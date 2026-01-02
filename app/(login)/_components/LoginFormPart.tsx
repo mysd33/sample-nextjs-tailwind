@@ -5,10 +5,12 @@ import LoginInputText from "@/components/form/LoginInputText";
 import SubmitButton from "@/components/button/SubmitButton";
 import InputItem from "@/components/form/InputItem";
 import LoginFormArea from "@/components/form/LoginFormArea";
-import { useState } from "react";
-import { FieldErrors, useForm } from "react-hook-form";
-import { login } from "@/lib/login/authenticationService";
 import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
+import { FieldErrors, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { login } from "@/lib/login/authenticationService";
+import * as z from "zod";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 
 interface FormInput {
@@ -23,12 +25,20 @@ export default function LoginFormPart() {
   // App RouterのuseRouter
   const router = useRouter();
 
+  // Zodを使った入力チェックのスキーマ定義
+  const schema = z.object({
+    userId: z.string().min(1, "ユーザIDは必須入力です。"),
+    password: z.string().min(1, "パスワードは必須入力です。"),
+  });
+
   // react-hook-formの定義
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormInput>();
+  } = useForm<FormInput>({
+    resolver: zodResolver(schema),
+  });
 
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
@@ -73,14 +83,14 @@ export default function LoginFormPart() {
             placeholder="ユーザID"
             focus={true}
             errors={errors.userId}
-            {...register("userId", { required: "ユーザIDは必須です" })}
+            {...register("userId")}
           />
           {/* TODO:Zodを使った入力チェックの実装 */}
           <LoginInputPassword
             id="password"
             placeholder="パスワード"
             errors={errors.password}
-            {...register("password", { required: "パスワードは必須です" })}
+            {...register("password")}
           />
         </InputItem>
         <SubmitButton size="lg" className="mt-3">
