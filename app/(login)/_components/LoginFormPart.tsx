@@ -9,6 +9,7 @@ import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { login } from "@/lib/login/authenticationService";
 import { useRouter } from "next/navigation";
+import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 
 interface FormInput {
   userId: string;
@@ -20,16 +21,24 @@ export default function LoginFormPart() {
     string[]
   >([]);
   const router = useRouter();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<FormInput>();
 
+  const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
+  const [message, setMessage] = useState<string>("");
+
   // 入力チェック成功時
   const onValidSubmit = (data: FormInput) => {
     // 入力エラーメッセージのクリア
     setValidationErrorMessages([]);
+    // バナーメッセージのクリア
+    setMessage("");
+    setMessageLevel("");
+
     // ビジネスロジックの呼び出し
     login(data.userId, data.password).then(() => {
       // ログイン成功時にメニュー画面へ遷移
@@ -53,10 +62,12 @@ export default function LoginFormPart() {
     setValidationErrorMessages(
       validationErrorMessages.filter((msg): msg is string => !!msg)
     );
+    setMessageLevel("validation");
   };
 
   return (
     <>
+      <MessageBanner message={message} level={messageLevel} />
       <LoginFormArea onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
         <InputItem errors={validationErrorMessages}>
           {/* TODO:Zodを使った入力チェックの実装 */}
