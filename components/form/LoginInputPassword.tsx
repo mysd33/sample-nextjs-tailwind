@@ -2,14 +2,41 @@ import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
 
 interface Props {
+  /**
+   * input要素のid
+   */
   id?: string;
+  /**
+   * input要素のname
+   */
   name?: string;
+  /**
+   * input要素のプレースフォルダ
+   */
   placeholder?: string;
+  /**
+   * input要素にフォーカスを当てるかどうか
+   */
   focus?: boolean;
+  /**
+   * input要素を読み取り専用にするかどうか
+   */
   readonly?: boolean;
+  /**
+   * input要素を無効にするかどうか
+   */
   disabled?: boolean;
+  /**
+   * 入力エラー情報
+   */
   errors?: FieldError;
+  /**
+   * input要素のonChangeイベントハンドラ
+   */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * input要素のonBlurイベントハンドラ
+   */
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 

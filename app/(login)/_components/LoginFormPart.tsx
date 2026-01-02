@@ -1,10 +1,10 @@
-// TODO: フォーム部分だけuse clientにするように切り出す
+// Form部分はクライアントコンポーネントとして切り出し
 "use client";
+import LoginInputPassword from "@/components/form/LoginInputPassword";
+import LoginInputText from "@/components/form/LoginInputText";
 import SubmitButton from "@/components/button/SubmitButton";
 import InputItem from "@/components/form/InputItem";
 import LoginFormArea from "@/components/form/LoginFormArea";
-import LoginInputPassword from "@/components/form/LoginInputPassword";
-import LoginInputText from "@/components/form/LoginInputText";
 import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 
@@ -13,7 +13,7 @@ interface FormInput {
   password: string;
 }
 
-export default function Home() {
+export default function LoginFormPart() {
   const [validationErrorMessages, setValidationErrorMessages] = useState<
     string[]
   >([]);
@@ -73,7 +73,6 @@ export default function Home() {
           ログイン
         </SubmitButton>
       </LoginFormArea>
-      {/* TODO:　テーブル */}
     </>
   );
 }

@@ -10,7 +10,7 @@ interface Props {
    */
   labelFor?: string;
   /**
-   * スクリーンリーダー専用のラベルかどうか
+   * スクリーンリーダー用にラベルを非表示にするか
    */
   srOnly?: boolean;
   /**

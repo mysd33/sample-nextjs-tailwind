@@ -1,5 +1,11 @@
 interface Props {
+  /**
+   * フォームの送信イベントハンドラ
+   */
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  /**
+   * フォーム内の子要素
+   */
   children: React.ReactNode;
 }
 
