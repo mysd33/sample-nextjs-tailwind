@@ -7,6 +7,8 @@ import InputItem from "@/components/form/InputItem";
 import LoginFormArea from "@/components/form/LoginFormArea";
 import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
+import { login } from "@/lib/login/authenticationService";
+import { useRouter } from "next/navigation";
 
 interface FormInput {
   userId: string;
@@ -17,19 +19,22 @@ export default function LoginFormPart() {
   const [validationErrorMessages, setValidationErrorMessages] = useState<
     string[]
   >([]);
-
+  const router = useRouter();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<FormInput>();
 
-  // 正常時
+  // 入力チェック成功時
   const onValidSubmit = (data: FormInput) => {
     // 入力エラーメッセージのクリア
     setValidationErrorMessages([]);
-    // TODO: ビジネスロジックの実装
-    console.log("Success:", data);
+    // ビジネスロジックの呼び出し
+    login(data.userId, data.password).then(() => {
+      // ログイン成功時にメニュー画面へ遷移
+      router.push("/menu");
+    });
   };
 
   // 入力エラー時
@@ -40,6 +45,7 @@ export default function LoginFormPart() {
       errors.userId?.message,
       errors.password?.message
     );
+    // 入力エラーメッセージの設定
     const validationErrorMessages = [
       errors.userId?.message,
       errors.password?.message,
