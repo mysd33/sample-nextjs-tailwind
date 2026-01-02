@@ -6,12 +6,13 @@ import SubmitButton from "@/components/button/SubmitButton";
 import InputItem from "@/components/form/InputItem";
 import LoginFormArea from "@/components/form/LoginFormArea";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "@/lib/login/authenticationService";
 import * as z from "zod";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
+import LoginInputItem from "@/components/form/LoginInputItem";
 
 interface FormInput {
   userId: string;
@@ -19,9 +20,6 @@ interface FormInput {
 }
 
 export default function LoginFormPart() {
-  const [validationErrorMessages, setValidationErrorMessages] = useState<
-    string[]
-  >([]);
   // App RouterのuseRouter
   const router = useRouter();
 
@@ -46,8 +44,6 @@ export default function LoginFormPart() {
 
   // 入力チェック成功時
   const onValidSubmit = (data: FormInput) => {
-    // 入力エラーメッセージのクリア
-    setValidationErrorMessages([]);
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel("");
@@ -60,15 +56,7 @@ export default function LoginFormPart() {
   };
 
   // 入力エラー時
-  const onInvalidSubmit = (errors: FieldErrors<FormInput>) => {
-    // 入力エラーメッセージの設定
-    const validationErrorMessages = [
-      errors.userId?.message,
-      errors.password?.message,
-    ];
-    setValidationErrorMessages(
-      validationErrorMessages.filter((msg): msg is string => !!msg)
-    );
+  const onInvalidSubmit = () => {
     setMessageLevel("validation");
   };
 
@@ -76,7 +64,7 @@ export default function LoginFormPart() {
     <>
       <MessageBanner message={message} level={messageLevel} />
       <LoginFormArea onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
-        <InputItem errors={validationErrorMessages}>
+        <LoginInputItem errors={errors}>
           {/* TODO:Zodを使った入力チェックの実装 */}
           <LoginInputText
             id="userId"
@@ -92,7 +80,7 @@ export default function LoginFormPart() {
             errors={errors.password}
             {...register("password")}
           />
-        </InputItem>
+        </LoginInputItem>
         <SubmitButton size="lg" className="mt-3">
           ログイン
         </SubmitButton>
