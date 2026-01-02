@@ -3,21 +3,16 @@
 import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";
 import SubmitButton from "@/components/button/SubmitButton";
-import InputItem from "@/components/form/InputItem";
 import LoginFormArea from "@/components/form/LoginFormArea";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "@/lib/login/authenticationService";
 import * as z from "zod";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
-import LoginInputItem from "@/components/form/LoginInputItem";
-
-interface FormInput {
-  userId: string;
-  password: string;
-}
+import LoginInputItem from "./LoginInputItem";
+import { LoginFormInput } from "./LoginFormInput";
 
 export default function LoginFormPart() {
   // App RouterのuseRouter
@@ -34,7 +29,7 @@ export default function LoginFormPart() {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormInput>({
+  } = useForm<LoginFormInput>({
     resolver: zodResolver(schema),
   });
 
@@ -43,7 +38,7 @@ export default function LoginFormPart() {
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
-  const onValidSubmit = (data: FormInput) => {
+  const onValidSubmit = (data: LoginFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel("");
@@ -65,7 +60,6 @@ export default function LoginFormPart() {
       <MessageBanner message={message} level={messageLevel} />
       <LoginFormArea onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
         <LoginInputItem errors={errors}>
-          {/* TODO:Zodを使った入力チェックの実装 */}
           <LoginInputText
             id="userId"
             placeholder="ユーザID"
@@ -73,7 +67,6 @@ export default function LoginFormPart() {
             errors={errors.userId}
             {...register("userId")}
           />
-          {/* TODO:Zodを使った入力チェックの実装 */}
           <LoginInputPassword
             id="password"
             placeholder="パスワード"

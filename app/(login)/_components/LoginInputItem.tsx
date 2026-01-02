@@ -1,10 +1,11 @@
 import { FieldErrors } from "react-hook-form";
+import { LoginFormInput } from "./LoginFormInput";
 
 interface Props {
   /**
    * 入力エラーメッセージ
    */
-  errors?: FieldErrors;
+  errors?: FieldErrors<LoginFormInput>;
   children?: React.ReactNode;
 }
 
