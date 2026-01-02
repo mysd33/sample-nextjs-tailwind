@@ -1,6 +1,4 @@
 import RequiredBadge from "@/components/icons/RequiredBadge";
-import { error } from "console";
-import { isError } from "util";
 
 interface Props {
   /**
@@ -15,7 +13,13 @@ interface Props {
    * スクリーンリーダー専用のラベルかどうか
    */
   srOnly?: boolean;
+  /**
+   * 必須項目かどうか
+   */
   required?: boolean;
+  /**
+   * 入力エラーメッセージ
+   */
   errors?: string[];
   children?: React.ReactNode;
 }
