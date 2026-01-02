@@ -19,18 +19,27 @@ interface Props {
    * ボタンが無効かどうか
    */
   disabled?: boolean;
+  /**
+   * クラス名
+   */
+  className?: string;
+  /**
+   * ボタンに表示する子要素(children)
+   */
+  children: React.ReactNode;
 }
 
 export default function BaseButton({
-  props,
+  type,
+  size,
+  outline,
+  danger,
+  disabled,
+  className,
   children,
-}: {
-  props: Props;
-  children: React.ReactNode;
-}) {
-  // TODO: 取り急ぎのコード。Propsではだめで、値が変わったら反映できるようにstate化する必要あり
+}: Props) {
   const height = () => {
-    switch (props.size) {
+    switch (size) {
       case "sm":
         return "h-8";
       case "md":
@@ -43,7 +52,7 @@ export default function BaseButton({
   };
 
   const textSize = () => {
-    switch (props.size) {
+    switch (size) {
       case "sm":
         return "text-sm";
       case "md":
@@ -56,10 +65,10 @@ export default function BaseButton({
   };
 
   const colorSet = () => {
-    if (props.danger) {
+    if (danger) {
       return "bg-red-600 hover:bg-red-700 text-white focus:border-red-400 focus:ring-red-300/50 ";
     }
-    if (props.outline) {
+    if (outline) {
       return "border border-blue-600 bg-white text-blue-600 hover:border-transparent hover:bg-blue-600 hover:text-white focus:border-blue-400 focus:ring-blue-300/50 focus:bg-blue-600 focus:text-white";
     }
     return "bg-blue-600 hover:bg-blue-700 text-white focus:border-blue-400 focus:ring-blue-300/50";
@@ -67,9 +76,9 @@ export default function BaseButton({
 
   return (
     <button
-      type={props.type}
-      disabled={props.disabled}
-      className={`rounded-md px-3 focus:ring-3 focus:outline-hidden disabled:opacity-50 ${height()} ${textSize()} ${colorSet()}`}
+      type={type}
+      disabled={disabled}
+      className={`rounded-md px-3 focus:ring-3 focus:outline-hidden disabled:opacity-50 ${height()} ${textSize()} ${colorSet()} ${className}`}
     >
       {children}
     </button>

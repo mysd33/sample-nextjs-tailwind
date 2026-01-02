@@ -8,17 +8,13 @@ export default function Home() {
   return (
     <>
       <LoginFormArea>
-        <InputItem props={{}}>
-          <LoginInputText id="userId" name="userId" placeholder="ユーザID" />
-          <LoginInputPassword
-            id="password"
-            name="password"
-            placeholder="パスワード"
-          />
+        <InputItem>
+          <LoginInputText id="userId" placeholder="ユーザID" />
+          <LoginInputPassword id="password" placeholder="パスワード" />
         </InputItem>
-        {/* TODO: mt-3を指定するためspanタグを置いているがVueのサンプルと同じようになくしたい */}
-        <span className="mt-3"></span>
-        <SubmitButton props={{ size: "lg" }}>ログイン</SubmitButton>
+        <SubmitButton size="lg" className="mt-3">
+          ログイン
+        </SubmitButton>
       </LoginFormArea>
       {/* TODO:　テーブル */}
     </>

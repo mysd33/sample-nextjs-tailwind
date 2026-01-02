@@ -1,32 +1,49 @@
 import RequiredBadge from "@/components/icons/RequiredBadge";
+import { error } from "console";
+import { isError } from "util";
 
 interface Props {
+  /**
+   * ラベル名
+   */
   label?: string;
+  /**
+   * ラベルのfor属性
+   */
   labelFor?: string;
+  /**
+   * スクリーンリーダー専用のラベルかどうか
+   */
   srOnly?: boolean;
   required?: boolean;
   errors?: string[];
+  children?: React.ReactNode;
 }
 export default function InputItem({
-  props,
+  label,
+  labelFor,
+  srOnly,
+  required,
+  errors,
   children,
-}: {
-  props: Props;
-  children: React.ReactNode;
-}) {
+}: Props) {
   return (
     <>
       <div className="flex flex-col">
-        <label>
-          {props.label}
-          {props.required && <RequiredBadge />}
-        </label>
+        {label && (
+          <label htmlFor={labelFor} className={srOnly ? "sr-only" : ""}>
+            {label}
+            {required && <RequiredBadge />}
+          </label>
+        )}
         {children}
-        {/* TODO: エラーメッセージ表示 
-            <div v-if="isError" class="flow flow-col m-1 text-sm text-red-600">
-            <div v-for="error in props.errors" :key="error">{{ error }}</div>
-            </div>
-        */}
+        {errors && errors.length > 0 && (
+          <div className="flow flow-col m-1 text-sm text-red-600">
+            {errors.map((error) => (
+              <div key={error}>{error}</div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

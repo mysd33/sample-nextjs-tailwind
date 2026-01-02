@@ -1,13 +1,18 @@
 interface Props {
   id?: string;
-  name: string;
   placeholder?: string;
   focus?: boolean;
   readonly?: boolean;
   disabled?: boolean;
 }
 
-export default function LoginInputText(props: Props) {
+export default function LoginInputText({
+  id,
+  placeholder,
+  focus,
+  readonly,
+  disabled,
+}: Props) {
   const commonStyle =
     "mb-[-1px] h-12 rounded-t-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent";
   //TODO: 入力エラーの表示
@@ -19,12 +24,12 @@ export default function LoginInputText(props: Props) {
   return (
     <>
       <input
-        id={props.id}
+        id={id}
         type="text"
-        placeholder={props.placeholder}
-        autoFocus={props.focus}
-        readOnly={props.readonly}
-        disabled={props.disabled}
+        placeholder={placeholder}
+        autoFocus={focus}
+        readOnly={readonly}
+        disabled={disabled}
         className={style}
       />
     </>

@@ -13,16 +13,35 @@ interface Props {
    * ボタンが無効かどうか
    */
   disabled?: boolean;
+
+  /**
+   * クラス名
+   *
+   */
+  className?: string;
+
+  /**
+   * ボタンに表示する子要素(children)
+   */
+  children: React.ReactNode;
 }
 
 export default function SubmitButton({
-  props,
+  size,
+  danger,
+  disabled,
+  className,
   children,
-}: {
-  props?: Props;
-  children: React.ReactNode;
-}) {
+}: Props) {
   return (
-    <BaseButton props={{ ...props, type: "submit" }}>{children} </BaseButton>
+    <BaseButton
+      type="submit"
+      size={size}
+      danger={danger}
+      disabled={disabled}
+      className={className}
+    >
+      {children}
+    </BaseButton>
   );
 }
