@@ -47,6 +47,31 @@ pnpm dev
 
 - ブラウザで[http://localhost:3000](http://localhost:3000)アクセス
 
+
+- ビルド
+```sh
+pnpm build
+```
+
+- 本番用サーバーの起動
+
+```sh
+pnpm start
+```
+
+## VSCodeでデバッグ実行
+- [Next.jsのドキュメント](https://nextjs.org/docs/app/guides/debugging#debugging-with-vs-code)を参考に[.vscode/launch.json](.vscode/launch.json)を作成しています。
+
+### サーバサイドのデバッグ実行
+- 「Next.js: debug server-side」を選択してデバッグ実行すると、サーバがデバッグ実行され、VSCodeでサーバサイドのコードに設定したブレークポイントで止めることができます。
+
+### クライアントサイドのデバッグ実行    
+- サーバ起動後、「Next.js: debug client-side」をさらに選択してデバッグ実行するとChromeが起動します。VSCodeでクライアントサイドのコードにブレークポイントを設定して止めることができます。
+
+### サーバサイドとクライアントサイドの両方のデバッグ実行
+- 「Next.js: debug full stack」を選択してデバッグ実行すると、サーバサイドとクライアントサイドの両方のコードにブレークポイントを設定してデバッグ実行できます。
+        - Next.jsのドキュメントに記載の設定だとうまく動かなかったので試行錯誤で修正しています。
+
 ## Storybookの起動方法
 > [!WARNING]
 > 今後対応予定
@@ -70,7 +95,7 @@ pnpm dev
 
 | 画面名 | 説明 | 画面イメージ | Storybook | Vue+TailWindソースコード | （参考比較）Thymeleaf+Bootstrapソースコード |
 | ---- | ---- | ---- | ---- | ---- | ---- |
-| ログイン画面 | トップページの画面で、ユーザがログインするための画面。 | [画面](docs/img/screen/screen1.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/login/login.html) |
+| ログイン画面 | トップページの画面で、ユーザがログインするための画面。 | [画面](docs/img/screen/screen1.png) | [Storybook]() | [ソースコード](./app/(login)/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/login/login.html) |
 | メニュー画面 | メニュー画面。ログインユーザのロールによって管理者メニューの表示有無が切り替わる。 | [画面]() | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/menu/menu.html) |
 | Todo管理画面 | Todoリストの一覧表示、登録、完了、削除といった操作を実施できる画面。 | [画面](docs/img/screen/screen3.png)  | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/todo/todoList.html) |
 | Todo一括登録画面 | Todoリストを記載したCSVファイルをアップロードし、非同期でTodoリストを登録できる画面。 | [画面](docs/img/screen/screen4.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/todo/upload.html)  |
