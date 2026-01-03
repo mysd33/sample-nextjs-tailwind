@@ -12,6 +12,7 @@ import TableDataCol from "@/components/table/TableDataCol";
 export default function LoginView() {
   return (
     <>
+      {/* ログインフォーム部分（クライアントコンポーネント） */}
       <LoginFormViewPart />
       {/* テストユーザを表示するテーブル */}
       <div className="mx-auto max-w-120">

@@ -1,4 +1,4 @@
-// Form部分は、react-hook-formを使用するためクライアントコンポーネントとして切り出し
+// Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネントとして切り出し
 "use client";
 import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";

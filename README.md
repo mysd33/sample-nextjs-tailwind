@@ -16,6 +16,10 @@
 
 - また、Vue.jsとTailwind CSSを使ったSPAのサンプルAPとして、[Vue.jsとTailwind CSSを使ったSPAサンプルAP](https://github.com/mysd33/sample-vue-tailwind/)を作成しています。こちらは、Nuxt.jsまでは導入しておらず純粋なCSRのSPAですので、単純比較が難しいですが、比較対象として参考にしてください。
 
+- サンプルAPのソフトウェアアーキテクチャ図は以下の通り。
+
+![ソフトウェアアーキテクチャ図](docs/img/architecture.png)
+
 ## サンプルAPの動作確認方法
 - 前提条件
     - [Node.js](https://nodejs.org/ja)がインストールされていること
@@ -196,10 +200,10 @@ pnpm start
         - エラーハンドリングに使用する可能性
     - [SWR](https://swr.vercel.app/ja/docs/getting-started)
         - データフェッチングに使用する可能性
-    - [Jotai](https://jotai.org/)
-        - 状態管理に使用する可能性
     - [Zustand](https://zustand-demo.pmnd.rs/)
         - 状態管理に使用する可能性
+    - [Jotai](https://jotai.org/)
+        - 状態管理に使用する可能性        
     - [Headless UI](https://headlessui.com/v1/react)
         - モーダルダイアログに使用する可能性
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
@@ -350,15 +354,15 @@ pnpm add swr
 - 以下は、いずれかの利用を検討中
 
 ```sh
+# Zustand
+pnpm add zustand
+```
+
+```sh
 # Jotai
 pnpm add jotai
 ```
 
-
-```sh
-# Zustand
-pnpm add zustand
-```
 
 
 ## (参考) gitの設定
