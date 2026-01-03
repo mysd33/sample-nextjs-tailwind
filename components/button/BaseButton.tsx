@@ -27,6 +27,10 @@ interface Props {
    * ボタンに表示する子要素(children)
    */
   children: React.ReactNode;
+  /**
+   * クリック時のイベントハンドラ
+   */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function BaseButton({
@@ -37,6 +41,7 @@ export default function BaseButton({
   disabled,
   className,
   children,
+  onClick,
 }: Props) {
   const height = () => {
     switch (size) {
@@ -79,6 +84,7 @@ export default function BaseButton({
       type={type}
       disabled={disabled}
       className={`rounded-md px-3 focus:ring-3 focus:outline-hidden disabled:opacity-50 ${height()} ${textSize()} ${colorSet()} ${className}`}
+      onClick={onClick}
     >
       {children}
     </button>
