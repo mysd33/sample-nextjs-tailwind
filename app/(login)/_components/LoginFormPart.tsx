@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "@/lib/login/authenticationService";
 import * as z from "zod";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import LoginInputItem from "./LoginInputItem";
 import { LoginFormInput } from "./LoginFormInput";
+import { login } from "@/lib/login/actions";
 
 export default function LoginFormPart() {
   // App RouterのuseRouter
