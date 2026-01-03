@@ -9,6 +9,9 @@ interface Props {
   children?: React.ReactNode;
 }
 
+/**
+ * ログイン画面専用のユーザIDとパスワードを1つにした入力項目領域
+ */
 export default function LoginInputItem({ errors, children }: Props) {
   return (
     <>

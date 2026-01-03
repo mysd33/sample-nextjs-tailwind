@@ -14,7 +14,10 @@ import LoginInputItem from "./LoginInputItem";
 import { LoginFormInput } from "./LoginFormInput";
 import { login } from "@/lib/login/actions";
 
-export default function LoginFormPart() {
+/**
+ * ログイン画面のフォーム部分
+ */
+export default function LoginFormViewPart() {
   // App RouterのuseRouter
   const router = useRouter();
 

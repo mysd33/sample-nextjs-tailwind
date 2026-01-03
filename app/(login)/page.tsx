@@ -1,5 +1,5 @@
 import TableArea from "@/components/table/TableArea";
-import LoginFormPart from "./_components/LoginFormPart";
+import LoginFormViewPart from "./_components/LoginFormViewPart";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableDataRow from "@/components/table/TableDataRow";
@@ -12,7 +12,7 @@ import TableDataCol from "@/components/table/TableDataCol";
 export default function LoginView() {
   return (
     <>
-      <LoginFormPart />
+      <LoginFormViewPart />
       {/* テストユーザを表示するテーブル */}
       <div className="mx-auto max-w-120">
         <p className="mt-5 mb-2">※テストユーザでログインできます</p>
