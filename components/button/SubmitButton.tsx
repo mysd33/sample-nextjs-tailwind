@@ -24,14 +24,22 @@ interface Props {
    * ボタンに表示する子要素(children)
    */
   children: React.ReactNode;
+  /**
+   * クリック時のイベントハンドラ
+   */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
+/**
+ * 送信ボタン
+ */
 export default function SubmitButton({
   size,
   danger,
   disabled,
   className,
   children,
+  onClick,
 }: Props) {
   return (
     <BaseButton
@@ -40,6 +48,7 @@ export default function SubmitButton({
       danger={danger}
       disabled={disabled}
       className={className}
+      onClick={onClick}
     >
       {children}
     </BaseButton>

@@ -33,6 +33,9 @@ interface Props {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
+/**
+ * ボタンの基底部品
+ */
 export default function BaseButton({
   type,
   size,

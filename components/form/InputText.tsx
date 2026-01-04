@@ -1,5 +1,6 @@
-import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
+import BaseInput from "./BaseInput";
+import { forwardRef } from "react";
 
 interface Props {
   /**
@@ -27,13 +28,9 @@ interface Props {
    */
   disabled?: boolean;
   /**
-   * ラベル文字列
-   */
-  label?: string;
-  /**
    * 入力エラー情報
    */
-  errors?: FieldError;
+  error?: FieldError;
   /**
    * input要素のonChangeイベントハンドラ
    */
@@ -47,7 +44,7 @@ interface Props {
 // 参考: React forwardRef と React Hook Form の組み合わせ
 // https://react-hook-form.com/get-started#Integratinganexistingform
 // https://note.com/naoya__in_web/n/ne9adfe08ecc2
-const LoginInputText = forwardRef<HTMLInputElement, Props>(
+const InputText = forwardRef<HTMLInputElement, Props>(
   (
     {
       id,
@@ -56,38 +53,30 @@ const LoginInputText = forwardRef<HTMLInputElement, Props>(
       focus,
       readonly,
       disabled,
-      errors,
+      error,
       onChange,
       onBlur,
     },
     ref
   ) => {
-    const commonStyle =
-      "mb-[-1px] h-12 rounded-t-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent";
-    const style = errors
-      ? `${commonStyle} errorIcon z-20 border-red-600 focus:border-red-400 focus:ring-red-300/50`
-      : `${commonStyle} z-0 border-gray-300 focus:border-blue-400 focus:ring-blue-300/50`;
-
     return (
-      <>
-        <input
-          id={id}
-          name={name}
-          type="text"
-          placeholder={placeholder}
-          autoFocus={focus}
-          readOnly={readonly}
-          disabled={disabled}
-          className={style}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      </>
+      <BaseInput
+        id={id}
+        name={name}
+        type="text"
+        placeholder={placeholder}
+        focus={focus}
+        readonly={readonly}
+        disabled={disabled}
+        ref={ref}
+        error={error}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     );
   }
 );
 
-LoginInputText.displayName = "LoginInputText";
+InputText.displayName = "InputText";
 
-export default LoginInputText;
+export default InputText;

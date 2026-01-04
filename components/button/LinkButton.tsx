@@ -31,6 +31,9 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * リンクボタン
+ */
 export default function LinkButton({
   forwardViewURL = "",
   outline = false,

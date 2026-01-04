@@ -1,4 +1,5 @@
 import RequiredBadge from "@/components/icons/RequiredBadge";
+import { FieldError } from "react-hook-form";
 
 interface Props {
   /**
@@ -20,7 +21,14 @@ interface Props {
   /**
    * 入力エラーメッセージ
    */
-  errors?: string[];
+  error?: FieldError;
+  /**
+   * クラス名
+   */
+  className?: string;
+  /**
+   * 子要素
+   */
   children?: React.ReactNode;
 }
 export default function InputItem({
@@ -28,12 +36,13 @@ export default function InputItem({
   labelFor,
   srOnly,
   required,
-  errors,
+  className = "",
+  error: errors,
   children,
 }: Props) {
   return (
     <>
-      <div className="flex flex-col">
+      <div className={`flex flex-col ${className}`}>
         {label && (
           <label htmlFor={labelFor} className={srOnly ? "sr-only" : ""}>
             {label}
@@ -41,11 +50,9 @@ export default function InputItem({
           </label>
         )}
         {children}
-        {errors && errors.length > 0 && (
+        {errors && (
           <div className="flow flow-col m-1 text-sm text-red-600">
-            {errors.map((error) => (
-              <div key={error}>{error}</div>
-            ))}
+            <div>{errors.message}</div>
           </div>
         )}
       </div>

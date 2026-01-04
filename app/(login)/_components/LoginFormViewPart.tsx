@@ -30,7 +30,7 @@ export default function LoginFormViewPart() {
   // react-hook-formの定義
   const {
     register,
-    formState: { errors },
+    formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm<LoginFormInput>({
     resolver: zodResolver(schema),
@@ -77,7 +77,7 @@ export default function LoginFormViewPart() {
             {...register("password")}
           />
         </LoginInputItem>
-        <SubmitButton size="lg" className="mt-3">
+        <SubmitButton disabled={isSubmitting} size="lg" className="mt-3">
           ログイン
         </SubmitButton>
       </LoginFormArea>

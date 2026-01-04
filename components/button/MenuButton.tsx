@@ -19,6 +19,9 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * メニューボタン
+ */
 export default function MenuButton({
   forwardViewURL = "",
   outline = false,
