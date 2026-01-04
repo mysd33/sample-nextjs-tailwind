@@ -176,11 +176,6 @@ pnpm start
 > [!WARNING]
 > 今後対応予定
 
-> ![NOTE]
-> 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができる。  
-> 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していない。
-
-
 - React関連ライブラリ
     - [Next.js (App Router)](https://nextjs.org/docs)
         - Reactのフルスタックフレームワーク
@@ -192,6 +187,12 @@ pnpm start
         - 入力チェック（スキーマバリデーション）に使用
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
+
+
+> [!NOTE]
+> 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
+> 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
+
 
 - Tailwind CSSプラグイン
     - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
