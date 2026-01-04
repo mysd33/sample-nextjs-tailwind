@@ -32,6 +32,7 @@ export default function TodoListView() {
     register,
     formState: { isSubmitting, errors },
     handleSubmit,
+    reset,
   } = useForm<TodoFormInput>({
     resolver: zodResolver(schema),
   });
@@ -62,6 +63,8 @@ export default function TodoListView() {
     // バナーメッセージの設定
     setMessage("作成しました。");
     setMessageLevel("info");
+    // フォームのリセット
+    reset();
   };
 
   // 入力エラー時
