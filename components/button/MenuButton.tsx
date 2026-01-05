@@ -9,34 +9,17 @@ interface Props {
    * アウトラインボタンかどうか
    */
   outline?: boolean;
-  /**
-   * ボタンが無効かどうか
-   */
-  disabled?: boolean;
-  /**
-   * ボタンに表示する子要素(children)
-   */
-  children: React.ReactNode;
 }
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
 
 /**
  * メニューボタン
  */
-export default function MenuButton({
-  forwardViewURL = "",
-  outline = false,
-  disabled = false,
-  children,
-}: Props) {
+export default function MenuButton(props: ButtonProps) {
   return (
-    <LinkButton
-      className="mt-12"
-      size="lg"
-      forwardViewURL={forwardViewURL}
-      outline={outline}
-      disabled={disabled}
-    >
-      {children}
+    <LinkButton {...props} className="mt-12" size="lg">
+      {props.children}
     </LinkButton>
   );
 }

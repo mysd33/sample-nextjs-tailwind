@@ -10,53 +10,33 @@ interface Props {
    */
   forwardViewURL?: string;
   /**
-   * アウトラインボタンかどうか
-   */
-  outline?: boolean;
-  /**
-   * ボタンが無効かどうか
-   */
-  disabled?: boolean;
-  /**
    * ボタンのサイズ（sm, md, lg）
    */
   size?: "sm" | "md" | "lg" | undefined;
   /**
-   * クラス名
+   * アウトラインボタンかどうか
    */
-  className?: string;
-  /**
-   * ボタンに表示する子要素(children)
-   */
-  children: React.ReactNode;
+  outline?: boolean;
 }
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
 
 /**
  * リンクボタン
  */
-export default function LinkButton({
-  forwardViewURL = "",
-  outline = false,
-  disabled = false,
-  size,
-  className,
-  children,
-}: Props) {
+export default function LinkButton(props: ButtonProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(forwardViewURL);
+    if (!props.forwardViewURL) {
+      return;
+    }
+    router.push(props.forwardViewURL);
   };
 
   return (
-    <BaseButton
-      disabled={disabled}
-      outline={outline}
-      size={size}
-      className={className}
-      onClick={handleClick}
-    >
-      {children}
+    <BaseButton {...props} onClick={handleClick}>
+      {props.children}
     </BaseButton>
   );
 }

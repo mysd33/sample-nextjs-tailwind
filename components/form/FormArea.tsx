@@ -1,11 +1,16 @@
 /**
  * フォーム領域
  */
-export default function FormArea({ children }: { children: React.ReactNode }) {
+export default function FormArea(
+  props: React.FormHTMLAttributes<HTMLFormElement>,
+) {
   return (
     <>
-      {/* TODO: onSubmitの実装 */}
-      <form className="grid grid-cols-2 gap-6 text-left">{children}</form>
+      <form
+        {...props}
+        className={`grid grid-cols-2 gap-6 text-left ${props.className ?? ""}`}>
+        {props.children}
+      </form>{" "}
     </>
   );
 }

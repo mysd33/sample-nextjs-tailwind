@@ -22,37 +22,26 @@ interface Props {
    * 入力エラーメッセージ
    */
   error?: FieldError;
-  /**
-   * クラス名
-   */
-  className?: string;
-  /**
-   * 子要素
-   */
-  children?: React.ReactNode;
 }
-export default function InputItem({
-  label,
-  labelFor,
-  srOnly,
-  required,
-  className = "",
-  error: errors,
-  children,
-}: Props) {
+
+type InputItemProps = React.InputHTMLAttributes<HTMLDivElement> & Props;
+
+export default function InputItem(props: InputItemProps) {
   return (
     <>
-      <div className={`flex flex-col ${className}`}>
-        {label && (
-          <label htmlFor={labelFor} className={srOnly ? "sr-only" : ""}>
-            {label}
-            {required && <RequiredBadge />}
+      <div className={`flex flex-col ${props.className}`}>
+        {props.label && (
+          <label
+            htmlFor={props.labelFor}
+            className={props.srOnly ? "sr-only" : ""}>
+            {props.label}
+            {props.required && <RequiredBadge />}
           </label>
         )}
-        {children}
-        {errors && (
+        {props.children}
+        {props.error && (
           <div className="flow flow-col m-1 text-sm text-red-600">
-            <div>{errors.message}</div>
+            <div>{props.error.message}</div>
           </div>
         )}
       </div>

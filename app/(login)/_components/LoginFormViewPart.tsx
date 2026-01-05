@@ -66,14 +66,14 @@ export default function LoginFormViewPart() {
           <LoginInputText
             id="userId"
             placeholder="ユーザID"
-            focus={true}
-            errors={errors.userId}
+            autoFocus={true}
+            error={errors.userId}
             {...register("userId")}
           />
           <LoginInputPassword
             id="password"
             placeholder="パスワード"
-            errors={errors.password}
+            error={errors.password}
             {...register("password")}
           />
         </LoginInputItem>

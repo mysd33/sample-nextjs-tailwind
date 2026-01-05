@@ -9,48 +9,17 @@ interface Props {
    * 重要な（危険）な操作を行うボタンかどうか
    */
   danger?: boolean;
-  /*
-   * ボタンが無効かどうか
-   */
-  disabled?: boolean;
-
-  /**
-   * クラス名
-   *
-   */
-  className?: string;
-
-  /**
-   * ボタンに表示する子要素(children)
-   */
-  children: React.ReactNode;
-  /**
-   * クリック時のイベントハンドラ
-   */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
 
 /**
  * 送信ボタン
  */
-export default function SubmitButton({
-  size,
-  danger,
-  disabled,
-  className,
-  children,
-  onClick,
-}: Props) {
+export default function SubmitButton(props: ButtonProps) {
   return (
-    <BaseButton
-      type="submit"
-      size={size}
-      danger={danger}
-      disabled={disabled}
-      className={className}
-      onClick={onClick}
-    >
-      {children}
+    <BaseButton {...props} type="submit">
+      {props.children}
     </BaseButton>
   );
 }

@@ -86,7 +86,7 @@ export default function TodoListView() {
         <InputItem className="basis-2/3 text-left" error={errors.todoTitle}>
           <InputText
             id="todoTitle"
-            focus={true}
+            autoFocus={true}
             error={errors.todoTitle}
             {...register("todoTitle")}
           />
