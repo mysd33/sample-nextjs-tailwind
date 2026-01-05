@@ -411,7 +411,7 @@ git config core.ignorecase false
     - Prettierのプラグインとして、[Prettier plugin for Tailwind CSS](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)もインストールするとよい。
 
         ```sh
-        pnpm install -D prettier prettier-plugin-tailwindcss
+        pnpm add -D prettier prettier-plugin-tailwindcss
         ```    
 
     - .prettierrcに以下の設定を追加すると、Tailwind CSSのクラス名のフォーマットが適用される。

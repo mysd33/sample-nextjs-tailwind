@@ -36,15 +36,13 @@ export default function TodoItem({ todo }: Props) {
         {!finished && (
           <SubmitButton
             disabled={isSubmitting}
-            onClick={handleSubmit(onClickFinishButton)}
-          >
+            onClick={handleSubmit(onClickFinishButton)}>
             完了
           </SubmitButton>
         )}
         <SubmitButton
           disabled={isSubmitting}
-          onClick={handleSubmit(onClickDeleteButton)}
-        >
+          onClick={handleSubmit(onClickDeleteButton)}>
           削除
         </SubmitButton>
       </ButtonArea>

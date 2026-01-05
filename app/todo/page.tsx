@@ -82,8 +82,7 @@ export default function TodoListView() {
       {/* TODO: formは SimpleFormAreaというコンポーネント化  */}
       <form
         className="mb-3 flex flex-row gap-10"
-        onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}
-      >
+        onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
         <InputItem className="basis-2/3 text-left" error={errors.todoTitle}>
           <InputText
             id="todoTitle"
