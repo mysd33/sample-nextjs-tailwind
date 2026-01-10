@@ -8,11 +8,16 @@ import InputItem from "@/components/form/InputItem";
 import InputText from "@/components/form/InputText";
 import { Todo } from "@/lib/todo/models/todo";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import TodoItem from "./_components/TodoItem";
-import { createTodo, deleteTodo, finishTodo } from "@/lib/todo/actions";
+import {
+  createTodo,
+  deleteTodo,
+  findTodoList,
+  finishTodo,
+} from "@/lib/todo/actions";
 
 export interface TodoFormInput {
   todoTitle: string;
@@ -103,6 +108,14 @@ export default function TodoListView() {
       });
   };
 
+  // 初期表示時にTODO一覧を取得
+  useEffect(() => {
+    startTransition(async () => {
+      const todos = await findTodoList();
+      setTodos(todos);
+    });
+  }, []);
+
   return (
     <>
       <MessageBanner message={message} level={messageLevel} />
@@ -126,7 +139,6 @@ export default function TodoListView() {
       <hr />
       <div className="mt-3 text-left">
         <ul className="list-disc">
-          {/* TODO: onFinishとonDeleteの実装 */}
           {todos.map((todo) => (
             <li key={todo.id} className="ml-10">
               <TodoItem todo={todo} onFinish={onFinish} onDelete={onDelete} />

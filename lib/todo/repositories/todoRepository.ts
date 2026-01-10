@@ -7,7 +7,21 @@ const sleepTime = 300;
  * Todoリストを管理するRepositoryのクラス
  */
 export class TodoRepository {
-  private todos: Todo[] = [];
+  private todos: Todo[] = [
+    // ダミーの初期データ
+    {
+      id: generateUUID(),
+      title: "牛乳を買う",
+      finished: false,
+      createAt: new Date(),
+    },
+    {
+      id: generateUUID(),
+      title: "メールを読む",
+      finished: true,
+      createAt: new Date(),
+    },
+  ];
 
   private static instance: TodoRepository;
   private constructor() {}

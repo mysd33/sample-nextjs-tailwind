@@ -4,7 +4,17 @@ import { Todo } from "@/lib/todo/models/todo";
 import { TodoService } from "./services/todoService";
 
 /**
+ * TODO一覧取得処理
+ */
+export async function findTodoList(): Promise<Todo[]> {
+  console.log("Server Action: findTodoList");
+  // ビジネスロジックの呼び出し
+  return await TodoService.getInstance().findAll();
+}
+
+/**
  * TODO作成処理
+ * @param title Todoのタイトル
  *
  */
 export async function createTodo(title: string): Promise<Todo[]> {
@@ -17,6 +27,7 @@ export async function createTodo(title: string): Promise<Todo[]> {
 
 /**
  * TODO完了処理
+ * @param id TodoのID
  */
 export async function finishTodo(id: string): Promise<Todo[]> {
   console.log("Server Action: finishTodo", { id });
@@ -28,6 +39,7 @@ export async function finishTodo(id: string): Promise<Todo[]> {
 
 /**
  * TODO削除処理
+ * @param id TodoのID
  */
 export async function deleteTodo(id: string): Promise<Todo[]> {
   console.log("Server Action: deleteTodo", { id });
