@@ -24,19 +24,19 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
 /**
  * リンクボタン
  */
-export default function LinkButton(props: ButtonProps) {
+export default function LinkButton({ forwardViewURL, ...rest }: ButtonProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    if (!props.forwardViewURL) {
+    if (!forwardViewURL) {
       return;
     }
-    router.push(props.forwardViewURL);
+    router.push(forwardViewURL);
   };
 
   return (
-    <BaseButton {...props} onClick={handleClick}>
-      {props.children}
+    <BaseButton {...rest} onClick={handleClick}>
+      {rest.children}
     </BaseButton>
   );
 }

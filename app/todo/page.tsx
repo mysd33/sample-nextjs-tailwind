@@ -6,13 +6,13 @@ import ButtonArea from "@/components/button/ButtonArea";
 import SubmitButton from "@/components/button/SubmitButton";
 import InputItem from "@/components/form/InputItem";
 import InputText from "@/components/form/InputText";
-import { generateUUID } from "@/lib/common/utils/idUtils";
 import { Todo } from "@/lib/todo/models/todo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import TodoItem from "./_components/TodoItem";
+import { createTodo, deleteTodo, finishTodo } from "@/lib/todo/actions";
 
 export interface TodoFormInput {
   todoTitle: string;
@@ -44,27 +44,24 @@ export default function TodoListView() {
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
-  const onValidSubmit = (data: TodoFormInput) => {
+  const onValidSubmit = async (data: TodoFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel("");
-
-    // TODO: サーバアクションでのビジネスロジックの呼び出し
-    console.log("TODO作成:", data);
-    setTodos([
-      ...todos,
-      {
-        id: generateUUID(),
-        title: data.todoTitle,
-        finished: false,
-        createAt: new Date(),
-      },
-    ]);
-    // バナーメッセージの設定
-    setMessage("作成しました。");
-    setMessageLevel("info");
-    // フォームのリセット
-    reset();
+    // ビジネスロジック実行
+    createTodo(data.todoTitle)
+      .then((newTodos) => {
+        // TODO一覧を更新
+        setTodos(newTodos);
+        // バナーメッセージの表示
+        setMessage("作成しました。");
+        setMessageLevel("info");
+        // フォームのリセット
+        reset();
+      })
+      .catch((error) => {
+        // TODO: 業務エラーのハンドリング
+      });
   };
 
   // 入力エラー時
@@ -72,8 +69,39 @@ export default function TodoListView() {
     setMessageLevel("validation");
   };
 
-  // TODO: 完了処理完了時の実装
-  // TODO: 削除処理完了時の実装
+  // 完了処理完了時
+  const onFinish = (todoId: string) => {
+    console.log("TODO完了:" + todoId);
+    // ビジネスロジック実行
+    finishTodo(todoId)
+      .then((newTodos) => {
+        // TODO一覧を更新
+        setTodos(newTodos);
+        // バナーメッセージの表示
+        setMessage("完了しました。");
+        setMessageLevel("info");
+      })
+      .catch((error) => {
+        // TODO: 業務エラーのハンドリング
+      });
+  };
+
+  // 削除処理完了時
+  const onDelete = (todoId: string) => {
+    console.log("TODO削除:" + todoId);
+    // ビジネスロジック実行
+    deleteTodo(todoId)
+      .then((newTodos) => {
+        // TODO一覧を更新
+        setTodos(newTodos);
+        // バナーのメッセージ表示
+        setMessage("削除しました。");
+        setMessageLevel("info");
+      })
+      .catch((error) => {
+        //TODO: 業務エラーのハンドリング
+      });
+  };
 
   return (
     <>
@@ -101,7 +129,7 @@ export default function TodoListView() {
           {/* TODO: onFinishとonDeleteの実装 */}
           {todos.map((todo) => (
             <li key={todo.id} className="ml-10">
-              <TodoItem todo={todo} />
+              <TodoItem todo={todo} onFinish={onFinish} onDelete={onDelete} />
             </li>
           ))}
         </ul>

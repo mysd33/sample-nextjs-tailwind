@@ -28,9 +28,10 @@ export class UserRepository {
    */
   public async authenticate(
     id: string,
-    password: string
+    password: string,
   ): Promise<User | null> {
     // TODO: 実際には、ユーザ認証処理を呼び出す
+    // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
 
     // ダミーデータ
