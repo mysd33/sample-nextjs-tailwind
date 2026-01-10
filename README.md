@@ -454,4 +454,26 @@ git config core.ignorecase false
 
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
+### Next.jsのMCPサーバ
+- [next-devtools-mcp]をインストール・設定することで、自動的にコーディングエージェントNext.jsのインスタンスに接続し有効になります。
+- [公式ガイド](https://nextjs.org/docs/app/guides/mcp)を参考に設定してください。
 
+- next-devtools-mcpのインストール
+
+    ```sh
+    pnpm add next-devtools-mcp
+    ```
+
+- プロジェクトのルートディレクトリに.mcp.jsonを作成し、以下を記載
+
+    ```js
+    {
+      "mcpServers": {
+        "next-devtools": {
+          "command": "npx",
+          "args": ["-y", "next-devtools-mcp@latest"]
+        }
+      }
+    }
+    ```    
+- あとは、`pnpm dev`(npm run dev)で開発用サーバーを起動すると、MCPサーバも起動する。
