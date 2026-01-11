@@ -1,4 +1,9 @@
+// TODO: サーバコンポーネントとクライアントコンポーネントを分離できるか検討
+"use client";
+
 import LinkButton from "@/components/button/LinkButton";
+import { Page, Pageable } from "@/components/pagination/pagination";
+import PaginationLink from "@/components/pagination/PaginationLink";
 import TableArea from "@/components/table/TableArea";
 import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
@@ -11,7 +16,7 @@ import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
  * ユーザ一覧画面
  */
 export default function UserListView() {
-  //TODO: ユーザ一覧表示するダミーデータ。Serviceから取得するように修正予定
+  //TODO: ユーザ一覧表示するダミーデータ。Serviceからサーバ側でページネーション処理取得するように修正予定
   const users = [
     {
       id: "yamada@xxx.co.jp",
@@ -27,7 +32,30 @@ export default function UserListView() {
       password: "password",
       isAdmin: false,
     },
+    {
+      id: "tamura2@xxx.co.jp",
+      name: "田村二郎",
+      birthday: new Date("1986-11-05"),
+      password: "password",
+      isAdmin: false,
+    },
+    {
+      id: "tamura3@xxx.co.jp",
+      name: "田村三郎",
+      birthday: new Date("1986-11-05"),
+      password: "password",
+      isAdmin: false,
+    },
   ] as User[];
+
+  // ダミーのページ情報
+  const userPage = new Page<User>(new Pageable(10, 0), users, 100);
+
+  // ページネーションリンククリック時
+  const handlePaginationLinkClick = (pageable: Pageable) => {
+    console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
+    // TODO: pageableをもとに再検索を実行し、画面を更新する処理を実装予定
+  };
 
   return (
     <>
@@ -63,7 +91,13 @@ export default function UserListView() {
           </>
         }
       />
-      {/* TODO: ページネーション機能は後で実装 */}
+      {/* ページネーション機能 */}
+      <PaginationLink
+        pageSize={10}
+        page={userPage}
+        onClick={handlePaginationLinkClick}
+      />
+
       <div className="my-2 text-left">
         {/* TODO: 合計件数は後で実装 */}
         <label>合計: {users.length} 件</label>
