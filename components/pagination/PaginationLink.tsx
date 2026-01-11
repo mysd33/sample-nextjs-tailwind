@@ -1,13 +1,10 @@
-// TODO: クライアントコンポーネントの宣言を画面側に追加するか検討
-"use client";
-
 // 参考
 // https://tailwindui.com/components/application-ui/navigation/pagination を参考に作成
 
-import { Page, Pageable } from "./pagination";
+import { Page, Pageable } from "./clientPagination";
 
 // Propsのインターフェース定義
-interface Props<T> {
+interface Props {
   /**
    * ページサイズ（1ページ当たりの表示件数）
    */
@@ -15,7 +12,7 @@ interface Props<T> {
   /**
    * 検索結果のページ情報
    */
-  page: Page<T>;
+  page: Page;
 
   /**
    * 最大表示ページ数
@@ -30,7 +27,7 @@ interface Props<T> {
 /**
  * ページネーションリンク
  */
-export default function PaginationLink<T>(props: Props<T>) {
+export default function PaginationLink(props: Props) {
   // ページ番号のリスト
   const sequence = () => {
     const maxDisplayPage = props.maxDisplayPage ?? 5;

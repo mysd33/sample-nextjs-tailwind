@@ -1,7 +1,7 @@
 /**
- * ページの情報を保持するクラス
+ * ページの情報を保持するクラス（クライアント処理用）
  */
-export class Page<T> {
+export class Page {
   /**
    * ページサイズ（1ページ当たりの表示件数）
    */
@@ -15,10 +15,7 @@ export class Page<T> {
      * ページネーション情報
      */
     pageable: Pageable,
-    /**
-     * ページの表示内容（検索結果）
-     */
-    public content: T[],
+
     /**
      * 総件数
      */

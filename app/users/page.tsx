@@ -1,9 +1,4 @@
-// TODO: サーバコンポーネントとクライアントコンポーネントを分離できるか検討
-"use client";
-
 import LinkButton from "@/components/button/LinkButton";
-import { Page, Pageable } from "@/components/pagination/pagination";
-import PaginationLink from "@/components/pagination/PaginationLink";
 import TableArea from "@/components/table/TableArea";
 import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
@@ -11,6 +6,7 @@ import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
 import { User } from "@/lib/common/models/user";
 import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
+import PaginationViewPart from "./_components/PaginationViewPart";
 
 /**
  * ユーザ一覧画面
@@ -48,14 +44,8 @@ export default function UserListView() {
     },
   ] as User[];
 
-  // ダミーのページ情報
-  const userPage = new Page<User>(new Pageable(10, 0), users, 100);
-
-  // ページネーションリンククリック時
-  const handlePaginationLinkClick = (pageable: Pageable) => {
-    console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
-    // TODO: pageableをもとに再検索を実行し、画面を更新する処理を実装予定
-  };
+  // ダミーの総件数
+  const totalElements = 100;
 
   return (
     <>
@@ -91,16 +81,15 @@ export default function UserListView() {
           </>
         }
       />
-      {/* ページネーション機能 */}
-      <PaginationLink
+      {/* ページネーション部分（クライアントコンポーネント） */}
+      <PaginationViewPart
         pageSize={10}
-        page={userPage}
-        onClick={handlePaginationLinkClick}
+        pageNumber={0}
+        totalElements={totalElements}
       />
 
       <div className="my-2 text-left">
-        {/* TODO: 合計件数は後で実装 */}
-        <label>合計: {users.length} 件</label>
+        <label>合計: {totalElements} 件</label>
       </div>
       <br />
     </>
