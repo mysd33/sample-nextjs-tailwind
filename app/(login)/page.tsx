@@ -7,7 +7,6 @@ import TableDataCol from "@/components/table/TableDataCol";
 
 /**
  * ログイン画面
- * @returns
  */
 export default function LoginView() {
   return (
