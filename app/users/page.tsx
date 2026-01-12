@@ -8,6 +8,8 @@ import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
 import PaginationViewPart from "./_components/PaginationViewPart";
 import { UserService } from "@/lib/users/services/userService";
 import { Pageable } from "@/lib/common/server-pagination/serverPagination";
+import ButtonArea from "@/components/button/ButtonArea";
+import BaseButton from "@/components/button/BaseButton";
 
 /**
  * ユーザ一覧画面
@@ -75,6 +77,11 @@ export default async function UserListView({
         <label>合計: {totalElements} 件</label>
       </div>
       <br />
+      <ButtonArea>
+        {/** 未実装 */}
+        <BaseButton>CSV出力</BaseButton>
+        <LinkButton forwardViewURL="users/newuser">新規ユーザ登録</LinkButton>
+      </ButtonArea>
     </>
   );
 }

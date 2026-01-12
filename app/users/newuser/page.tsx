@@ -11,9 +11,9 @@ import ToggleSwitch from "@/components/form/ToggleSwitch";
 import { useState } from "react";
 
 /**
- * ユーザ詳細画面
+ * ユーザ登録画面
  */
-export default function UserDetailView() {
+export default function UserRegistrationView() {
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
   const [message, setMessage] = useState<string>("");
