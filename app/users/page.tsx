@@ -4,48 +4,31 @@ import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
-import { User } from "@/lib/common/models/user";
 import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
 import PaginationViewPart from "./_components/PaginationViewPart";
+import { UserService } from "@/lib/users/services/userService";
+import { Pageable } from "@/lib/common/server-pagination/serverPagination";
 
 /**
  * ユーザ一覧画面
  */
-export default function UserListView() {
-  //TODO: ユーザ一覧表示するダミーデータ。Serviceからサーバ側でページネーション処理取得するように修正予定
-  const users = [
-    {
-      id: "yamada@xxx.co.jp",
-      name: "山田太郎",
-      birthday: new Date("1990-01-01"),
-      password: "password",
-      isAdmin: true,
-    },
-    {
-      id: "tamura@xxx.co.jp",
-      name: "田村一郎",
-      birthday: new Date("1986-11-05"),
-      password: "password",
-      isAdmin: false,
-    },
-    {
-      id: "tamura2@xxx.co.jp",
-      name: "田村二郎",
-      birthday: new Date("1986-11-05"),
-      password: "password",
-      isAdmin: false,
-    },
-    {
-      id: "tamura3@xxx.co.jp",
-      name: "田村三郎",
-      birthday: new Date("1986-11-05"),
-      password: "password",
-      isAdmin: false,
-    },
-  ] as User[];
+export default async function UserListView({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  // TODO: クエリパラメータよりページ数とページサイズの取得
+  const params = await searchParams;
+  const pageSize = params.pageSize ? Number(params.pageSize) : 5;
+  // 現在ページ数
+  const pageNumber = params.pageNumber ? Number(params.pageNumber) : 0;
 
-  // ダミーの総件数
-  const totalElements = 100;
+  // ユーザ情報の取得
+  const userPage = UserService.getInstance().findAllForPageNation(
+    new Pageable(pageSize, pageNumber),
+  );
+  const users = (await userPage).content;
+  const totalElements = (await userPage).totalElements;
 
   return (
     <>
@@ -83,8 +66,8 @@ export default function UserListView() {
       />
       {/* ページネーション部分（クライアントコンポーネント） */}
       <PaginationViewPart
-        pageSize={10}
-        pageNumber={0}
+        pageSize={pageSize}
+        pageNumber={pageNumber}
         totalElements={totalElements}
       />
 

@@ -2,6 +2,7 @@
 
 import { Page, Pageable } from "@/components/pagination/clientPagination";
 import PaginationLink from "@/components/pagination/PaginationLink";
+import { useRouter } from "next/navigation";
 
 // サーバコンポーネントからクライアントコンポーネントは
 // プレーンオブジェクトか組み込みのデータ型しか渡せない。
@@ -38,16 +39,21 @@ export default function PaginationViewPart({
   totalElements,
   maxDisplayPage,
 }: Props) {
+  const router = useRouter();
+
   // ページネーションリンククリック時
   const handlePaginationLinkClick = (pageable: Pageable) => {
     console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
-    // TODO: pageableをもとに再検索を実行し、画面を更新する処理を実装予定
+    // Pageableをもとに再検索を実行し、画面を更新
+    router.push(
+      `/users?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`,
+    );
   };
 
   /* ページネーション機能 */
   return (
     <PaginationLink
-      pageSize={10}
+      pageSize={pageSize}
       page={new Page(new Pageable(pageSize, pageNumber), totalElements)}
       maxDisplayPage={maxDisplayPage}
       onClick={handlePaginationLinkClick}
