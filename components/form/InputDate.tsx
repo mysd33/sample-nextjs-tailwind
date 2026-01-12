@@ -1,7 +1,14 @@
 import { forwardRef } from "react";
 import BaseInput from "./BaseInput";
+import { FieldError } from "react-hook-form";
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+interface Props {
+  /**
+   * 入力エラー情報
+   */
+  error?: FieldError;
+}
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & Props;
 
 // 参考: React forwardRef と React Hook Form の組み合わせ
 // https://react-hook-form.com/get-started#Integratinganexistingform
