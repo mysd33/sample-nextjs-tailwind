@@ -477,3 +477,58 @@ git config core.ignorecase false
     }
     ```    
 - あとは、`pnpm dev`(npm run dev)で開発用サーバーを起動すると、MCPサーバも起動する。
+
+
+# Agent Skills
+- [Agent Skills](https://agentskills.io/home)は、AIエージェントの能力を特定のタスクに合わせて拡張・専門化するためのオープンな標準仕様です。
+    - Codex、Claude Code、Cursor、GitHub Copilot Agent…等のコーディングエージェントで利用できると思います。
+- Vercel社は、React、Next.jsの実装での最適化されたナレッジを[React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices)をAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。
+    - 参考： [Introducing: React Best Practices](https://vercel.com/blog/introducing-react-best-practices)
+- また、Vercel社の「Agent Skills」には、[Web Design Guidelines](https://github.com/vercel-labs/agent-skills#web-design-guidelines)という、UIコードがWebインターフェースのベストプラクティスに準拠しているかどうかをレビューするスキルも含まれています。
+- 以下のコマンドを実行して、プロジェクトに追加できます。    
+    - 私は、VSCodeとGitHub Copilotの拡張機能を使っていますが、GitHub Copilotも[Agent Skillsに対応](https://docs.github.com/ja/copilot/concepts/agents/about-agent-skills)しています。
+    - このサンプルAPのプロジェクトでは、`.github/skills/`フォルダにスキルがインストールされました。
+
+```sh
+npx add-skill vercel-labs/agent-skills
+
+# yを選択
+Ok to proceed? (y) y
+
+# Select skills to installで、インストールしたいスキルを選択
+# ここではvercel-react-best-practicesとweb-design-guidelinesの両方を選択して進める
+┌   add-skill 
+│
+◇  Source: https://github.com/vercel-labs/agent-skills.git
+│
+◇  Repository cloned
+│
+◇  Found 2 skills
+│
+◆  Select skills to install
+│  ◻ vercel-react-best-practices
+│  ◻ web-design-guidelines (Review UI code for Web Interface Guidelines compliance. U...)
+│
+◇  Detected 1 agent
+│
+●  Installing to: VSCode
+│
+◆  Installation scope
+│  ● Project (Install in current directory (committed with your project))
+│  ○ Global
+│
+◇  Installation Summary
+│
+│    vercel-react-best-practices
+│
+│      → VSCode: C:\Users\xxx\git\sample-nextjs-tailwind\.github\skills\vercel-react-best-practices
+│
+│    web-design-guidelines
+│
+│      → VSCode: C:\Users\xxx\git\sample-nextjs-tailwind\.github\skills\web-design-guidelines
+│
+◆  Proceed with installation?
+│  ● Yes / ○ No
+└
+…
+```
