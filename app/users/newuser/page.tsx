@@ -9,8 +9,8 @@ import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FieldErrors, useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
 
 interface UserRegistrationFormInput {
@@ -19,7 +19,7 @@ interface UserRegistrationFormInput {
   confirmPassword: string;
   userName: string;
   birthday: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 /**
@@ -36,15 +36,29 @@ export default function UserRegistrationView() {
       confirmPassword: z.string().min(1, "確認用パスワードは必須入力です。"),
       userName: z.string().min(1, "ユーザ名は必須入力です。"),
       birthday: z.string().min(1, "生年月日は必須入力です。"),
-      isAdmin: z.boolean(),
+      isAdmin: z.boolean().optional(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "パスワードと確認用パスワードが一致しません。",
+    .superRefine((data, ctx) => {
+      if (data.password !== data.confirmPassword) {
+        ctx.addIssue({
+          code: "custom",
+          message: "パスワードと確認用パスワードが一致しません。",
+          path: ["password"],
+        });
+        ctx.addIssue({
+          code: "custom",
+          message: "パスワードと確認用パスワードが一致しません。",
+          path: ["confirmPassword"],
+        });
+      }
     });
 
   // react-hook-formの定義
   const {
     register,
+    control,
+    trigger,
+    clearErrors,
     formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm<UserRegistrationFormInput>({
@@ -59,9 +73,27 @@ export default function UserRegistrationView() {
     console.log("ユーザ登録データ:", data);
   };
   // 入力エラー時
-  const onInvalidSubmit = () => {
+  const onInvalidSubmit = (errors: FieldErrors<UserRegistrationFormInput>) => {
+    console.log("入力エラー", errors);
     setMessageLevel("validation");
   };
+  /* 確認用フィールドが変わったら password のエラーを再評価 */
+  const [password, confirmPassword] = useWatch({
+    control,
+    name: ["password", "confirmPassword"],
+  });
+  useEffect(() => {
+    if (confirmPassword !== undefined) {
+      clearErrors("password");
+      void trigger("password");
+    }
+  }, [confirmPassword, clearErrors, trigger]);
+  useEffect(() => {
+    if (password !== undefined) {
+      clearErrors("confirmPassword");
+      void trigger("confirmPassword");
+    }
+  }, [password, clearErrors, trigger]);
 
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
