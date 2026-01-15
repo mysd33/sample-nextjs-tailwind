@@ -1,4 +1,4 @@
-import LinkButton from "./LinkButton";
+import LinkButton from "@/components/button/LinkButton";
 
 interface Props {
   /**
@@ -9,14 +9,16 @@ interface Props {
    * アウトラインボタンかどうか
    */
   outline?: boolean;
+  /**
+   * 子要素
+   */
+  children: React.ReactNode;
 }
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
 
 /**
  * メニューボタン
  */
-export default function MenuButton(props: ButtonProps) {
+export default function MenuButton(props: Props) {
   return (
     <LinkButton {...props} className="mt-12" size="lg">
       {props.children}
