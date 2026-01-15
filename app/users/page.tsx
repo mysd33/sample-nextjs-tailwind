@@ -48,6 +48,13 @@ export default async function UserListView({
         }
         tbody={
           <>
+            {users.length === 0 && (
+              <TableDataRow>
+                <TableDataCol colSpan={7} className="text-center">
+                  データが存在しません
+                </TableDataCol>
+              </TableDataRow>
+            )}
             {users.map((user, index) => (
               <TableDataRow key={user.id}>
                 <TableDataCol>{index + 1}</TableDataCol>
@@ -74,7 +81,7 @@ export default async function UserListView({
       />
 
       <div className="my-2 text-left">
-        <label>合計: {totalElements} 件</label>
+        <span>合計: {totalElements} 件</span>
       </div>
       <br />
       <ButtonArea>
