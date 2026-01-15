@@ -539,4 +539,14 @@ Ok to proceed? (y) y
 …
 ```
 
--　
+- Agent Skillsの利用例
+    - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
+
+    - 「性能に問題があるか…」に関するタスクを依頼すると、自動的に「React Best Practices」スキルが参照され、コードのパフォーマンス最適化のベストプラクティスに基づいてレビューや改善提案を行ってくれました。
+
+        ![React Best Practicesの利用例](docs/img/AgentSkill1.png)
+
+    - [Web Design Guidelines](https://github.com/vercel-labs/agent-skills#web-design-guidelines)
+        - 「UIをレビューして」と依頼すると、自動的に「Web Design Guidelines」スキルが参照され、Webインターフェースのベストプラクティスに基づいてレビューや改善提案を行ってくれました。
+
+        ![Web Design Guidelinesの利用例](docs/img/AgentSkill2.png)
