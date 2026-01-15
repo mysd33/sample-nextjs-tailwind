@@ -45,14 +45,14 @@ export default function TodoListView() {
   // TODOリストの状態管理
   const [todos, setTodos] = useState<Todo[]>([]);
   // バナーメッセージの状態管理
-  const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
+  const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
   const onValidSubmit = async (data: TodoFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
-    setMessageLevel("");
+    setMessageLevel(undefined);
     // ビジネスロジック実行
     createTodo(data.todoTitle)
       .then((newTodos) => {

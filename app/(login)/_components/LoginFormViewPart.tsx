@@ -37,14 +37,14 @@ export default function LoginFormViewPart() {
   });
 
   // バナーメッセージの状態管理
-  const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
+  const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
   const onValidSubmit = (data: LoginFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
-    setMessageLevel("");
+    setMessageLevel(undefined);
 
     // ビジネスロジックの呼び出し
     login(data.userId, data.password).then(() => {

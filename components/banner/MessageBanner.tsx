@@ -2,7 +2,7 @@ import WarnIcon from "@/components/icons/WarnIcon";
 import InfoIcon from "@/components/icons/InfoIcon";
 import ErrorIcon from "@/components/icons/ErrorIcon";
 
-export type MessageLevel = "validation" | "info" | "warn" | "error";
+export type MessageLevel = "validation" | "info" | "warn" | "error" | undefined;
 
 interface Props {
   level: MessageLevel;
@@ -44,6 +44,9 @@ const levelConfig = {
 };
 
 export default function MessageBanner({ message, level }: Props) {
+  if (!level) {
+    return null;
+  }
   const config = levelConfig[level];
   if (!config) {
     return null;

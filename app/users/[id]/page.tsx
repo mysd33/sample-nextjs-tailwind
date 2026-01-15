@@ -15,7 +15,7 @@ import { useState } from "react";
  */
 export default function UserDetailView() {
   // バナーメッセージの状態管理
-  const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
+  const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
   return (
     <>

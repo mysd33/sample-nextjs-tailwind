@@ -69,7 +69,7 @@ export default function UserRegistrationView() {
   const onValidSubmit = (data: UserRegistrationFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
-    setMessageLevel("");
+    setMessageLevel(undefined);
     console.log("ユーザ登録データ:", data);
   };
   // 入力エラー時
@@ -96,7 +96,7 @@ export default function UserRegistrationView() {
   }, [password, clearErrors, trigger]);
 
   // バナーメッセージの状態管理
-  const [messageLevel, setMessageLevel] = useState<MessageLevel>("");
+  const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
   return (
     <>
