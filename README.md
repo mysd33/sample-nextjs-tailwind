@@ -482,9 +482,15 @@ git config core.ignorecase false
 # Agent Skills
 - [Agent Skills](https://agentskills.io/home)は、AIエージェントの能力を特定のタスクに合わせて拡張・専門化するためのオープンな標準仕様です。
     - Codex、Claude Code、Cursor、GitHub Copilot Agent…等のコーディングエージェントで利用できると思います。
-- Vercel社は、React、Next.jsの実装での最適化されたナレッジを[React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices)をAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。
-    - 参考： [Introducing: React Best Practices](https://vercel.com/blog/introducing-react-best-practices)
-- また、Vercel社の「Agent Skills」には、[Web Design Guidelines](https://github.com/vercel-labs/agent-skills#web-design-guidelines)という、UIコードがWebインターフェースのベストプラクティスに準拠しているかどうかをレビューするスキルも含まれています。
+- Vercel社は、React、Next.jsの実装での最適化されたナレッジをAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。以下のスキルを提供しています。
+    - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
+        - 参考： [Introducing: React Best Practices](https://vercel.com/blog/introducing-react-best-practices)
+        - React/Next.jsのコードのパフォーマンス最適化の実装のためのガイドラインで、ベストプラクティスに準拠しているかどうかをレビューするスキルです。
+        - ReactコンポーネントやNext.js ページの実装・変更、データフェッチ処理、性能レビュー、バンドルサイズ対策、レンダリング最適化など「React/Next.js の性能改善・コード品質」に関わるタスクが依頼されたときに、このスキルが自動的に参照され、定義されたルールに従って作業やレビューを行います。
+    - [Web Design Guidelines](https://github.com/vercel-labs/agent-skills#web-design-guidelines)
+        - UIコードがWebインターフェースのベストプラクティスに準拠しているかどうかをレビューするスキルです。
+        - 「UI をレビューして」「アクセシビリティを確認して」「デザインを監査して」「UX をレビューして」「サイトをベストプラクティスと照らし合わせて」と依頼されたときに使用されます。
+            - 最新のルールを[ここ](https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md)から取得してレビューを行います。
 - 以下のコマンドを実行して、プロジェクトに追加できます。    
     - 私は、VSCodeとGitHub Copilotの拡張機能を使っていますが、GitHub Copilotも[Agent Skillsに対応](https://docs.github.com/ja/copilot/concepts/agents/about-agent-skills)しています。
     - このサンプルAPのプロジェクトでは、`.github/skills/`フォルダにスキルがインストールされました。
@@ -532,3 +538,5 @@ Ok to proceed? (y) y
 └
 …
 ```
+
+-　
