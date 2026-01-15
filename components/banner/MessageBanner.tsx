@@ -1,49 +1,73 @@
 import WarnIcon from "@/components/icons/WarnIcon";
-import InfoIcon from "../icons/InfoIcon";
-import ErrorIcon from "../icons/ErrorIcon";
+import InfoIcon from "@/components/icons/InfoIcon";
+import ErrorIcon from "@/components/icons/ErrorIcon";
 
-export type MessageLevel = "" | "validation" | "info" | "warn" | "error";
+export type MessageLevel = "validation" | "info" | "warn" | "error";
 
 interface Props {
-  message: string;
-  level?: MessageLevel;
+  level: MessageLevel;
+  message?: string;
 }
 
+const BASE_CLASS =
+  "mb-4 flex items-center gap-3 rounded-lg border px-4 py-3 w-full";
+
+const levelConfig = {
+  validation: {
+    className: "border-red-950/20 bg-red-500/20",
+    icon: <ErrorIcon />,
+    textClassName: "text-red-950",
+    role: "alert" as const,
+    ariaLive: "assertive" as const,
+  },
+  info: {
+    className: "border-green-950/20 bg-green-600/20",
+    icon: <InfoIcon />,
+    textClassName: "text-green-950",
+    role: "status" as const,
+    ariaLive: "polite" as const,
+  },
+  warn: {
+    className: "border-amber-950/20 bg-amber-500/20",
+    icon: <WarnIcon />,
+    textClassName: "text-amber-950",
+    role: "status" as const,
+    ariaLive: "polite" as const,
+  },
+  error: {
+    className: "border-red-950/20 bg-red-500/20",
+    icon: <ErrorIcon />,
+    textClassName: "text-red-950",
+    role: "alert" as const,
+    ariaLive: "assertive" as const,
+  },
+};
+
 export default function MessageBanner({ message, level }: Props) {
+  const config = levelConfig[level];
+  if (!config) {
+    return null;
+  }
+  let displayMessage = message;
+  if (level === "validation") {
+    displayMessage =
+      message && message.length > 0 ? message : "入力エラーです。";
+  }
+  if (!displayMessage) {
+    return null;
+  }
+
   return (
-    <>
-      {level === "validation" && (
-        <div className="mb-4 flex flex-row content-center rounded-lg border border-red-950/20 bg-red-500/20 px-4 py-3">
-          <div className="flex flex-row">
-            <ErrorIcon />
-            <span className="mt-1 ml-3 text-red-950">入力エラーです。</span>
-          </div>
-        </div>
-      )}
-      {level === "info" && message && (
-        <div className="mb-4 flex flex-row content-center rounded-lg border border-green-950/20 bg-green-600/20 px-4 py-3">
-          <div className="flex flex-row">
-            <InfoIcon />
-            <span className="mt-1 ml-3 text-green-950">{message}</span>
-          </div>
-        </div>
-      )}
-      {level === "warn" && message && (
-        <div className="mb-4 flex flex-row content-center rounded-lg border border-amber-950/20 bg-amber-500/20 px-4 py-3">
-          <div className="flex flex-row">
-            <WarnIcon />
-          </div>
-          <span className="mt-1 ml-3 text-amber-950">{message}</span>
-        </div>
-      )}
-      {level === "error" && message && (
-        <div className="mb-4 flex flex-row content-center rounded-lg border border-red-950/20 bg-red-500/20 px-4 py-3">
-          <div className="flex flex-row">
-            <ErrorIcon />
-            <span className="mt-1 ml-3 text-red-950">{message}</span>
-          </div>
-        </div>
-      )}
-    </>
+    <div
+      role={config.role}
+      aria-live={config.ariaLive}
+      className={`${BASE_CLASS} ${config.className}`}>
+      <span className="flex items-center" aria-hidden="true">
+        {config.icon}
+      </span>
+      <span className={`text-sm ${config.textClassName}`}>
+        {displayMessage}
+      </span>
+    </div>
   );
 }
