@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useMemo } from "react";
 import { Page, Pageable } from "@/components/pagination/clientPagination";
 import PaginationLink from "@/components/pagination/PaginationLink";
 import { useRouter } from "next/navigation";
@@ -42,19 +43,27 @@ export default function PaginationViewPart({
   const router = useRouter();
 
   // ページネーションリンククリック時
-  const handlePaginationLinkClick = (pageable: Pageable) => {
-    console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
-    // Pageableをもとに再検索を実行し、画面を更新
-    router.push(
-      `/users?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`,
-    );
-  };
+  const handlePaginationLinkClick = useCallback(
+    (pageable: Pageable) => {
+      console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
+      // Pageableをもとに再検索を実行し、画面を更新
+      router.push(
+        `/users?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`,
+      );
+    },
+    [router],
+  );
+
+  const pageInfo = useMemo(
+    () => new Page(new Pageable(pageSize, pageNumber), totalElements),
+    [pageNumber, pageSize, totalElements],
+  );
 
   /* ページネーション機能 */
   return (
     <PaginationLink
       pageSize={pageSize}
-      page={new Page(new Pageable(pageSize, pageNumber), totalElements)}
+      page={pageInfo}
       maxDisplayPage={maxDisplayPage}
       onClick={handlePaginationLinkClick}
     />
