@@ -23,7 +23,12 @@ const LoginInputText = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <>
-        <input {...props} className={style} ref={ref} />
+        <input
+          {...props}
+          className={style}
+          ref={ref}
+          aria-invalid={props.error ? "true" : "false"}
+        />
       </>
     );
   },

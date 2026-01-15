@@ -23,7 +23,13 @@ const LoginInputPassword = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <>
-        <input {...props} type="password" className={style} ref={ref} />
+        <input
+          {...props}
+          type="password"
+          className={style}
+          ref={ref}
+          aria-invalid={props.error ? "true" : "false"}
+        />
       </>
     );
   },

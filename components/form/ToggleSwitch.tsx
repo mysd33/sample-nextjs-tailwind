@@ -1,6 +1,9 @@
 import { Field, Label, Switch } from "@headlessui/react";
 import { useState } from "react";
 
+{
+  /** TODO: react-hook-form対応 */
+}
 export default function ToggleSwitch({
   children,
 }: {

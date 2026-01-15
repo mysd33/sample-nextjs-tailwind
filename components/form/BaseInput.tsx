@@ -21,7 +21,14 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     ? `${commonStyle} errorIcon border-red-600 focus:border-red-400 focus:ring-red-300/50`
     : `${commonStyle} border-gray-300 focus:border-blue-400 focus:ring-blue-300/50`;
 
-  return <input {...props} ref={ref} className={style} />;
+  return (
+    <input
+      {...props}
+      ref={ref}
+      className={style}
+      aria-invalid={props.error ? "true" : "false"}
+    />
+  );
 });
 
 BaseInput.displayName = "BaseInput";
