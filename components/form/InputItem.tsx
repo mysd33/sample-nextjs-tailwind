@@ -40,7 +40,10 @@ export default function InputItem(props: InputItemProps) {
         )}
         {props.children}
         {props.error && (
-          <div className="flow flow-col m-1 text-sm text-red-600">
+          <div
+            className="flow flow-col m-1 text-sm text-red-600"
+            role="alert"
+            aria-live="polite">
             <div>{props.error.message}</div>
           </div>
         )}

@@ -18,7 +18,10 @@ export default function LoginInputItem({ errors, children }: Props) {
       <div className="flex flex-col">
         {children}
         {errors && (
-          <div className="flow flow-col m-1 text-sm text-red-600">
+          <div
+            className="flow flow-col m-1 text-sm text-red-600"
+            role="alert"
+            aria-live="polite">
             <div>{errors.userId?.message}</div>
             <div>{errors.password?.message}</div>
           </div>
