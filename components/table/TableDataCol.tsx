@@ -10,10 +10,7 @@ type TableDataColProps = React.TdHTMLAttributes<HTMLTableCellElement> & Props;
 
 export default function TableDataCol(props: TableDataColProps) {
   return (
-    <td
-      {...props}
-      scope="col"
-      className={`border border-gray-300 p-3 ${props.className}`}>
+    <td {...props} className={`border border-gray-300 p-3 ${props.className}`}>
       {props.children}
     </td>
   );

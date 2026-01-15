@@ -3,5 +3,5 @@ export default function TableHeaderRow({
 }: {
   children: React.ReactNode;
 }) {
-  return <tr className="bg-gray-300">{children}</tr>;
+  return <tr>{children}</tr>;
 }
