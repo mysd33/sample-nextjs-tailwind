@@ -455,7 +455,7 @@ git config core.ignorecase false
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
 ### Next.jsのMCPサーバ
-- [next-devtools-mcp]をインストール・設定することで、自動的にコーディングエージェントNext.jsのインスタンスに接続し有効になります。
+- [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)をインストール・設定することで、自動的にコーディングエージェントNext.jsのインスタンスに接続し有効になります。
 - [公式ガイド](https://nextjs.org/docs/app/guides/mcp)を参考に設定してください。
 
 - next-devtools-mcpのインストール
@@ -542,7 +542,7 @@ Ok to proceed? (y) y
 - Agent Skillsの利用例
     - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
 
-    - 「性能に問題があるか…」に関するタスクを依頼すると、自動的に「React Best Practices」スキルが参照され、コードのパフォーマンス最適化のベストプラクティスに基づいてレビューや改善提案を行ってくれました。
+        - 「性能に問題があるか…」に関するタスクを依頼すると、自動的に「React Best Practices」スキルが参照され、コードのパフォーマンス最適化のベストプラクティスに基づいてレビューや改善提案を行ってくれました。
 
         ![React Best Practicesの利用例](docs/img/AgentSkill1.png)
 
