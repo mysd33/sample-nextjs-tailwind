@@ -208,10 +208,10 @@ pnpm start
 - Tailwind CSSプラグイン
     - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)          
 
-    > [!NOTE]
-    > 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
-    > 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
-    
+        > [!NOTE]
+        > 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
+        > 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
+
 - Storybook
     - [Storybook](https://storybook.js.org/)
     - [msw-storybook-addon](https://github.com/mswjs/msw-storybook-addon)
