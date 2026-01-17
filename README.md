@@ -96,7 +96,7 @@ pnpm start
 
 ## 画面一覧
 > [!WARNING]
-> 今後対応予定
+> 対応中
 
 > [!NOTE]
 > 比較として、完全にHTML、CSSを一致させているわけではなく、だいたいのレイアウト、色が一致するようにしているだけです。ご注意ください。
@@ -109,23 +109,20 @@ pnpm start
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | ログイン画面 | トップページの画面で、ユーザがログインするための画面。 | [画面](docs/img/screen/screen1.png) | [Storybook]() | [ソースコード](./app/(login)/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/login/login.html) |
 | メニュー画面 | メニュー画面。ログインユーザのロールによって管理者メニューの表示有無が切り替わる。 | [画面](docs/img/screen/screen2.png) | [Storybook]() | [ソースコード](./app/(login)/menu/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/menu/menu.html) |
-| Todo管理画面 | Todoリストの一覧表示、登録、完了、削除といった操作を実施できる画面。 | [画面](docs/img/screen/screen3.png)  | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/todo/todoList.html) |
+| Todo管理画面 | Todoリストの一覧表示、登録、完了、削除といった操作を実施できる画面。 | [画面](docs/img/screen/screen3.png)  | [Storybook]() | [ソースコード](./app/todo/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/todo/todoList.html) |
 | Todo一括登録画面 | Todoリストを記載したCSVファイルをアップロードし、非同期でTodoリストを登録できる画面。 | [画面](docs/img/screen/screen4.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/todo/upload.html)  |
-| ユーザ一覧画面 | 登録されているユーザを一覧表示&CSVファイルダウンロードできる画面。 | [画面](docs/img/screen/screen5.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/userList.html) |
-| ユーザ登録画面 | ユーザを新規登録するための画面。 | [画面](docs/img/screen/screen6.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/regist.html) |
-| ユーザ詳細画面 | ユーザの詳細情報の表示と情報更新するための画面。 | [画面](docs/img/screen/screen7.png) | [Storybook]() | [ソースコード]() | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/userDetail.html) |
+| ユーザ一覧画面 | 登録されているユーザを一覧表示&CSVファイルダウンロードできる画面。 | [画面](docs/img/screen/screen5.png) | [Storybook]() | [ソースコード](./app/users/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/userList.html) |
+| ユーザ登録画面 | ユーザを新規登録するための画面。 | [画面](docs/img/screen/screen6.png) | [Storybook]() | [ソースコード](./app/users/newuser/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/regist.html) |
+| ユーザ詳細画面 | ユーザの詳細情報の表示と情報更新するための画面。 | [画面](docs/img/screen/screen7.png) | [Storybook]() | [ソースコード](./app/users/[id]/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/userDetail.html) |
 
 ## 画面遷移図
-> [!WARNING]
-> 今後対応予定
-
 - Next.jsのAppRouterにより以下の画面遷移が実現されています。
 
 ![画面遷移図](docs/img/screen-flow.png)
 
 ## メッセージ表示
 > [!WARNING]
-> 今後対応予定
+> 対応中
 
 - 正常終了時やエラー時のメッセージおよびバナー等表示できるように対応しています。
 - また、比較対象の「Spring Boot + Thymeleaf + Bootstrap」では実装してませんが、モーダルダイアログの表示も試しています。
@@ -143,7 +140,7 @@ pnpm start
 
 # 画面部品
 > [!WARNING]
-> 今後対応予定
+> 対応中
 
 - [components/](components/)フォルダに入っています。
 - 作成している画面部品は以下の通り。
@@ -163,10 +160,10 @@ pnpm start
 | 入力の基底部品 | 入力部品共通の基底のコンポーネント | [ソースコード](./components/form/BaseInput.tsx) | TBD |
 | テキスト入力 | テキスト入力部品 | [ソースコード](./components/form/InputText.tsx) | TBD |
 | テキスト入力（ログイン画面用） | ログイン画面のレイアウトに合わせたテキスト入力部品 | [ソースコード](./components/form/LoginInputText.tsx) | TBD |
-| パスワード入力 | パスワード入力部品 | [ソースコード]() | TBD |
+| パスワード入力 | パスワード入力部品 | [ソースコード](./components/form/InputPassword.tsx) | TBD |
 | パスワード入力（ログイン画面用） | ログイン画面のレイアウトに合わせたパスワード入力部品 | [ソースコード](./components/form/LoginInputPassword.tsx) | TBD |
-| 日付入力 | 日付入力部品 | [ソースコード]() | TBD |
-| トグルスイッチ | トグルの入力部品　| [ソースコード]() | TBD |
+| 日付入力 | 日付入力部品 | [ソースコード](./components/form/InputDate.tsx) | TBD |
+| トグルスイッチ | トグルの入力部品　| [ソースコード](./components/form/ToggleSwitch.tsx) | TBD |
 | ファイル入力 | ファイルアップロード入力部品 | [ソースコード]() | TBD |
 | ボタン領域 | ボタンを並べて表示する領域 | [ソースコード](./components/button/ButtonArea.tsx) | TBD |
 | ボタンの基底部品 | ボタン共通の基底のコンポーネント| [ソースコード](./components/button/BaseButton.tsx) | TBD |
@@ -175,14 +172,12 @@ pnpm start
 | 送信ボタン | フォームの送信ボタン | [ソースコード](./components/button/SubmitButton.tsx) | TBD |
 | アクションボタン | フォーム以外でのロジック実行ボタン | [ソースコード]() | TBD |
 | テーブル | テーブルの表示領域、ヘッダー部、データ部 | [ソースコード](./components/table) | TBD |
-| ページネーションリンク | ページネーションのリンクボタン | [ソースコード]() | TBD |
+| ページネーションリンク | ページネーションのリンクボタン | [ソースコード](./components/pagination/PaginationLink.tsx) | TBD |
 | モーダルダイアログの基底部品 | ダイアログ共通の基底のコンポーネント | TBD | TBD |
 | 確認用モーダルダイアログ | 確認ダイアログ | [ソースコード]() | TBD |
 | 情報モーダルダイアログ | 完了時等の情報ダイアログ | [ソースコード]() | TBD |
 
 ## 追加したプラグイン・ライブラリ
-> [!WARNING]
-> 今後対応予定
 
 - React関連ライブラリ
     - [Next.js (App Router)](https://nextjs.org/docs)
@@ -195,15 +190,10 @@ pnpm start
         - 入力チェック（スキーマバリデーション）に使用
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
-
-
-> [!NOTE]
-> 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
-> 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
-
-
-- Tailwind CSSプラグイン
-    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)    
+    - [Headless UI](https://headlessui.com/v1/react)
+        - モーダルダイアログに使用する
+    - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
+        - アイコンに使用する
 
 - React関連ライブラリ（追加検討中）
     - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
@@ -214,12 +204,14 @@ pnpm start
         - 状態管理に使用する可能性
     - [Jotai](https://jotai.org/)
         - 状態管理に使用する可能性        
-    - [Headless UI](https://headlessui.com/v1/react)
-        - モーダルダイアログに使用する可能性
-    - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
-        - アイコンに使用する可能性
-       
 
+- Tailwind CSSプラグイン
+    - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)          
+
+    > [!NOTE]
+    > 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
+    > 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
+    
 - Storybook
     - [Storybook](https://storybook.js.org/)
     - [msw-storybook-addon](https://github.com/mswjs/msw-storybook-addon)
