@@ -15,10 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body>
-        <HeaderArea title="TODO管理アプリ" />
-        <MainContainer>{children}</MainContainer>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

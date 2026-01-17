@@ -1,6 +1,7 @@
 "use client";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
+import LinkButton from "@/components/button/LinkButton";
 import SubmitButton from "@/components/button/SubmitButton";
 import FormArea from "@/components/form/FormArea";
 import InputDate from "@/components/form/InputDate";
@@ -8,6 +9,8 @@ import InputItem from "@/components/form/InputItem";
 import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
+import HeaderArea from "@/components/layout/HeaderArea";
+import MainContainer from "@/components/layout/MainContainer";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { FieldErrors, useForm, useWatch } from "react-hook-form";
@@ -100,73 +103,79 @@ export default function UserRegistrationView() {
   const [message, setMessage] = useState<string>("");
   return (
     <>
-      <MessageBanner level={messageLevel} message={message} />
-      <FormArea onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
-        <InputItem
-          label="ユーザーID"
-          labelFor="userId"
-          required={true}
-          error={errors.userId}>
-          <InputText
-            id="userId"
-            autoFocus={true}
-            error={errors.userId}
-            {...register("userId")}
-          />
-        </InputItem>
-        <InputItem
-          label="ユーザー名"
-          labelFor="userName"
-          required={true}
-          error={errors.userName}>
-          <InputText
-            id="userName"
-            error={errors.userName}
-            {...register("userName")}
-          />
-        </InputItem>
-        <InputItem
-          label="パスワード"
-          labelFor="password"
-          required={true}
-          error={errors.password}>
-          <InputPassword
-            id="password"
-            error={errors.password}
-            {...register("password")}
-          />
-        </InputItem>
-        <InputItem
-          label="確認用パスワード"
-          labelFor="confirmPassword"
-          required={true}
-          error={errors.confirmPassword}>
-          <InputPassword
-            id="confirmPassword"
-            error={errors.confirmPassword}
-            {...register("confirmPassword")}
-          />
-        </InputItem>
-        <InputItem
-          label="生年月日"
-          labelFor="birthday"
-          required={true}
-          error={errors.birthday}>
-          <InputDate
-            id="birthday"
-            error={errors.birthday}
-            {...register("birthday")}
-          />
-        </InputItem>
-        <InputItem>
-          <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
-        </InputItem>
-        <ButtonArea>
-          <SubmitButton disabled={isSubmitting}>ユーザ登録</SubmitButton>
-        </ButtonArea>
-      </FormArea>
-
-      {/* TODO: ユーザ作成完了ダイアログの追加 */}
+      <HeaderArea title="ユーザ登録">
+        <LinkButton outline={true} forwardViewURL="/users">
+          ユーザ一覧に戻る
+        </LinkButton>
+      </HeaderArea>
+      <MainContainer>
+        <MessageBanner level={messageLevel} message={message} />
+        <FormArea onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
+          <InputItem
+            label="ユーザーID"
+            labelFor="userId"
+            required={true}
+            error={errors.userId}>
+            <InputText
+              id="userId"
+              autoFocus={true}
+              error={errors.userId}
+              {...register("userId")}
+            />
+          </InputItem>
+          <InputItem
+            label="ユーザー名"
+            labelFor="userName"
+            required={true}
+            error={errors.userName}>
+            <InputText
+              id="userName"
+              error={errors.userName}
+              {...register("userName")}
+            />
+          </InputItem>
+          <InputItem
+            label="パスワード"
+            labelFor="password"
+            required={true}
+            error={errors.password}>
+            <InputPassword
+              id="password"
+              error={errors.password}
+              {...register("password")}
+            />
+          </InputItem>
+          <InputItem
+            label="確認用パスワード"
+            labelFor="confirmPassword"
+            required={true}
+            error={errors.confirmPassword}>
+            <InputPassword
+              id="confirmPassword"
+              error={errors.confirmPassword}
+              {...register("confirmPassword")}
+            />
+          </InputItem>
+          <InputItem
+            label="生年月日"
+            labelFor="birthday"
+            required={true}
+            error={errors.birthday}>
+            <InputDate
+              id="birthday"
+              error={errors.birthday}
+              {...register("birthday")}
+            />
+          </InputItem>
+          <InputItem>
+            <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
+          </InputItem>
+          <ButtonArea>
+            <SubmitButton disabled={isSubmitting}>ユーザ登録</SubmitButton>
+          </ButtonArea>
+        </FormArea>
+        {/* TODO: ユーザ作成完了ダイアログの追加 */}
+      </MainContainer>
     </>
   );
 }

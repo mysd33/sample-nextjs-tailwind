@@ -1,15 +1,17 @@
+import BaseButton from "@/components/button/BaseButton";
+import ButtonArea from "@/components/button/ButtonArea";
 import LinkButton from "@/components/button/LinkButton";
+import HeaderArea from "@/components/layout/HeaderArea";
+import MainContainer from "@/components/layout/MainContainer";
 import TableArea from "@/components/table/TableArea";
 import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
-import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
-import PaginationViewPart from "./_components/PaginationViewPart";
-import { UserService } from "@/lib/users/services/userService";
 import { Pageable } from "@/lib/common/server-pagination/serverPagination";
-import ButtonArea from "@/components/button/ButtonArea";
-import BaseButton from "@/components/button/BaseButton";
+import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
+import { UserService } from "@/lib/users/services/userService";
+import PaginationViewPart from "./_components/PaginationViewPart";
 
 /**
  * ユーザ一覧画面
@@ -34,61 +36,68 @@ export default async function UserListView({
 
   return (
     <>
-      <TableArea
-        thead={
-          <TableHeaderRow>
-            <TableHeaderCol>No</TableHeaderCol>
-            <TableHeaderCol>ユーザID</TableHeaderCol>
-            <TableHeaderCol>ユーザ名</TableHeaderCol>
-            <TableHeaderCol>誕生日</TableHeaderCol>
-            <TableHeaderCol>年齢</TableHeaderCol>
-            <TableHeaderCol>管理者</TableHeaderCol>
-            <TableHeaderCol></TableHeaderCol>
-          </TableHeaderRow>
-        }
-        tbody={
-          <>
-            {users.length === 0 && (
-              <TableDataRow>
-                <TableDataCol colSpan={7} className="text-center">
-                  データが存在しません
-                </TableDataCol>
-              </TableDataRow>
-            )}
-            {users.map((user, index) => (
-              <TableDataRow key={user.id}>
-                <TableDataCol>{index + 1}</TableDataCol>
-                <TableDataCol>{user.id}</TableDataCol>
-                <TableDataCol>{user.name}</TableDataCol>
-                <TableDataCol>{formatDate(user.birthday)}</TableDataCol>
-                <TableDataCol>{calcAge(user.birthday)}</TableDataCol>
-                <TableDataCol>{user.isAdmin ? "○" : "-"}</TableDataCol>
-                <TableDataCol>
-                  <LinkButton forwardViewURL={`users/${user.id}`}>
-                    詳細
-                  </LinkButton>
-                </TableDataCol>
-              </TableDataRow>
-            ))}
-          </>
-        }
-      />
-      {/* ページネーション部分（クライアントコンポーネント） */}
-      <PaginationViewPart
-        pageSize={pageSize}
-        pageNumber={pageNumber}
-        totalElements={totalElements}
-      />
+      <HeaderArea title="ユーザ管理">
+        <LinkButton outline={true} forwardViewURL="/menu">
+          メニューに戻る
+        </LinkButton>
+      </HeaderArea>
+      <MainContainer>
+        <TableArea
+          thead={
+            <TableHeaderRow>
+              <TableHeaderCol>No</TableHeaderCol>
+              <TableHeaderCol>ユーザID</TableHeaderCol>
+              <TableHeaderCol>ユーザ名</TableHeaderCol>
+              <TableHeaderCol>誕生日</TableHeaderCol>
+              <TableHeaderCol>年齢</TableHeaderCol>
+              <TableHeaderCol>管理者</TableHeaderCol>
+              <TableHeaderCol></TableHeaderCol>
+            </TableHeaderRow>
+          }
+          tbody={
+            <>
+              {users.length === 0 && (
+                <TableDataRow>
+                  <TableDataCol colSpan={7} className="text-center">
+                    データが存在しません
+                  </TableDataCol>
+                </TableDataRow>
+              )}
+              {users.map((user, index) => (
+                <TableDataRow key={user.id}>
+                  <TableDataCol>{index + 1}</TableDataCol>
+                  <TableDataCol>{user.id}</TableDataCol>
+                  <TableDataCol>{user.name}</TableDataCol>
+                  <TableDataCol>{formatDate(user.birthday)}</TableDataCol>
+                  <TableDataCol>{calcAge(user.birthday)}</TableDataCol>
+                  <TableDataCol>{user.isAdmin ? "○" : "-"}</TableDataCol>
+                  <TableDataCol>
+                    <LinkButton forwardViewURL={`users/${user.id}`}>
+                      詳細
+                    </LinkButton>
+                  </TableDataCol>
+                </TableDataRow>
+              ))}
+            </>
+          }
+        />
+        {/* ページネーション部分（クライアントコンポーネント） */}
+        <PaginationViewPart
+          pageSize={pageSize}
+          pageNumber={pageNumber}
+          totalElements={totalElements}
+        />
 
-      <div className="my-2 text-left">
-        <span>合計: {totalElements} 件</span>
-      </div>
-      <br />
-      <ButtonArea>
-        {/** 未実装 */}
-        <BaseButton>CSV出力</BaseButton>
-        <LinkButton forwardViewURL="users/newuser">新規ユーザ登録</LinkButton>
-      </ButtonArea>
+        <div className="my-2 text-left">
+          <span>合計: {totalElements} 件</span>
+        </div>
+        <br />
+        <ButtonArea>
+          {/** 未実装 */}
+          <BaseButton>CSV出力</BaseButton>
+          <LinkButton forwardViewURL="users/newuser">新規ユーザ登録</LinkButton>
+        </ButtonArea>
+      </MainContainer>
     </>
   );
 }

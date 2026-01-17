@@ -1,17 +1,24 @@
 import MenuButton from "@/components/button/MenuButton";
+import HeaderArea from "@/components/layout/HeaderArea";
+import MainContainer from "@/components/layout/MainContainer";
 
 /**
  * メニュー画面
  */
 export default function MenuView() {
   return (
-    <div className="mx-auto flex flex-col">
-      <MenuButton forwardViewURL="/todo">TODO管理</MenuButton>
-      <MenuButton forwardViewURL="/todoFileUpload">TODO一括登録</MenuButton>
-      {/* TODO: 管理者ユーザのみ表示するように修正 */}
-      <MenuButton forwardViewURL="/users">ユーザ管理</MenuButton>
-      {/* TODO: ログアウト処理を実装するように修正 */}
-      <MenuButton forwardViewURL="/">ログアウト</MenuButton>
-    </div>
+    <>
+      <HeaderArea title="TODO管理アプリ メニュー" />
+      <MainContainer>
+        <div className="mx-auto flex flex-col">
+          <MenuButton forwardViewURL="/todo">TODO管理</MenuButton>
+          <MenuButton forwardViewURL="/todoFileUpload">TODO一括登録</MenuButton>
+          {/* TODO: 管理者ユーザのみ表示するように修正 */}
+          <MenuButton forwardViewURL="/users">ユーザ管理</MenuButton>
+          {/* TODO: ログアウト処理を実装するように修正 */}
+          <MenuButton forwardViewURL="/">ログアウト</MenuButton>
+        </div>
+      </MainContainer>
+    </>
   );
 }

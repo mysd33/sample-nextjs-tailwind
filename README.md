@@ -387,7 +387,7 @@ git config core.ignorecase false
 ```
 
 ## (参考) インストールするとよいツール
-### Chorom拡張機能
+### Chrome拡張機能
 - [React.js devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
     - React.jsのコンポーネント構造や状態を確認できる
 
@@ -432,16 +432,22 @@ git config core.ignorecase false
     *.md
     ```    
 
-    - tsファイルやtsxファイルが、VSCodeでも自動保存時にPrettierでフォーマットされるように、settings.jsonに以下を追記
+    - tsファイルやtsxファイルが、VSCodeでも自動保存時にPrettierでフォーマット、import文の整理がされるように、settings.jsonに以下を追記
 
     ```json
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
     },     
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
     }, 
     ```
 

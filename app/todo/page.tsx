@@ -3,22 +3,24 @@
 
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
+import LinkButton from "@/components/button/LinkButton";
 import SubmitButton from "@/components/button/SubmitButton";
 import InputItem from "@/components/form/InputItem";
 import InputText from "@/components/form/InputText";
-import { Todo } from "@/lib/todo/models/todo";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import TodoItem from "./_components/TodoItem";
+import HeaderArea from "@/components/layout/HeaderArea";
+import MainContainer from "@/components/layout/MainContainer";
 import {
   createTodo,
   deleteTodo,
   findTodoList,
   finishTodo,
 } from "@/lib/todo/actions";
-
+import { Todo } from "@/lib/todo/models/todo";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { startTransition, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import TodoItem from "./_components/TodoItem";
 export interface TodoFormInput {
   todoTitle: string;
 }
@@ -118,34 +120,41 @@ export default function TodoListView() {
 
   return (
     <>
-      <MessageBanner message={message} level={messageLevel} />
+      <HeaderArea title="TODOリスト">
+        <LinkButton outline={true} forwardViewURL="/menu">
+          メニューに戻る
+        </LinkButton>
+      </HeaderArea>
+      <MainContainer>
+        <MessageBanner message={message} level={messageLevel} />
 
-      {/* TODO: formは SimpleFormAreaというコンポーネント化  */}
-      <form
-        className="mb-3 flex flex-row gap-10"
-        onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
-        <InputItem className="basis-2/3 text-left" error={errors.todoTitle}>
-          <InputText
-            id="todoTitle"
-            autoFocus={true}
-            error={errors.todoTitle}
-            {...register("todoTitle")}
-          />
-        </InputItem>
-        <ButtonArea className="basis-1/3 text-left">
-          <SubmitButton disabled={isSubmitting}>作成</SubmitButton>
-        </ButtonArea>
-      </form>
-      <hr />
-      <div className="mt-3 text-left">
-        <ul className="list-disc">
-          {todos.map((todo) => (
-            <li key={todo.id} className="ml-10">
-              <TodoItem todo={todo} onFinish={onFinish} onDelete={onDelete} />
-            </li>
-          ))}
-        </ul>
-      </div>
+        {/* TODO: formは SimpleFormAreaというコンポーネント化  */}
+        <form
+          className="mb-3 flex flex-row gap-10"
+          onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
+          <InputItem className="basis-2/3 text-left" error={errors.todoTitle}>
+            <InputText
+              id="todoTitle"
+              autoFocus={true}
+              error={errors.todoTitle}
+              {...register("todoTitle")}
+            />
+          </InputItem>
+          <ButtonArea className="basis-1/3 text-left">
+            <SubmitButton disabled={isSubmitting}>作成</SubmitButton>
+          </ButtonArea>
+        </form>
+        <hr />
+        <div className="mt-3 text-left">
+          <ul className="list-disc">
+            {todos.map((todo) => (
+              <li key={todo.id} className="ml-10">
+                <TodoItem todo={todo} onFinish={onFinish} onDelete={onDelete} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </MainContainer>
     </>
   );
 }
