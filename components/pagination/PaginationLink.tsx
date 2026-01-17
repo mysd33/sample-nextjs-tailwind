@@ -1,6 +1,7 @@
 // 参考
 // https://tailwindui.com/components/application-ui/navigation/pagination を参考に作成
 
+import clsx from "clsx";
 import { Page, Pageable } from "./clientPagination";
 
 // Propsのインターフェース定義
@@ -57,12 +58,14 @@ export default function PaginationLink(props: Props) {
           aria-label="Pagination">
           <a
             href="#"
-            className={
-              "text-md relative inline-flex items-center rounded-l-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0 " +
-              (props.page.isFirst()
-                ? "cursor-default bg-gray-200 text-gray-500"
-                : "text-blue-600 hover:bg-gray-50")
-            }
+            className={clsx(
+              "text-md relative inline-flex items-center rounded-l-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
+              {
+                "cursor-default bg-gray-200 text-gray-500":
+                  props.page.isFirst(),
+                "text-blue-600 hover:bg-gray-50": !props.page.isFirst(),
+              },
+            )}
             onClick={() => {
               if (!props.page.isFirst()) handleClick(1);
             }}>
@@ -70,12 +73,14 @@ export default function PaginationLink(props: Props) {
           </a>
           <a
             href="#"
-            className={
-              "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0 " +
-              (props.page.isFirst()
-                ? "cursor-default bg-gray-200 text-gray-500"
-                : "text-blue-600 hover:bg-gray-50")
-            }
+            className={clsx(
+              "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
+              {
+                "cursor-default bg-gray-200 text-gray-500":
+                  props.page.isFirst(),
+                "text-blue-600 hover:bg-gray-50": !props.page.isFirst(),
+              },
+            )}
             onClick={() => {
               if (!props.page.isFirst) handleClick(props.page.pageNumber);
             }}>
@@ -89,24 +94,25 @@ export default function PaginationLink(props: Props) {
               aria-current={
                 props.page.isCurrent(pageIndex - 1) ? "page" : undefined
               }
-              className={
-                "relative inline-flex px-4 py-2 font-semibold " +
-                (props.page.isCurrent(pageIndex - 1)
-                  ? "z-10 items-center bg-blue-600 text-sm text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2"
-                  : "items-centertext-sm text-blue-600 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0")
-              }
+              className={clsx("relative inline-flex px-4 py-2 font-semibold", {
+                "z-10 items-center bg-blue-600 text-sm text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2":
+                  props.page.isCurrent(pageIndex - 1),
+                "items-centertext-sm text-blue-600 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0":
+                  !props.page.isCurrent(pageIndex - 1),
+              })}
               onClick={() => handleClick(pageIndex)}>
               {pageIndex}
             </a>
           ))}
           <a
             href="#"
-            className={
-              "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0 " +
-              (props.page.isLast()
-                ? "cursor-default bg-gray-200 text-gray-500"
-                : "text-blue-600 hover:bg-gray-50")
-            }
+            className={clsx(
+              "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
+              {
+                "cursor-default bg-gray-200 text-gray-500": props.page.isLast(),
+                "text-blue-600 hover:bg-gray-50": !props.page.isLast(),
+              },
+            )}
             onClick={() => {
               if (!props.page.isLast()) handleClick(props.page.pageNumber + 2);
             }}>
@@ -114,12 +120,13 @@ export default function PaginationLink(props: Props) {
           </a>
           <a
             href="#"
-            className={
-              "text-md relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0 " +
-              (props.page.isLast()
-                ? "cursor-default bg-gray-200 text-gray-500"
-                : "text-blue-600 hover:bg-gray-50")
-            }
+            className={clsx(
+              "text-md relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
+              {
+                "cursor-default bg-gray-200 text-gray-500": props.page.isLast(),
+                "text-blue-600 hover:bg-gray-50": !props.page.isLast(),
+              },
+            )}
             onClick={() => {
               if (!props.page.isLast()) handleClick(props.page.getTotalPages());
             }}>

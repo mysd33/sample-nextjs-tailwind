@@ -182,6 +182,8 @@ pnpm start
 - React関連ライブラリ
     - [Next.js (App Router)](https://nextjs.org/docs)
         - Reactのフルスタックフレームワーク
+    - [clsx](https://github.com/lukeed/clsx)
+        - 条件に応じたクラス名の結合に使用
     - [React Hook Form](https://react-hook-form.com/)
         - フォームの状態管理、入力チェックに使用
     - [React Hook Form Resolvers](https://github.com/react-hook-form/resolvers)
@@ -194,6 +196,7 @@ pnpm start
         - モーダルダイアログに使用する
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
         - アイコンに使用する
+    
 
 - React関連ライブラリ（追加検討中）
     - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
@@ -319,6 +322,9 @@ export default config
 - 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
     
 ```sh
+# clsx
+pnpm add clsx
+
 # React Hook Form
 pnpm add react-hook-form
 

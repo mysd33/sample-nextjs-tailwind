@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
 
@@ -15,18 +16,20 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & Props;
 // https://note.com/naoya__in_web/n/ne9adfe08ecc2
 const LoginInputPassword = forwardRef<HTMLInputElement, InputProps>(
   (props, ref) => {
-    const commonStyle =
-      "mb-[-1px] h-12 rounded-b-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent";
-    const style = props.error
-      ? `${commonStyle} errorIcon z-20 border-red-600 focus:border-red-400 focus:ring-red-300/50`
-      : `${commonStyle} z-0 border-gray-300 focus:border-blue-400 focus:ring-blue-300/50`;
-
     return (
       <>
         <input
           {...props}
           type="password"
-          className={style}
+          className={clsx(
+            "mb-[-1px] h-12 rounded-b-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent",
+            {
+              "errorIcon z-20 border-red-600 focus:border-red-400 focus:ring-red-300/50":
+                props.error,
+              "z-0 border-gray-300 focus:border-blue-400 focus:ring-blue-300/50":
+                !props.error,
+            },
+          )}
           ref={ref}
           aria-invalid={props.error ? "true" : "false"}
         />

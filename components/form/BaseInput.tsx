@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
 
@@ -14,18 +15,20 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & Props;
 // https://react-hook-form.com/get-started#Integratinganexistingform
 // https://note.com/naoya__in_web/n/ne9adfe08ecc2
 const BaseInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const commonStyle =
-    "h-10 rounded-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent";
-
-  const style = props.error
-    ? `${commonStyle} errorIcon border-red-600 focus:border-red-400 focus:ring-red-300/50`
-    : `${commonStyle} border-gray-300 focus:border-blue-400 focus:ring-blue-300/50`;
-
   return (
     <input
       {...props}
       ref={ref}
-      className={style}
+      // clsxを利用してclassNameを設定した例
+      className={clsx(
+        "h-10 rounded-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent",
+        {
+          "errorIcon border-red-600 focus:border-red-400 focus:ring-red-300/50":
+            props.error,
+          "border-gray-300 focus:border-blue-400 focus:ring-blue-300/50":
+            !props.error,
+        },
+      )}
       aria-invalid={props.error ? "true" : "false"}
     />
   );
