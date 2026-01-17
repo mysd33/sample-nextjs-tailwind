@@ -7,13 +7,17 @@ import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
 import LoginFormViewPart from "./_components/LoginFormViewPart";
 
+const title = "TODO管理アプリ";
+export const metadata = {
+  title: title,
+};
 /**
  * ログイン画面
  */
 export default function LoginView() {
   return (
     <>
-      <HeaderArea title="TODO管理アプリ" />
+      <HeaderArea title={title} />
       <MainContainer>
         {/* ログインフォーム部分（クライアントコンポーネント） */}
         <LoginFormViewPart />

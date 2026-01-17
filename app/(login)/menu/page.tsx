@@ -1,14 +1,19 @@
 import MenuButton from "@/components/button/MenuButton";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
+import { Metadata } from "next";
 
+const title = "TODO管理アプリ メニュー";
+export const metadata: Metadata = {
+  title: title,
+};
 /**
  * メニュー画面
  */
 export default function MenuView() {
   return (
     <>
-      <HeaderArea title="TODO管理アプリ メニュー" />
+      <HeaderArea title={title} />
       <MainContainer>
         <div className="mx-auto flex flex-col">
           <MenuButton forwardViewURL="/todo">TODO管理</MenuButton>

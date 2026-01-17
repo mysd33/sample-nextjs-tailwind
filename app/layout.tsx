@@ -3,7 +3,10 @@ import { notoSansJp } from "./_fonts/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Todo管理アプリ",
+  title: {
+    template: "%s",
+    default: "Todo管理アプリ",
+  },
   description: "シンプルなTodo管理アプリケーションです。",
 };
 

@@ -11,7 +11,13 @@ import TableHeaderRow from "@/components/table/TableHeaderRow";
 import { Pageable } from "@/lib/common/server-pagination/serverPagination";
 import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
 import { UserService } from "@/lib/users/services/userService";
+import { Metadata } from "next";
 import PaginationViewPart from "./_components/PaginationViewPart";
+
+const title = "ユーザ管理";
+export const metadata: Metadata = {
+  title: title,
+};
 
 /**
  * ユーザ一覧画面
@@ -36,7 +42,7 @@ export default async function UserListView({
 
   return (
     <>
-      <HeaderArea title="ユーザ管理">
+      <HeaderArea title={title}>
         <LinkButton outline={true} forwardViewURL="/menu">
           メニューに戻る
         </LinkButton>
