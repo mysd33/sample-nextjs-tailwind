@@ -14,8 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     // ルートレイアウトにNoto Sans JPフォントを適用
-    <html lang="ja" className={notoSansJp.className}>
-      <body>{children}</body>
+    <html lang="ja">
+      <body className={`${notoSansJp.className} antialiased`}>{children}</body>
     </html>
   );
 }
