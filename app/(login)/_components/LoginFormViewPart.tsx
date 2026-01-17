@@ -47,10 +47,19 @@ export default function LoginFormViewPart() {
     setMessageLevel(undefined);
 
     // ビジネスロジックの呼び出し
-    login(data.userId, data.password).then(() => {
-      // ログイン成功時にはメニュー画面へ遷移
-      router.push("/menu");
-    });
+    login(data.userId, data.password)
+      .then(() => {
+        // ログイン成功時にはメニュー画面へ遷移
+        router.push("/menu");
+      })
+      .catch((error: Error) => {
+        // TODO: 仮置きのエラーハンドリング
+        // BusinessErrorのみをハンドリング するように修正する
+        // ログイン失敗時にはバナーメッセージを表示
+        setMessage(error.message);
+        // warnレベルだが、ログインエラーは赤で表示させたいのでerrorで設定
+        setMessageLevel("error");
+      });
   };
 
   // 入力エラー時

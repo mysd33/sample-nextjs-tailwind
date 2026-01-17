@@ -3,10 +3,12 @@ import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
 import { Metadata } from "next";
 
+// タイトル等のページごとのメタデータの設定
 const title = "TODO管理アプリ メニュー";
 export const metadata: Metadata = {
   title: title,
 };
+
 /**
  * メニュー画面
  */

@@ -14,6 +14,7 @@ import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
 import PaginationViewPart from "./_components/PaginationViewPart";
 
+// タイトル等のページごとのメタデータの設定
 const title = "ユーザ管理";
 export const metadata: Metadata = {
   title: title,
@@ -27,11 +28,10 @@ export default async function UserListView({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // TODO: クエリパラメータよりページ数とページサイズの取得
+  // クエリパラメータよりページ数とページサイズの取得
   const params = await searchParams;
-  const pageSize = params.pageSize ? Number(params.pageSize) : 5;
-  // 現在ページ数
   const pageNumber = params.pageNumber ? Number(params.pageNumber) : 0;
+  const pageSize = params.pageSize ? Number(params.pageSize) : 5;
 
   // ユーザ情報の取得
   const userPage = UserService.getInstance().findAllForPageNation(
@@ -48,6 +48,7 @@ export default async function UserListView({
         </LinkButton>
       </HeaderArea>
       <MainContainer>
+        {/* ユーザ一覧部分 */}
         <TableArea
           thead={
             <TableHeaderRow>
@@ -99,7 +100,7 @@ export default async function UserListView({
         </div>
         <br />
         <ButtonArea>
-          {/** 未実装 */}
+          {/* TODO: CSV出力は未実装 */}
           <BaseButton>CSV出力</BaseButton>
           <LinkButton forwardViewURL="users/newuser">新規ユーザ登録</LinkButton>
         </ButtonArea>

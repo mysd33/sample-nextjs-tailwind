@@ -6,7 +6,7 @@ import { UserRepository } from "@/lib/common/repositories/userRepository";
 export class AuthenticationService {
   private static instance: AuthenticationService;
   private constructor(
-    private readonly userRepository: UserRepository = UserRepository.getInstance()
+    private readonly userRepository: UserRepository = UserRepository.getInstance(),
   ) {
     this.userRepository = userRepository;
   }
@@ -33,6 +33,10 @@ export class AuthenticationService {
     if (user) {
       console.log(`ログイン成功: ${user.id}`);
       // TODO: ログイン成功時に、ログイン済認証時情報を保存
+    } else {
+      console.log(`ログイン失敗: ${id}`);
+      // TODO: 仮置きのエラーハンドリング
+      throw new Error("ユーザIDかパスワードが正しくありません");
     }
   }
 
