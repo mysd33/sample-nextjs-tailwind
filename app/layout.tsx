@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
+import { notoSansJp } from "./_fonts/fonts";
 import "./globals.css";
-import MainContainer from "@/components/layout/MainContainer";
-import HeaderArea from "@/components/layout/HeaderArea";
 
 export const metadata: Metadata = {
   title: "Todo管理アプリ",
@@ -14,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={notoSansJp.className}>
       <body>{children}</body>
     </html>
   );
