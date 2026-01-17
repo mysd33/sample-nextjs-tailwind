@@ -1,5 +1,5 @@
 import { FieldErrors } from "react-hook-form";
-import { LoginFormInput } from "./LoginFormInput";
+import { LoginFormInput } from "../_lib/LoginFormInput";
 
 interface Props {
   /**
