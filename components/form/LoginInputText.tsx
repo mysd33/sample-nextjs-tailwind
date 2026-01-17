@@ -21,7 +21,7 @@ const LoginInputText = forwardRef<HTMLInputElement, InputProps>(
         <input
           {...props}
           className={clsx(
-            "mb-[-1px] h-12 rounded-t-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent",
+            "-mb-px h-12 rounded-t-lg border shadow-xs read-only:border-transparent read-only:bg-transparent read-only:px-0 read-only:shadow-none focus:z-20 focus:ring-3 read-only:focus:border-transparent read-only:focus:ring-transparent",
             {
               "errorIcon z-20 border-red-600 focus:border-red-400 focus:ring-red-300/50":
                 props.error,
