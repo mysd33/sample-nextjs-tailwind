@@ -71,6 +71,9 @@ export default async function UserListView({
             <>
               {/* サーバでのStreamingによるレンダリング */}
               <Suspense
+                // ページネーションリンククリック時にLoadingSpinner表示のため
+                // keyをpageNumberとpageSizeの組み合わせで一意にしておく
+                key={`${pageNumber}-${pageSize}`}
                 fallback={
                   <TableDataRow>
                     <TableDataCol colSpan={7} className="text-center">
@@ -85,7 +88,7 @@ export default async function UserListView({
           }
         />
         {/* サーバでのStreamingによるレンダリング */}
-        <Suspense fallback={""}>
+        <Suspense key={`${pageNumber}-${pageSize}`} fallback={""}>
           {/* ページネーション部分*/}
           <PaginationViewPartAsync userPage={userPagePromise} />
         </Suspense>
@@ -93,7 +96,7 @@ export default async function UserListView({
           {/* サーバでのStreamingによるレンダリング */}
           <span>
             合計:
-            <Suspense fallback={""}>
+            <Suspense key={`${pageNumber}-${pageSize}`} fallback={""}>
               {/* 総件数部分*/}
               <UserListTotalCountAsync userPage={userPagePromise} />
             </Suspense>
