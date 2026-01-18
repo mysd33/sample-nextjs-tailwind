@@ -5,7 +5,7 @@ import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
-import LoginFormViewPart from "./_components/LoginFormViewPart";
+import LoginFormClientViewPart from "./_components/LoginFormClientViewPart";
 
 const title = "TODO管理アプリ";
 export const metadata = {
@@ -20,7 +20,7 @@ export default function LoginView() {
       <HeaderArea title={title} />
       <MainContainer>
         {/* ログインフォーム部分（クライアントコンポーネント） */}
-        <LoginFormViewPart />
+        <LoginFormClientViewPart />
         {/* テストユーザを表示するテーブル */}
         <div className="mx-auto max-w-120">
           <p className="mt-5 mb-2">※テストユーザでログインできます</p>

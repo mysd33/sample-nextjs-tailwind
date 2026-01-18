@@ -17,7 +17,7 @@ import LoginInputItem from "./LoginInputItem";
 /**
  * ログイン画面のフォーム部分
  */
-export default function LoginFormViewPart() {
+export default function LoginFormClientViewPart() {
   // App RouterのuseRouter
   const router = useRouter();
 

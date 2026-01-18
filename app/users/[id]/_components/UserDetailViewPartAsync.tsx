@@ -1,5 +1,5 @@
 import { User } from "@/lib/common/models/user";
-import UserDetailViewPart from "./UserDetailViewPart";
+import UserDetailClientViewPart from "./UserDetailClientViewPart";
 
 export default async function UserDetailViewPartAsync({
   userPromise,
@@ -7,5 +7,5 @@ export default async function UserDetailViewPartAsync({
   userPromise: Promise<User | null>;
 }) {
   const user = await userPromise;
-  return <>{user && <UserDetailViewPart userProps={user!} />}</>;
+  return <>{user && <UserDetailClientViewPart userProps={user!} />}</>;
 }

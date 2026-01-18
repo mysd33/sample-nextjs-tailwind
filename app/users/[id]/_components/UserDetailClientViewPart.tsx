@@ -27,7 +27,7 @@ interface UserRegistrationFormInput {
 /**
  * ユーザ詳細画面
  */
-export default function UserDetailViewPart({
+export default function UserDetailClientViewPart({
   userProps: userProps,
 }: {
   userProps: User;

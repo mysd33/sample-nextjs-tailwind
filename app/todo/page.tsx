@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import TodoListViewPart from "./_components/TodoListViewPart";
+import TodoListClientViewPart from "./_components/TodoListClientViewPart";
 export interface TodoFormInput {
   todoTitle: string;
 }
@@ -17,7 +17,7 @@ export default function TodoListView() {
   return (
     <>
       {/* TODOリストのフォーム部分（クライアントコンポーネント） */}
-      <TodoListViewPart title={title} />
+      <TodoListClientViewPart title={title} />
     </>
   );
 }

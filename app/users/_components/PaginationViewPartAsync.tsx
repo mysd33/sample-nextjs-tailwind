@@ -3,7 +3,7 @@ import { Page } from "@/components/pagination/pagination";
 import { User } from "@/lib/common/models/user";
 
 /**
- * いったんサーバ側でStreaming対応させるようにするためのasync/awaitするページネーション部分コンポーネント
+ * Streaming対応させるためasync/awaitするページネーション部分のコンポーネント
  */
 export default async function PaginationViewPartAsync({
   userPage,
@@ -11,13 +11,16 @@ export default async function PaginationViewPartAsync({
   userPage: Promise<Page<User>>;
 }) {
   const page = await userPage;
-  // ページネーション部分（クライアントコンポーネント）
+
   return (
-    <PaginationLink
-      page={page}
-      forwardViewURL="/users"
-      pageNumberParamName="pageNumber"
-      pageSizeParamName="pageSize"
-    />
+    <>
+      {/* 元々のPaginationLink */}
+      <PaginationLink
+        page={page}
+        forwardViewURL="/users"
+        pageNumberParamName="pageNumber"
+        pageSizeParamName="pageSize"
+      />
+    </>
   );
 }

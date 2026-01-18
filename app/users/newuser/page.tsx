@@ -2,7 +2,7 @@ import LinkButton from "@/components/button/LinkButton";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
 import { Metadata } from "next";
-import UserRegistrationViewPart from "./_components/UserRegistrationViewPart";
+import UserRegistrationViewPart from "./_components/UserRegistrationClientViewPart";
 
 // タイトル等のページごとのメタデータの設定
 const title = "ユーザ登録";

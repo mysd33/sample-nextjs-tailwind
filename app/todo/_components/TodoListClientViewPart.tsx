@@ -28,7 +28,7 @@ export interface TodoFormInput {
 /**
  * Todo管理画面
  */
-export default function TodoListViewPart({ title }: { title: string }) {
+export default function TodoListClientViewPart({ title }: { title: string }) {
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({
     todoTitle: z.string().min(1, "Todoタイトルは必須入力です。"),
