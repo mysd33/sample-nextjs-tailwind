@@ -1,72 +1,40 @@
-"use client";
-
-import { Page, Pageable } from "@/components/pagination/clientPagination";
+import {
+  Page as ClientPage,
+  Pageable as ClientPageable,
+} from "@/components/pagination/clientPagination";
 import PaginationLink from "@/components/pagination/PaginationLink";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
-
-// サーバコンポーネントからクライアントコンポーネントは
-// プレーンオブジェクトか組み込みのデータ型しか渡せない。
-// クラス情報やイベントハンドラの関数の受け渡しができないため、
-// ページネーション情報をPropsとして受け取るためのインターフェースを定義
-interface Props {
-  /**
-   * ページサイズ（1ページ当たりの表示件数）
-   */
-  pageSize: number;
-
-  /**
-   * 現在のページ数
-   */
-  pageNumber: number;
-
-  /**
-   * 総件数
-   */
-  totalElements: number;
-
-  /**
-   * 最大表示ページ数
-   */
-  maxDisplayPage?: number;
-}
+import { User } from "@/lib/common/models/user";
+import { Page } from "@/lib/common/server-pagination/serverPagination";
 
 /**
- * ユーザ一覧画面
+ * いったんサーバ側でStreaming対応させるようにするためのページネーション部分コンポーネント
+ * @param param0
+ * @returns
  */
-export default function PaginationViewPart({
-  pageSize,
-  pageNumber,
-  totalElements,
-  maxDisplayPage,
-}: Props) {
-  const router = useRouter();
+export default async function PaginationViewPartOnServer({
+  userPage,
+}: {
+  userPage: Promise<Page<User>>;
+}) {
+  const page = await userPage;
 
-  // ページネーションリンククリック時
-  const handlePaginationLinkClick = useCallback(
-    (pageable: Pageable) => {
-      console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
-      // Pageableをもとに再検索を実行し、画面を更新
-      // TODO: これだと、画面全体が再レンダリングされてしまうため、部分的に非同期で更新するように修正する
-      router.push(
-        `/users?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`,
-      );
-    },
-    [router],
-  );
+  // TOOD: UserPageをそのまま渡せるようにデータ型の問題を戻していく
+  const pageSize = page.pageSize;
+  const pageNumber = page.pageNumber;
 
-  const pageInfo = useMemo(
-    () => new Page(new Pageable(pageSize, pageNumber), totalElements),
-    [pageNumber, pageSize, totalElements],
-  );
-
-  /* ページネーション機能 */
+  // ページネーション部分（クライアントコンポーネント）
   return (
     <PaginationLink
       pageSize={pageSize}
-      page={pageInfo}
-      maxDisplayPage={maxDisplayPage}
-      onClick={handlePaginationLinkClick}
+      page={
+        new ClientPage(
+          new ClientPageable(pageSize, pageNumber),
+          page.totalElements,
+        )
+      }
+      forwardViewURL="/users"
+      pageNumberParamName="pageNumber"
+      pageSizeParamName="pageSize"
     />
   );
 }

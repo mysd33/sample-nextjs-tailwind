@@ -13,7 +13,8 @@ import { Pageable } from "@/lib/common/server-pagination/serverPagination";
 import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import PaginationViewPartOnServer from "./_components/PaginationViewPartOnServer";
+
+import PaginationViewPartOnServer from "./_components/PaginationViewPart";
 import UserListTableDataRows from "./_components/UserListTableDataRows";
 import UserListTotalCount from "./_components/UserListTotalCount";
 

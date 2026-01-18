@@ -2,7 +2,8 @@
 // https://tailwindui.com/components/application-ui/navigation/pagination を参考に作成
 
 import clsx from "clsx";
-import { Page, Pageable } from "./clientPagination";
+import Link from "next/link";
+import { Page } from "./clientPagination";
 
 // Propsのインターフェース定義
 interface Props {
@@ -19,10 +20,20 @@ interface Props {
    * 最大表示ページ数
    */
   maxDisplayPage?: number;
+
   /**
-   * クリック時のイベントハンドラ
+   * リンクの遷移先URL（省略時は#）
    */
-  onClick: (pageable: Pageable) => void;
+  forwardViewURL?: string;
+
+  /**
+   * ページ番号のクエリパラメータ名（デフォルト: pageNumber）
+   */
+  pageNumberParamName?: string;
+  /**
+   * ページサイズのクエリパラメータ名（デフォルト: pageSize）
+   */
+  pageSizeParamName?: string;
 }
 
 /**
@@ -42,13 +53,18 @@ export default function PaginationLink(props: Props) {
     }
     return Array.from({ length: end - begin + 1 }, (_, i) => begin + i);
   };
+
   // ページリンクがクリックされたときのハンドラ
+  // クリックされたページ番号をもとに、Pageableを作成してイベントを発火
+  // ページ数は0から始まるため、ページ番号から1を引いている
+  /*
   const handleClick = (pageIndex: number) => {
-    // クリックされたページ番号をもとに、Pageableを作成してイベントを発火
-    // ページ数は0から始まるため、ページ番号から1を引いている
     const pageNumber = pageIndex - 1;
     props.onClick(new Pageable(props.pageSize, pageNumber));
-  };
+  };*/
+
+  const pageNumberParamName = props.pageNumberParamName ?? "pageNumber";
+  const pageSizeParamName = props.pageSizeParamName ?? "pageSize";
 
   return (
     <div className="flex items-center justify-between border-t border-gray-200 py-3">
@@ -56,41 +72,51 @@ export default function PaginationLink(props: Props) {
         <nav
           className="isolate inline-flex -space-x-px rounded-md bg-white shadow-xs"
           aria-label="Pagination">
-          <a
-            href="#"
+          <Link
+            href={
+              props.page.isFirst()
+                ? "#"
+                : props.forwardViewURL
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=0&${pageSizeParamName}=${props.pageSize}`
+                  : "#"
+            }
             className={clsx(
               "text-md relative inline-flex items-center rounded-l-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
               {
-                "cursor-default bg-gray-200 text-gray-500":
+                "pointer-events-none cursor-default bg-gray-200 text-gray-500":
                   props.page.isFirst(),
                 "text-blue-600 hover:bg-gray-50": !props.page.isFirst(),
               },
-            )}
-            onClick={() => {
-              if (!props.page.isFirst()) handleClick(1);
-            }}>
+            )}>
             <span>最初へ</span>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href={
+              props.page.isFirst()
+                ? "#"
+                : props.forwardViewURL
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber - 1}&${pageSizeParamName}=${props.pageSize}`
+                  : "#"
+            }
             className={clsx(
               "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
               {
-                "cursor-default bg-gray-200 text-gray-500":
+                "pointer-events-none cursor-default bg-gray-200 text-gray-500":
                   props.page.isFirst(),
                 "text-blue-600 hover:bg-gray-50": !props.page.isFirst(),
               },
-            )}
-            onClick={() => {
-              if (!props.page.isFirst) handleClick(props.page.pageNumber);
-            }}>
+            )}>
             <span>前へ</span>
-          </a>
+          </Link>
           {/* TODO: ページネーションの中央に「…」を表示できるようにする */}
           {sequence().map((pageIndex) => (
-            <a
+            <Link
               key={pageIndex}
-              href="#"
+              href={
+                props.forwardViewURL
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${pageIndex - 1}&${pageSizeParamName}=${props.pageSize}`
+                  : "#"
+              }
               aria-current={
                 props.page.isCurrent(pageIndex - 1) ? "page" : undefined
               }
@@ -99,39 +125,46 @@ export default function PaginationLink(props: Props) {
                   props.page.isCurrent(pageIndex - 1),
                 "items-centertext-sm text-blue-600 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:z-20 focus:outline-offset-0":
                   !props.page.isCurrent(pageIndex - 1),
-              })}
-              onClick={() => handleClick(pageIndex)}>
+              })}>
               {pageIndex}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#"
+          <Link
+            href={
+              props.page.isLast()
+                ? "#"
+                : props.forwardViewURL
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber + 1}&${pageSizeParamName}=${props.pageSize}`
+                  : "#"
+            }
             className={clsx(
               "text-md relative inline-flex items-center px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
               {
-                "cursor-default bg-gray-200 text-gray-500": props.page.isLast(),
+                "pointer-events-none cursor-default bg-gray-200 text-gray-500":
+                  props.page.isLast(),
                 "text-blue-600 hover:bg-gray-50": !props.page.isLast(),
               },
-            )}
-            onClick={() => {
-              if (!props.page.isLast()) handleClick(props.page.pageNumber + 2);
-            }}>
+            )}>
             <span>次へ</span>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href={
+              props.page.isLast()
+                ? "#"
+                : props.forwardViewURL
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.getTotalPages() - 1}&${pageSizeParamName}=${props.pageSize}`
+                  : "#"
+            }
             className={clsx(
               "text-md relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-gray-300 ring-inset focus:z-20 focus:outline-offset-0",
               {
-                "cursor-default bg-gray-200 text-gray-500": props.page.isLast(),
+                "pointer-events-none cursor-default bg-gray-200 text-gray-500":
+                  props.page.isLast(),
                 "text-blue-600 hover:bg-gray-50": !props.page.isLast(),
               },
-            )}
-            onClick={() => {
-              if (!props.page.isLast()) handleClick(props.page.getTotalPages());
-            }}>
+            )}>
             <span>最後へ</span>
-          </a>
+          </Link>
         </nav>
       </div>
     </div>
