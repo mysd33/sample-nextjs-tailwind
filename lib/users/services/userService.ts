@@ -1,9 +1,6 @@
+import { Page, Pageable } from "@/components/pagination/pagination";
 import { User } from "@/lib/common/models/user";
 import { UserRepository } from "@/lib/common/repositories/userRepository";
-import {
-  Page,
-  Pageable,
-} from "@/lib/common/server-pagination/serverPagination";
 
 /**
  * ユーザ情報を提供するServiceクラス

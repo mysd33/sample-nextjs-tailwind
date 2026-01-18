@@ -3,18 +3,14 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { Page } from "./clientPagination";
+import { Page } from "./pagination";
 
 // Propsのインターフェース定義
-interface Props {
-  /**
-   * ページサイズ（1ページ当たりの表示件数）
-   */
-  pageSize: number;
+interface Props<T> {
   /**
    * 検索結果のページ情報
    */
-  page: Page;
+  page: Page<T>;
 
   /**
    * 最大表示ページ数
@@ -39,7 +35,7 @@ interface Props {
 /**
  * ページネーションリンク
  */
-export default function PaginationLink(props: Props) {
+export default function PaginationLink<T>(props: Props<T>) {
   // ページ番号のリスト
   const sequence = () => {
     const maxDisplayPage = props.maxDisplayPage ?? 5;
@@ -77,7 +73,7 @@ export default function PaginationLink(props: Props) {
               props.page.isFirst()
                 ? "#"
                 : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=0&${pageSizeParamName}=${props.pageSize}`
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=0&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -95,7 +91,7 @@ export default function PaginationLink(props: Props) {
               props.page.isFirst()
                 ? "#"
                 : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber - 1}&${pageSizeParamName}=${props.pageSize}`
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -114,7 +110,7 @@ export default function PaginationLink(props: Props) {
               key={pageIndex}
               href={
                 props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${pageIndex - 1}&${pageSizeParamName}=${props.pageSize}`
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${pageIndex - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
               }
               aria-current={
@@ -134,7 +130,7 @@ export default function PaginationLink(props: Props) {
               props.page.isLast()
                 ? "#"
                 : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber + 1}&${pageSizeParamName}=${props.pageSize}`
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber + 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -152,7 +148,7 @@ export default function PaginationLink(props: Props) {
               props.page.isLast()
                 ? "#"
                 : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.getTotalPages() - 1}&${pageSizeParamName}=${props.pageSize}`
+                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.getTotalPages() - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(

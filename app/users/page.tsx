@@ -4,17 +4,17 @@ import LinkButton from "@/components/button/LinkButton";
 import LoadingSpinnerIcon from "@/components/icons/LodingSpinnerIcon";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
+import { Pageable } from "@/components/pagination/pagination";
 import TableArea from "@/components/table/TableArea";
 import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
-import { Pageable } from "@/lib/common/server-pagination/serverPagination";
 import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-import PaginationViewPartOnServer from "./_components/PaginationViewPart";
+import PaginationViewPartAsync from "./_components/PaginationViewPartAsync";
 import UserListTableDataRows from "./_components/UserListTableDataRows";
 import UserListTotalCount from "./_components/UserListTotalCount";
 
@@ -36,13 +36,14 @@ export default async function UserListView({
   const params = await searchParams;
   const pageNumber = params.pageNumber ? Number(params.pageNumber) : 0;
   const pageSize = params.pageSize ? Number(params.pageSize) : 5;
+  console.log(`UserListView: pageNumber=${pageNumber}, pageSize=${pageSize}`);
   // ユーザ情報の取得
   const userPage = UserService.getInstance().findAllForPagination(
     new Pageable(pageSize, pageNumber),
   );
 
-  // コメント外すと、ページ全体の初期表示処理でawaitするので、loading.tsxでSuspenseによるページ全体のローディング画面表示になる
-  // await userPage;
+  // もしコメント外すと、ページ全体の初期表示処理でawaitするので、loading.tsxでSuspenseによるページ全体のローディング画面表示になる
+  //await userPage;
 
   return (
     <>
@@ -84,7 +85,7 @@ export default async function UserListView({
         <Suspense fallback={""}>
           {/* ページネーション部分*/}
           {/* サーバでのStreamingによるレンダリング */}
-          <PaginationViewPartOnServer userPage={userPage} />
+          <PaginationViewPartAsync userPage={userPage} />
         </Suspense>
         <div className="my-2 text-left">
           <Suspense fallback={""}>

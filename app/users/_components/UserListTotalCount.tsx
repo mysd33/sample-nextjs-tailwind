@@ -1,5 +1,5 @@
+import { Page } from "@/components/pagination/pagination";
 import { User } from "@/lib/common/models/user";
-import { Page } from "@/lib/common/server-pagination/serverPagination";
 
 export default async function UserListTotalCount({
   userPage,

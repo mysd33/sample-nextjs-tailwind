@@ -1,6 +1,3 @@
-// クリック時の処理はクライアントのみで動作するため"use client"を指定
-"use client";
-
 import { buildBaseButtonClassName } from "@/components/button/BaseButton";
 import Link from "next/link";
 

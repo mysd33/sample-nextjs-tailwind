@@ -1,5 +1,5 @@
 import { User } from "@/lib/common/models/user";
-import { Page, Pageable } from "../server-pagination/serverPagination";
+import { Page, Pageable } from "../../../components/pagination/pagination";
 
 //const sleepTime = 500;
 const sleepTime = 3000;

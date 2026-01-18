@@ -1,3 +1,4 @@
+// Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";

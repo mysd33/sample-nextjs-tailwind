@@ -1,8 +1,8 @@
 import LinkButton from "@/components/button/LinkButton";
+import { Page } from "@/components/pagination/pagination";
 import TableDataCol from "@/components/table/TableDataCol";
 import TableDataRow from "@/components/table/TableDataRow";
 import { User } from "@/lib/common/models/user";
-import { Page } from "@/lib/common/server-pagination/serverPagination";
 import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
 
 /**

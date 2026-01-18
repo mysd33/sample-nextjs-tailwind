@@ -1,3 +1,4 @@
+// Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
 import ButtonArea from "@/components/button/ButtonArea";
 import SubmitButton from "@/components/button/SubmitButton";
