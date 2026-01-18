@@ -25,7 +25,7 @@ export default async function UserDetailView({
 
   // TODO: サーバからユーザデータを取得する
   // ダミーとしてスリープ処理（動作確認用）
-  const userPromise = await UserService.getInstance().findOne(decodedId);
+  const userPromise = UserService.getInstance().findOne(decodedId);
 
   return (
     <>
