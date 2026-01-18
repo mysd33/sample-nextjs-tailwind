@@ -1,8 +1,10 @@
 import LinkButton from "@/components/button/LinkButton";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
+import LoadingSuspenceFallback from "@/components/suspence/LoadingSuspenceFallback";
 import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import UserDetailViewPartAsync from "./_components/UserDetailViewPartAsync";
 
 // タイトル等のページごとのメタデータの設定
@@ -36,7 +38,9 @@ export default async function UserDetailView({
       </HeaderArea>
       <MainContainer>
         {/* ユーザ詳細フォーム部分（クライアントコンポーネント） */}
-        <UserDetailViewPartAsync userPromise={userPromise} />
+        <Suspense fallback={<LoadingSuspenceFallback />}>
+          <UserDetailViewPartAsync userPromise={userPromise} />
+        </Suspense>
       </MainContainer>
     </>
   );
