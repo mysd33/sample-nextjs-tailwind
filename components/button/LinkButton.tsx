@@ -64,9 +64,9 @@ export default function LinkButton({
     サーバサイドの遷移処理の待ち時間の影響が直接でてしまうため、必ず、Linkを使用する。    
     Next.jsのLinkコンポーネントを使用して画面遷移を行う
     https://nextjs.org/learn/dashboard-app/navigating-between-pages
-    https://nextjs.org/docs/app/getting-started/linking-and-navigating
-    
-    これにより、条件にもよるが、リンク先のページがあらかじめプリフェッチ
+    https://nextjs.org/docs/app/getting-started/linking-and-navigating#prefetching
+
+    これにより、条件にもよるが、特に静的なルートの場合はリンク先のページがあらかじめプリフェッチ
     （ユーザーがルートに移動する前にバックグラウンドでルートを読み込む）されるため
     アプリケーション内のルート間のナビゲーションが瞬時に感じられるようになる。
     
