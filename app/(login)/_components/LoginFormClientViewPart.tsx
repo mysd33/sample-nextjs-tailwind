@@ -7,7 +7,6 @@ import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";
 import { login } from "@/lib/login/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -18,9 +17,6 @@ import LoginInputItem from "./LoginInputItem";
  * ログイン画面のフォーム部分
  */
 export default function LoginFormClientViewPart() {
-  // App RouterのuseRouter
-  const router = useRouter();
-
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({
     userId: z.string().min(1, "ユーザIDは必須入力です。"),
@@ -47,11 +43,7 @@ export default function LoginFormClientViewPart() {
     setMessageLevel(undefined);
 
     // ビジネスロジックの呼び出し
-    login(data.userId, data.password)
-      .then(() => {
-        // ログイン成功時にはメニュー画面へ遷移
-        router.push("/menu");
-      })
+    login(data.userId, data.password) //
       .catch((error: Error) => {
         // TODO: 仮置きのエラーハンドリング
         // AuthenticationError、BusinessErrorのみをハンドリング するように修正する
