@@ -9,7 +9,7 @@ import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
  * ユーザ一覧のテーブルデータ行コンポーネント
  * Suspenseで非同期で表示できるようにする
  */
-export default async function UserListTableDataRows({
+export default async function UserListTableDataRowsAsync({
   userPage,
 }: {
   userPage: Promise<Page<User>>;

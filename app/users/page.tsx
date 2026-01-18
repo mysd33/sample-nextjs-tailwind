@@ -14,9 +14,9 @@ import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-import PaginationViewPart from "./_components/PaginationViewPart";
-import UserListTableDataRows from "./_components/UserListTableDataRows";
-import UserListTotalCount from "./_components/UserListTotalCount";
+import PaginationViewPartAsync from "./_components/PaginationViewPartAsync";
+import UserListTableDataRowsAsync from "./_components/UserListTableDataRowsAsync";
+import UserListTotalCountAsync from "./_components/UserListTotalCountAsync";
 
 // タイトル等のページごとのメタデータの設定
 const title = "ユーザ管理";
@@ -79,7 +79,7 @@ export default async function UserListView({
                   </TableDataRow>
                 }>
                 {/* ユーザ一覧のテーブルデータ行部分*/}
-                <UserListTableDataRows userPage={userPagePromise} />
+                <UserListTableDataRowsAsync userPage={userPagePromise} />
               </Suspense>
             </>
           }
@@ -87,14 +87,18 @@ export default async function UserListView({
         {/* サーバでのStreamingによるレンダリング */}
         <Suspense fallback={""}>
           {/* ページネーション部分*/}
-          <PaginationViewPart userPage={userPagePromise} />
+          <PaginationViewPartAsync userPage={userPagePromise} />
         </Suspense>
         <div className="my-2 text-left">
           {/* サーバでのStreamingによるレンダリング */}
-          <Suspense fallback={""}>
-            {/* 総件数部分*/}
-            <UserListTotalCount userPage={userPagePromise} />
-          </Suspense>
+          <span>
+            合計:
+            <Suspense fallback={""}>
+              {/* 総件数部分*/}
+              <UserListTotalCountAsync userPage={userPagePromise} />
+            </Suspense>
+            件
+          </span>
         </div>
         <br />
         <ButtonArea>
