@@ -14,7 +14,7 @@ import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-import PaginationViewPartAsync from "./_components/PaginationViewPartAsync";
+import PaginationViewPart from "./_components/PaginationViewPart";
 import UserListTableDataRows from "./_components/UserListTableDataRows";
 import UserListTotalCount from "./_components/UserListTotalCount";
 
@@ -37,8 +37,9 @@ export default async function UserListView({
   const pageNumber = params.pageNumber ? Number(params.pageNumber) : 0;
   const pageSize = params.pageSize ? Number(params.pageSize) : 5;
   console.log(`UserListView: pageNumber=${pageNumber}, pageSize=${pageSize}`);
-  // ユーザ情報の取得
-  const userPage = UserService.getInstance().findAllForPagination(
+
+  // サービスクラス（ビジネスロジック）を呼び出しユーザ情報の取得
+  const userPagePromise = UserService.getInstance().findAllForPagination(
     new Pageable(pageSize, pageNumber),
   );
 
@@ -77,21 +78,21 @@ export default async function UserListView({
                     </TableDataCol>
                   </TableDataRow>
                 }>
-                <UserListTableDataRows userPage={userPage} />
+                <UserListTableDataRows userPage={userPagePromise} />
               </Suspense>
             </>
           }
         />
+        {/* サーバでのStreamingによるレンダリング */}
         <Suspense fallback={""}>
           {/* ページネーション部分*/}
-          {/* サーバでのStreamingによるレンダリング */}
-          <PaginationViewPartAsync userPage={userPage} />
+          <PaginationViewPart userPage={userPagePromise} />
         </Suspense>
         <div className="my-2 text-left">
+          {/* サーバでのStreamingによるレンダリング */}
           <Suspense fallback={""}>
             {/* 総件数部分*/}
-            {/* サーバでのStreamingによるレンダリング */}
-            <UserListTotalCount userPage={userPage} />
+            <UserListTotalCount userPage={userPagePromise} />
           </Suspense>
         </div>
         <br />

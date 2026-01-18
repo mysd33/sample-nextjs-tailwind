@@ -7,7 +7,7 @@ import { User } from "@/lib/common/models/user";
  * @param param0
  * @returns
  */
-export default async function PaginationViewPartAsync({
+export default async function PaginationViewPart({
   userPage,
 }: {
   userPage: Promise<Page<User>>;

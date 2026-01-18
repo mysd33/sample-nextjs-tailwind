@@ -62,6 +62,13 @@ export default function PaginationLink<T>(props: Props<T>) {
   const pageNumberParamName = props.pageNumberParamName ?? "pageNumber";
   const pageSizeParamName = props.pageSizeParamName ?? "pageSize";
 
+  // TODO: この実装はLinkを使っているのでクライアントサイド遷移になるので、効率的であるが、
+  // 既に表示された一覧があると、<Suspense>のフォールバック（LoadingSpinner）が表示されないため、UX的に良くない。
+  // クライアント側でページネーションリンクがクリックされたときに、明示的にローディング状態に遷移させる仕組みを作る必要があるが
+  // その場合は、クライアントコンポーネントとする必要がある。
+  // クライアントコンポーネントにすると、サーバコンポーネントから渡されるPropsの型に制約が出てしまい、
+  // カスタムオブジェクトは渡せなくなってしまうので、せっかくサーバコンポーネントに統一するように直したばかりなので
+  // また、元に戻すための大きな修正が入るので、いったん後回しにする。
   return (
     <div className="flex items-center justify-between border-t border-gray-200 py-3">
       <div>
