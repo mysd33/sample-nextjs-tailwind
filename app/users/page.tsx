@@ -78,6 +78,7 @@ export default async function UserListView({
                     </TableDataCol>
                   </TableDataRow>
                 }>
+                {/* ユーザ一覧のテーブルデータ行部分*/}
                 <UserListTableDataRows userPage={userPagePromise} />
               </Suspense>
             </>

@@ -2,7 +2,6 @@
 "use client";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
-import LinkButton from "@/components/button/LinkButton";
 import SubmitButton from "@/components/button/SubmitButton";
 import FormArea from "@/components/form/FormArea";
 import InputDate from "@/components/form/InputDate";
@@ -10,8 +9,7 @@ import InputItem from "@/components/form/InputItem";
 import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
-import HeaderArea from "@/components/layout/HeaderArea";
-import MainContainer from "@/components/layout/MainContainer";
+import { User } from "@/lib/common/models/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { FieldErrors, useForm, useWatch } from "react-hook-form";
@@ -30,11 +28,9 @@ interface UserRegistrationFormInput {
  * ユーザ詳細画面
  */
 export default function UserDetailViewPart({
-  title,
-  id,
+  userProps: userProps,
 }: {
-  title: string;
-  id: string;
+  userProps: User;
 }) {
   // Zodを使った入力チェックのスキーマ定義
   const schema = z
@@ -74,27 +70,47 @@ export default function UserDetailViewPart({
   } = useForm<UserRegistrationFormInput>({
     resolver: zodResolver(schema),
     defaultValues: {
-      userId: id,
+      userId: userProps.id,
+      userName: userProps.name,
+      birthday: userProps.birthday.toISOString().substring(0, 10),
+      isAdmin: userProps.isAdmin,
+      password: "",
+      confirmPassword: "",
       // TOOD: API等から取得したユーザ情報を初期値にセットする
     },
   });
 
-  // TODO: 更新ボタンクリック時の処理
-  // 入力チェック成功時
+  // 更新ボタンクリック時の処理
+  // 更新ボタンクリック時の入力チェック成功時
   const onValidSubmit = (data: UserRegistrationFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
     console.log("ユーザ登録データ:", data);
+    // TODO: ユーザ更新処理の実装
   };
 
-  // TODO: 入力エラー時
+  // 更新ボタンクリック時の入力エラー時
   const onInvalidSubmit = (errors: FieldErrors<UserRegistrationFormInput>) => {
-    console.log("入力エラー", errors);
     setMessageLevel("validation");
   };
 
-  // TODO: 削除ボタンクリック時の処理
+  // 削除ボタンクリック時の処理
+  const [isDeleting, setIsDeleting] = useState(false);
+  const onDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    // バナーメッセージのクリア
+    setMessage("");
+    setMessageLevel(undefined);
+    try {
+      setIsDeleting(true);
+      // TODO: ユーザ削除処理の実装
+
+      console.log("ユーザ削除:", userProps.id);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   /* 確認用フィールドが変わったら password のエラーを再評価 */
   const [password, confirmPassword] = useWatch({
@@ -119,78 +135,80 @@ export default function UserDetailViewPart({
   const [message, setMessage] = useState<string>("");
   return (
     <>
-      <HeaderArea title={title}>
-        <LinkButton outline={true} forwardViewURL="/users">
-          ユーザ一覧に戻る
-        </LinkButton>
-      </HeaderArea>
-      <MainContainer>
-        <MessageBanner level={messageLevel} message={message} />
-        <FormArea>
-          <InputItem label="ユーザーID" labelFor="userId" error={errors.userId}>
-            <InputText
-              id="userId"
-              readOnly={true}
-              error={errors.userId}
-              {...register("userId")}
-            />
-          </InputItem>
-          <InputItem
-            label="ユーザー名"
-            labelFor="userName"
-            autoFocus={true}
-            required={true}
-            error={errors.userName}>
-            <InputText
-              id="userName"
-              error={errors.userName}
-              {...register("userName")}
-            />
-          </InputItem>
-          <InputItem
-            label="パスワード"
-            labelFor="password"
-            required={true}
-            error={errors.password}>
-            <InputPassword
-              id="password"
-              error={errors.password}
-              {...register("password")}
-            />
-          </InputItem>
-          <InputItem
-            label="確認用パスワード"
-            labelFor="confirmPassword"
-            required={true}
-            error={errors.confirmPassword}>
-            <InputPassword
-              id="confirmPassword"
-              error={errors.confirmPassword}
-              {...register("confirmPassword")}
-            />
-          </InputItem>
-          <InputItem
-            label="生年月日"
-            labelFor="birthday"
-            required={true}
-            error={errors.birthday}>
-            <InputDate
-              id="birthday"
-              error={errors.birthday}
-              {...register("birthday")}
-            />
-          </InputItem>
-          <InputItem>
-            <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
-          </InputItem>
+      <MessageBanner level={messageLevel} message={message} />
+      <FormArea>
+        <InputItem label="ユーザーID" labelFor="userId" error={errors.userId}>
+          <InputText
+            id="userId"
+            readOnly={true}
+            error={errors.userId}
+            {...register("userId")}
+          />
+        </InputItem>
+        <InputItem
+          label="ユーザー名"
+          labelFor="userName"
+          autoFocus={true}
+          required={true}
+          error={errors.userName}>
+          <InputText
+            id="userName"
+            error={errors.userName}
+            {...register("userName")}
+          />
+        </InputItem>
+        <InputItem
+          label="パスワード"
+          labelFor="password"
+          required={true}
+          error={errors.password}>
+          <InputPassword
+            id="password"
+            error={errors.password}
+            {...register("password")}
+          />
+        </InputItem>
+        <InputItem
+          label="確認用パスワード"
+          labelFor="confirmPassword"
+          required={true}
+          error={errors.confirmPassword}>
+          <InputPassword
+            id="confirmPassword"
+            error={errors.confirmPassword}
+            {...register("confirmPassword")}
+          />
+        </InputItem>
+        <InputItem
+          label="生年月日"
+          labelFor="birthday"
+          required={true}
+          error={errors.birthday}>
+          <InputDate
+            id="birthday"
+            error={errors.birthday}
+            {...register("birthday")}
+          />
+        </InputItem>
+        <InputItem>
+          <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
+        </InputItem>
 
-          <ButtonArea>
-            <SubmitButton>ユーザ更新</SubmitButton>
-            <SubmitButton danger={true}>ユーザ削除</SubmitButton>
-          </ButtonArea>
-        </FormArea>
-        {/* TODO: ユーザ更新・削除の確認・完了ダイアログの追加 */}
-      </MainContainer>
+        <ButtonArea>
+          <SubmitButton
+            disabled={isSubmitting}
+            onClick={handleSubmit(onValidSubmit, onInvalidSubmit)}>
+            ユーザ更新
+          </SubmitButton>
+          <SubmitButton
+            disabled={isDeleting}
+            danger={true}
+            onClick={onDeleteClick}>
+            ユーザ削除
+          </SubmitButton>
+        </ButtonArea>
+      </FormArea>
+      {/* TODO: ユーザ更新・削除の確認・完了ダイアログの追加 */}
     </>
   );
 }

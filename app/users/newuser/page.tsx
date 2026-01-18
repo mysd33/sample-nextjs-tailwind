@@ -1,3 +1,6 @@
+import LinkButton from "@/components/button/LinkButton";
+import HeaderArea from "@/components/layout/HeaderArea";
+import MainContainer from "@/components/layout/MainContainer";
 import { Metadata } from "next";
 import UserRegistrationViewPart from "./_components/UserRegistrationViewPart";
 
@@ -13,8 +16,15 @@ export const metadata: Metadata = {
 export default function UserRegistrationView() {
   return (
     <>
-      {/* ユーザ登録フォーム部分（クライアントコンポーネント） */}
-      <UserRegistrationViewPart title={title} />
+      <HeaderArea title={title}>
+        <LinkButton outline={true} forwardViewURL="/users">
+          ユーザ一覧に戻る
+        </LinkButton>
+      </HeaderArea>
+      <MainContainer>
+        {/* ユーザ登録フォーム部分（クライアントコンポーネント） */}
+        <UserRegistrationViewPart />
+      </MainContainer>
     </>
   );
 }
