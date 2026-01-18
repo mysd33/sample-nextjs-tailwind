@@ -54,7 +54,7 @@ export default function LoginFormViewPart() {
       })
       .catch((error: Error) => {
         // TODO: 仮置きのエラーハンドリング
-        // BusinessErrorのみをハンドリング するように修正する
+        // AuthenticationError、BusinessErrorのみをハンドリング するように修正する
         // ログイン失敗時にはバナーメッセージを表示
         setMessage(error.message);
         // warnレベルだが、ログインエラーは赤で表示させたいのでerrorで設定

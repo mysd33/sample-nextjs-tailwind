@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notoSansJp } from "./_fonts/fonts";
+import { notoSansJp } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
