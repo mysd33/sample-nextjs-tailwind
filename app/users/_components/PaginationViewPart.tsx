@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
 import { Page, Pageable } from "@/components/pagination/clientPagination";
 import PaginationLink from "@/components/pagination/PaginationLink";
 import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
 
 // サーバコンポーネントからクライアントコンポーネントは
 // プレーンオブジェクトか組み込みのデータ型しか渡せない。
@@ -47,6 +47,7 @@ export default function PaginationViewPart({
     (pageable: Pageable) => {
       console.log(`ページリンクがクリックされました ${pageable.pageNumber}`);
       // Pageableをもとに再検索を実行し、画面を更新
+      // TODO: これだと、画面全体が再レンダリングされてしまうため、部分的に非同期で更新するように修正する
       router.push(
         `/users?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`,
       );

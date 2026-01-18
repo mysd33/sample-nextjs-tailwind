@@ -1,6 +1,7 @@
 import BaseButton from "@/components/button/BaseButton";
 import ButtonArea from "@/components/button/ButtonArea";
 import LinkButton from "@/components/button/LinkButton";
+import LoadingSpinnerIcon from "@/components/icons/LodingSpinnerIcon";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
 import TableArea from "@/components/table/TableArea";
@@ -9,10 +10,12 @@ import TableDataRow from "@/components/table/TableDataRow";
 import TableHeaderCol from "@/components/table/TableHeaderCol";
 import TableHeaderRow from "@/components/table/TableHeaderRow";
 import { Pageable } from "@/lib/common/server-pagination/serverPagination";
-import { calcAge, formatDate } from "@/lib/common/utils/dateUtils";
 import { UserService } from "@/lib/users/services/userService";
 import { Metadata } from "next";
-import PaginationViewPart from "./_components/PaginationViewPart";
+import { Suspense } from "react";
+import PaginationViewPartOnServer from "./_components/PaginationViewPartOnServer";
+import UserListTableDataRows from "./_components/UserListTableDataRows";
+import UserListTotalCount from "./_components/UserListTotalCount";
 
 // タイトル等のページごとのメタデータの設定
 const title = "ユーザ管理";
@@ -32,13 +35,13 @@ export default async function UserListView({
   const params = await searchParams;
   const pageNumber = params.pageNumber ? Number(params.pageNumber) : 0;
   const pageSize = params.pageSize ? Number(params.pageSize) : 5;
-
   // ユーザ情報の取得
-  const userPage = UserService.getInstance().findAllForPageNation(
+  const userPage = UserService.getInstance().findAllForPagination(
     new Pageable(pageSize, pageNumber),
   );
-  const users = (await userPage).content;
-  const totalElements = (await userPage).totalElements;
+
+  // コメント外すと、ページ全体の初期表示処理でawaitするので、loading.tsxでSuspenseによるページ全体のローディング画面表示になる
+  // await userPage;
 
   return (
     <>
@@ -48,7 +51,7 @@ export default async function UserListView({
         </LinkButton>
       </HeaderArea>
       <MainContainer>
-        {/* ユーザ一覧部分 */}
+        {/* ユーザ一覧部分 ここだけは、サーバレンダリングですぐに表示させる */}
         <TableArea
           thead={
             <TableHeaderRow>
@@ -63,40 +66,31 @@ export default async function UserListView({
           }
           tbody={
             <>
-              {users.length === 0 && (
-                <TableDataRow>
-                  <TableDataCol colSpan={7} className="text-center">
-                    データが存在しません
-                  </TableDataCol>
-                </TableDataRow>
-              )}
-              {users.map((user, index) => (
-                <TableDataRow key={user.id}>
-                  <TableDataCol>{index + 1}</TableDataCol>
-                  <TableDataCol>{user.id}</TableDataCol>
-                  <TableDataCol>{user.name}</TableDataCol>
-                  <TableDataCol>{formatDate(user.birthday)}</TableDataCol>
-                  <TableDataCol>{calcAge(user.birthday)}</TableDataCol>
-                  <TableDataCol>{user.isAdmin ? "○" : "-"}</TableDataCol>
-                  <TableDataCol>
-                    <LinkButton forwardViewURL={`users/${user.id}`}>
-                      詳細
-                    </LinkButton>
-                  </TableDataCol>
-                </TableDataRow>
-              ))}
+              {/* サーバでのStreamingによるレンダリング */}
+              <Suspense
+                fallback={
+                  <TableDataRow>
+                    <TableDataCol colSpan={7} className="text-center">
+                      <LoadingSpinnerIcon />
+                    </TableDataCol>
+                  </TableDataRow>
+                }>
+                <UserListTableDataRows userPage={userPage} />
+              </Suspense>
             </>
           }
         />
-        {/* ページネーション部分（クライアントコンポーネント） */}
-        <PaginationViewPart
-          pageSize={pageSize}
-          pageNumber={pageNumber}
-          totalElements={totalElements}
-        />
-
+        <Suspense fallback={""}>
+          {/* ページネーション部分*/}
+          {/* サーバでのStreamingによるレンダリング */}
+          <PaginationViewPartOnServer userPage={userPage} />
+        </Suspense>
         <div className="my-2 text-left">
-          <span>合計: {totalElements} 件</span>
+          <Suspense fallback={""}>
+            {/* 総件数部分*/}
+            {/* サーバでのStreamingによるレンダリング */}
+            <UserListTotalCount userPage={userPage} />
+          </Suspense>
         </div>
         <br />
         <ButtonArea>

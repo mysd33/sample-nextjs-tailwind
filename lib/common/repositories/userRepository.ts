@@ -1,7 +1,8 @@
 import { User } from "@/lib/common/models/user";
 import { Page, Pageable } from "../server-pagination/serverPagination";
 
-const sleepTime = 500;
+//const sleepTime = 500;
+const sleepTime = 3000;
 
 /**
  * ユーザ情報を管理するRepositoryクラス
@@ -301,9 +302,11 @@ export class UserRepository {
     // TODO: サーバ側のユーザ認証処理を呼び出す
 
     // サーバ処理を疑似するため、0.5秒待機
+    console.log("UserRepository findAllForPagination start");
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
     const targetUsers = this.users.slice(offset, offset + pageSize);
     const totalSize = this.users.length;
+    console.log("UserRepository findAllForPagination end");
 
     // ページ情報を返却
     return new Page(pageable, targetUsers, totalSize);

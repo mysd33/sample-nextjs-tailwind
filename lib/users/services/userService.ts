@@ -30,7 +30,7 @@ export class UserService {
    * @param pageable ページネーション情報
    * @returns ユーザリストの1ページ分
    */
-  public async findAllForPageNation(pageable: Pageable): Promise<Page<User>> {
+  public async findAllForPagination(pageable: Pageable): Promise<Page<User>> {
     return this.userRepository.findAllForPagination(pageable);
   }
 
