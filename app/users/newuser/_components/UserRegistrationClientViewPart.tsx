@@ -160,7 +160,9 @@ export default function UserRegistrationViewPart() {
           />
         </InputItem>
         <InputItem>
-          <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
+          <ToggleSwitch name="isAdmin" control={control}>
+            管理者
+          </ToggleSwitch>
         </InputItem>
         <ButtonArea>
           <SubmitButton disabled={isSubmitting}>ユーザ登録</SubmitButton>

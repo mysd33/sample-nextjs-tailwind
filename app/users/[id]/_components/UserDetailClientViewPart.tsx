@@ -93,6 +93,7 @@ export default function UserDetailClientViewPart({
   // 更新ボタンクリック時の入力エラー時
   const onInvalidSubmit = (errors: FieldErrors<UserRegistrationFormInput>) => {
     setMessageLevel("validation");
+    console.log("エラー情報:", errors);
   };
 
   // 削除ボタンクリック時の処理
@@ -191,7 +192,9 @@ export default function UserDetailClientViewPart({
           />
         </InputItem>
         <InputItem>
-          <ToggleSwitch {...register("isAdmin")}>管理者</ToggleSwitch>
+          <ToggleSwitch name="isAdmin" control={control}>
+            管理者
+          </ToggleSwitch>
         </InputItem>
 
         <ButtonArea>
