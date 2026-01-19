@@ -29,9 +29,6 @@ export default function ToggleSwitch<T extends FieldValues>({
             <Switch
               {...field}
               checked={field.value}
-              onChange={(value) => {
-                field.onChange(value);
-              }}
               // clsxを利用してclassNameを設定した例
               className={clsx(
                 "group relative mr-2 inline-flex h-5 w-9 items-center rounded-full shadow-xs focus:border-blue-400 focus:ring-3 focus:ring-blue-300/50",
