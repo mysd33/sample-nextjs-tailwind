@@ -5,7 +5,7 @@ import { Control, Controller, FieldValues, Path } from "react-hook-form";
 interface Props<T extends FieldValues> {
   name: Path<T>;
   children: React.ReactNode;
-  control: Control<T, any, T>;
+  control: Control<T, unknown, T>;
 }
 
 /**
