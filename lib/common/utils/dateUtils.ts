@@ -4,9 +4,9 @@
  * @returns 年齢
  */
 export function calcAge(birthday: Date): number {
-  const diff = Date.now() - new Date(birthday).getTime()
-  const ageDate = new Date(diff)
-  return Math.abs(ageDate.getUTCFullYear() - 1970)
+  const diff = Date.now() - new Date(birthday).getTime();
+  const ageDate = new Date(diff);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
 /**
@@ -15,11 +15,11 @@ export function calcAge(birthday: Date): number {
  * @returns フォーマット済み日付文字列
  */
 export function formatDate(date: Date): string {
-  return new Date(date).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
+  return new Date(date).toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
 }
 
 /**
@@ -29,10 +29,10 @@ export function formatDate(date: Date): string {
  */
 export function formatDateWithHyphen(date: Date): string {
   return new Date(date)
-    .toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+    .toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     })
-    .replace(/\//g, '-')
+    .replace(/\//g, "-");
 }

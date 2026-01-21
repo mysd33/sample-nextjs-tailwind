@@ -5,28 +5,28 @@ export interface User {
   /**
    * ユーザID
    */
-  id: string
+  id: string;
   /**
    * 名前
    */
-  name: string
+  name: string;
   /**
    * 誕生日
    */
-  birthday: Date
+  birthday: Date;
 
   /**
    * 管理者フラグ
    */
-  isAdmin: boolean
+  isAdmin: boolean;
 
   /**
    * パスワード
    */
-  password?: string
+  password?: string;
 
   /**
    * 確認用パスワード
    */
-  confirmPassword?: string
+  confirmPassword?: string;
 }

@@ -5,17 +5,17 @@ export interface Todo {
   /**
    * TodoリストID
    */
-  id?: string
+  id?: string;
   /**
    * タイトル
    */
-  title: string
+  title: string;
   /**
    * 完了フラグ
    */
-  finished?: boolean
+  finished?: boolean;
   /**
    * 作成日時
    */
-  createAt?: Date
+  createAt?: Date;
 }
