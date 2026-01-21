@@ -435,7 +435,8 @@ git config core.ignorecase false
     ```
 
 - [Preitter - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-    - コードフォーマッタ。VSCodeで、ファイル保存時にPrettierによるコードフォーマットを実行できるようにする。
+    - コードフォーマッタ。
+    - `pnpm format`などのコマンドで都度実行できるが、VSCodeで、ファイル保存時にPrettierによるコードフォーマットを実行できるようにする。
     - Prettierのプラグインとして、[Prettier plugin for Tailwind CSS](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)もインストールするとよい。
 
         ```sh
@@ -487,15 +488,10 @@ git config core.ignorecase false
         - https://prettier.io/docs/configuration.html#editorconfig
 
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-
-    - リンター。
-    - eslintは、lintツールとして、以下のコマンドで実行できるが、VSCodeの拡張機能をインストールしておくと、プロジェクトにインストールされたESLintを使って、VSCode上でリアルタイムにコードチェックができるようになる。
-
-    ```
-    pnpm lint
-    ```
-    
-    - ESLintでアクセシビリティに沿った実装かできているかチェックを行う場合は、[eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)もインストールするとよい。
+    - リンタ（静的コードチェックツール）。
+    - eslintは、lintツールとして、`pnpm lint`などのコマンドで都度実行できるが、VSCodeの拡張機能をインストールしておくと、プロジェクトにインストールされたESLintを使って、VSCode上でリアルタイムにコードチェックができるようになる。
+    - eslint-plugin-jsx-a11y
+        - ESLintでアクセシビリティに沿った実装かできているかチェックを行う場合は、[eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)もインストールするとよい。
         - 例えば、imageにaltがあるか, aria-* や role属性が適切に使われているか等をチェックできる。
 
     ```sh
