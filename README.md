@@ -391,6 +391,31 @@ export default config
         - ワークフローが正常に終了すると、「https://(ユーザ名).github.io/(リポジトリ名)」というURLでStorybookが公開される
             - 本サンプルでは「[https://mysd33.github.io/sample-vue-tailwind](https://mysd33.github.io/sample-vue-tailwind)」というURLで公開されている
 
+### Better Authのインストール
+> [!WARNING]
+> 今後対応予定
+
+- 参考: [Better Authのドキュメント](https://www.better-auth.com/docs/installation)
+
+```sh
+# Better Auth
+pnpm add better-auth
+
+# Better AuthでDBが必要なためとりあえず動作確認用にsqlite3をインストール
+pnpm add better-sqlite3
+
+pnpm approve-builds
+√ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · better-sqlite3
+? The next packages will now be built: better-sqlite3.
+Do you approve? (y/N) » true # yを入力
+
+pnpm i --save-dev @types/better-sqlite3
+
+# Better Auth用のDBを生成
+npx @better-auth/cli generate
+```
+
+
 ### その他、ライブラリインストール
 - 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
     
@@ -416,6 +441,7 @@ pnpm add @headlessui/react
 # Heroicons
 pnpm add @heroicons/react
 ```
+
 
 > [!WARNING]
 > 今後対応予定
