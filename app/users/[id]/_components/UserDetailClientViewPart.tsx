@@ -1,8 +1,11 @@
 // Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
+import { UserRegistrationFormInput } from "@/app/users/_lib/UserRegistrationFormInput";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
 import SubmitButton from "@/components/button/SubmitButton";
+import ConfirmModalDialog from "@/components/dialog/ConfirmModalDialog";
+import InformationModalDialog from "@/components/dialog/InformationModalDialog";
 import FormArea from "@/components/form/FormArea";
 import InputDate from "@/components/form/InputDate";
 import InputItem from "@/components/form/InputItem";
@@ -10,19 +13,12 @@ import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
 import { User } from "@/lib/common/models/user";
+import { deleteUser, updateUser } from "@/lib/users/action";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FieldErrors, useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
-
-interface UserRegistrationFormInput {
-  userId: string;
-  password: string;
-  confirmPassword: string;
-  userName: string;
-  birthday: string;
-  isAdmin?: boolean;
-}
 
 /**
  * ユーザ詳細画面
@@ -32,6 +28,8 @@ export default function UserDetailClientViewPart({
 }: {
   userProps: User;
 }) {
+  // 画面遷移用のフック
+  const router = useRouter();
   // Zodを使った入力チェックのスキーマ定義
   const schema = z
     .object({
@@ -80,14 +78,27 @@ export default function UserDetailClientViewPart({
     },
   });
 
+  // 更新完了ダイアログの表示・非表示状態管理
+  const [isUpdateCompleteDialogOpen, setIsUpdateCompleteDialogOpen] =
+    useState(false);
+  // 削除確認ダイアログの表示・非表示状態管理
+  const [isDeleteConfirmDialogOpen, setIsDeleteConfirmDialogOpen] =
+    useState(false);
+  // 削除完了ダイアログの表示・非表示状態管理
+  const [isDeleteCompleteDialogOpen, setIsDeleteCompleteDialogOpen] =
+    useState(false);
+
   // 更新ボタンクリック時の処理
   // 更新ボタンクリック時の入力チェック成功時
-  const onValidSubmit = (data: UserRegistrationFormInput) => {
+  const onValidSubmit = async (data: UserRegistrationFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
     console.log("ユーザ登録データ:", data);
-    // TODO: ユーザ更新処理の実装
+    await updateUser(data);
+    // 更新完了ダイアログを表示
+    setIsUpdateCompleteDialogOpen(true);
+    router.push("/users");
   };
 
   // 更新ボタンクリック時の入力エラー時
@@ -97,22 +108,39 @@ export default function UserDetailClientViewPart({
   };
 
   // 削除ボタンクリック時の処理
-  const [isDeleting, setIsDeleting] = useState(false);
+  // 二重送信防止のための削除処理中状態
+  const [isDeleteSubmitting, setIsDeleteSubmitting] = useState(false);
   const onDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
-    try {
-      setIsDeleting(true);
-      // TODO: ユーザ削除処理の実装
-
-      console.log("ユーザ削除:", userProps.id);
-    } finally {
-      setIsDeleting(false);
-    }
+    // 削除確認ダイアログを表示
+    setIsDeleteConfirmDialogOpen(true);
   };
 
+  // 削除確認ダイアログのOKボタンクリック時の処理
+  const onDeleteDialogOKButtonClick = async () => {
+    try {
+      // ボタン非活性化のために状態を更新
+      setIsDeleteSubmitting(true);
+      // ユーザ削除処理の実行
+      console.log("ユーザ削除:", userProps.id);
+      await deleteUser(userProps.id);
+      // 削除完了ダイアログを表示
+      setIsDeleteCompleteDialogOpen(true);
+      // ユーザ一覧画面へ遷移
+      router.push("/users");
+    } finally {
+      // ボタン活性化状態に戻すために状態を更新
+      setIsDeleteSubmitting(false);
+    }
+  };
+  // 削除確認ダイアログのキャンセルボタンクリック時の処理
+  const onDeleteDialogCancelButtonClick = () => {
+    // 特に何もしない
+    console.log("確認ダイアログのキャンセルボタンがクリックされました。");
+  };
   /* 確認用フィールドが変わったら password のエラーを再評価 */
   const [password, confirmPassword] = useWatch({
     control,
@@ -149,11 +177,11 @@ export default function UserDetailClientViewPart({
         <InputItem
           label="ユーザー名"
           labelFor="userName"
-          autoFocus={true}
           required={true}
           error={errors.userName}>
           <InputText
             id="userName"
+            autoFocus={true}
             error={errors.userName}
             {...register("userName")}
           />
@@ -204,14 +232,33 @@ export default function UserDetailClientViewPart({
             ユーザ更新
           </SubmitButton>
           <SubmitButton
-            disabled={isDeleting}
+            disabled={isDeleteSubmitting}
             danger={true}
             onClick={onDeleteClick}>
             ユーザ削除
           </SubmitButton>
         </ButtonArea>
       </FormArea>
-      {/* TODO: ユーザ更新・削除の確認・完了ダイアログの追加 */}
+      <InformationModalDialog
+        title="ユーザ情報更新完了"
+        message="ユーザ情報を更新しました。"
+        isOpen={isUpdateCompleteDialogOpen}
+        setIsOpen={setIsUpdateCompleteDialogOpen}
+      />
+      <ConfirmModalDialog
+        title="ユーザ削除確認"
+        message="ユーザを削除してもいいですか？"
+        isOpen={isDeleteConfirmDialogOpen}
+        setIsOpen={setIsDeleteConfirmDialogOpen}
+        onOkButtonClicked={onDeleteDialogOKButtonClick}
+        onCancelButtonClicked={onDeleteDialogCancelButtonClick}
+      />
+      <InformationModalDialog
+        title="ユーザ削除完了"
+        message="ユーザを削除しました。"
+        isOpen={isDeleteCompleteDialogOpen}
+        setIsOpen={setIsDeleteCompleteDialogOpen}
+      />
     </>
   );
 }
