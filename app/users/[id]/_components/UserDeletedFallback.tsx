@@ -7,7 +7,6 @@ import { useState } from "react";
 /**
  * ユーザ削除後に表示するフォールバックダイアログ
  * ユーザ情報削除すると詳細画面に表示できる情報がなくなるため、Fallbackとしてダイアログを表示する。
-
  */
 export default function UserDeletedFallbackDialog() {
   const router = useRouter();

@@ -309,6 +309,26 @@ Do you approve? (y/N) » true # yを入力
 npx msw init public --save
 ```
 
+- 本サンプルAPは、SSRのためフロントエンドのサーバからバックエンドサーバへのREST API通信をMock化する。
+- このため、サーバ（Node.js）上でのMSWを利用するため、以下の通り設定する。
+- [mocks/handler.ts](./mocks/handler.ts)を作成し、MSWのハンドラを記載
+- [mocks/server.ts](./mocks/server.ts)を作成し、以下を記載
+
+    ```ts
+    import { setupServer } from "msw/node";
+    import { handlers } from "./handler";
+
+    export const server = setupServer(...handlers);
+    ```
+- [app/layout.tsx](./app/layout.tsx)に以下を追記
+
+    ```ts
+    // 開発環境ではMSWを有効化
+    if (process.env.NODE_ENV === "development") {
+        server.listen();
+    }
+    ```    
+
 ### Storybookのセットアップ
 > [!WARNING]
 > 今後対応予定

@@ -43,7 +43,8 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
     clearErrors,
   } = useForm<TodoFormInput>({
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    // Blurにしたい場合はコメントアウトを外す
+    // mode: "onBlur",
   });
 
   // TODOリストの状態管理

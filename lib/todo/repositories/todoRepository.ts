@@ -1,12 +1,10 @@
+import { API_BASE_URL } from "@/lib/common/constants/contants";
 import { Todo } from "../models/todo";
-
-const sleepTime = 300;
 
 /**
  * Todoリストを管理するRepositoryのクラス
  */
 export class TodoRepository {
-  private readonly API_BASE_URL = "http://localhost:3000";
   private static instance: TodoRepository;
   private constructor() {}
   /**
@@ -26,10 +24,10 @@ export class TodoRepository {
    * @returns Todo
    */
   public async findOne(id: string): Promise<Todo | null> {
-    // TODO: 実際には、ユーザ認証処理を呼び出す
-    // サーバ処理を疑似するため待機
-    await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo/${id}`);
+    const res = await fetch(`${API_BASE_URL}/api/v1/todo/${id}`);
+    if (!res.ok) {
+      // TOOD: エラー処理
+    }
     const todo: Todo | undefined = await res.json();
     return todo ?? null;
   }
@@ -39,10 +37,14 @@ export class TodoRepository {
    * @returns Todoリスト
    */
   public async findAll(): Promise<Todo[]> {
-    // TODO: 実際には、ユーザ認証処理を呼び出す
-    // サーバ処理を疑似するため待機
-    await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo`);
+    const res = await fetch(`${API_BASE_URL}/api/v1/todo`, {
+      // TODOを削除しても、一覧がキャッシュされてデータ残ってしまうので、
+      // no-storeを指定して毎回最新の情報を取得する
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      // TOOD: エラー処理
+    }
     const todos: Todo[] = await res.json();
     return todos;
   }
@@ -52,16 +54,16 @@ export class TodoRepository {
    * @param todo Todo
    */
   public async create(todo: Todo): Promise<Todo> {
-    // TODO: 実際には、ユーザ認証処理を呼び出す
-    // サーバ処理を疑似するため待機
-    await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo`, {
+    const res = await fetch(`${API_BASE_URL}/api/v1/todo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(todo),
     });
+    if (!res.ok) {
+      // TOOD: エラー処理
+    }
     const createdTodo: Todo = await res.json();
     return createdTodo;
   }
@@ -71,15 +73,16 @@ export class TodoRepository {
    * @param todo Todo
    */
   public async update(todo: Todo): Promise<void> {
-    // サーバ処理を疑似するため待機
-    await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    await fetch(`${this.API_BASE_URL}/api/v1/todo`, {
+    const res = await fetch(`${API_BASE_URL}/api/v1/todo`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(todo),
     });
+    if (!res.ok) {
+      // TOOD: エラー処理
+    }
     return;
   }
 
@@ -88,12 +91,12 @@ export class TodoRepository {
    * @param id ID
    */
   public async delete(id: string): Promise<void> {
-    // サーバ処理を疑似するため待機
-    await new Promise((resolve) => setTimeout(resolve, sleepTime));
-
-    await fetch(`${this.API_BASE_URL}/api/v1/todo/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/v1/todo/${id}`, {
       method: "DELETE",
     });
+    if (!res.ok) {
+      // TOOD: エラー処理
+    }
     return;
   }
 }
