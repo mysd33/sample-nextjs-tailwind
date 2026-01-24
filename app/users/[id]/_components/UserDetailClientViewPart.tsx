@@ -103,6 +103,11 @@ export default function UserDetailClientViewPart({
     await updateUser(data);
     // 更新完了ダイアログを表示
     setIsUpdateCompleteDialogOpen(true);
+  };
+
+  // 更新完了ダイアログのOKボタンクリック時の処理
+  const handleUpdateCompleteDialogOKButtonClick = () => {
+    // ユーザ一覧画面へ遷移
     router.push("/users");
   };
 
@@ -115,7 +120,9 @@ export default function UserDetailClientViewPart({
   // 削除ボタンクリック時の処理
   // 二重送信防止のための削除処理中状態
   const [isDeleteSubmitting, setIsDeleteSubmitting] = useState(false);
-  const onDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     // バナーメッセージのクリア
     setMessage("");
@@ -125,7 +132,7 @@ export default function UserDetailClientViewPart({
   };
 
   // 削除確認ダイアログのOKボタンクリック時の処理
-  const onDeleteDialogOKButtonClick = async () => {
+  const handleDeleteConfirmDialogOKButtonClick = async () => {
     try {
       // ボタン非活性化のために状態を更新
       setIsDeleteSubmitting(true);
@@ -134,18 +141,22 @@ export default function UserDetailClientViewPart({
       await deleteUser(userProps.id);
       // 削除完了ダイアログを表示
       setIsDeleteCompleteDialogOpen(true);
-      // ユーザ一覧画面へ遷移
-      router.push("/users");
     } finally {
       // ボタン活性化状態に戻すために状態を更新
       setIsDeleteSubmitting(false);
     }
   };
   // 削除確認ダイアログのキャンセルボタンクリック時の処理
-  const onDeleteDialogCancelButtonClick = () => {
+  const handleDeleteConfirmDialogCancelButtonClick = () => {
     // 特に何もしない
     console.log("確認ダイアログのキャンセルボタンがクリックされました。");
   };
+  // 削除完了ダイアログのOKボタンクリック時の処理
+  const handleDeleteCompleteDialogOKButtonClick = () => {
+    // ユーザ一覧画面へ遷移
+    router.push("/users");
+  };
+
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
@@ -223,7 +234,7 @@ export default function UserDetailClientViewPart({
           <SubmitButton
             disabled={isDeleteSubmitting}
             danger={true}
-            onClick={onDeleteClick}>
+            onClick={handleDeleteButtonClick}>
             ユーザ削除
           </SubmitButton>
         </ButtonArea>
@@ -233,20 +244,22 @@ export default function UserDetailClientViewPart({
         message="ユーザ情報を更新しました。"
         isOpen={isUpdateCompleteDialogOpen}
         setIsOpen={setIsUpdateCompleteDialogOpen}
+        onOkButtonClicked={handleUpdateCompleteDialogOKButtonClick}
       />
       <ConfirmModalDialog
         title="ユーザ削除確認"
         message="ユーザを削除してもいいですか？"
         isOpen={isDeleteConfirmDialogOpen}
         setIsOpen={setIsDeleteConfirmDialogOpen}
-        onOkButtonClicked={onDeleteDialogOKButtonClick}
-        onCancelButtonClicked={onDeleteDialogCancelButtonClick}
+        onOkButtonClicked={handleDeleteConfirmDialogOKButtonClick}
+        onCancelButtonClicked={handleDeleteConfirmDialogCancelButtonClick}
       />
       <InformationModalDialog
         title="ユーザ削除完了"
         message="ユーザを削除しました。"
         isOpen={isDeleteCompleteDialogOpen}
         setIsOpen={setIsDeleteCompleteDialogOpen}
+        onOkButtonClicked={handleDeleteCompleteDialogOKButtonClick}
       />
     </>
   );

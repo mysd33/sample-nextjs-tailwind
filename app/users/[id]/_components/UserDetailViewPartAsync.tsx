@@ -1,4 +1,5 @@
 import { User } from "@/lib/common/models/user";
+import UserDeletedFallbackDialog from "./UserDeletedFallback";
 import UserDetailClientViewPart from "./UserDetailClientViewPart";
 
 export default async function UserDetailViewPartAsync({
@@ -7,5 +8,8 @@ export default async function UserDetailViewPartAsync({
   userPromise: Promise<User | null>;
 }) {
   const user = await userPromise;
-  return <>{user && <UserDetailClientViewPart userProps={user!} />}</>;
+  if (!user) {
+    return <UserDeletedFallbackDialog />;
+  }
+  return <UserDetailClientViewPart userProps={user} />;
 }

@@ -4,7 +4,30 @@ import { revalidatePath } from "next/cache";
 import { UserService } from "./services/userService";
 
 /**
+ * ユーザの登録処理
+ * @param user
+ *
+ */
+export async function registerUser(
+  user: UserRegistrationFormInput,
+): Promise<void> {
+  console.log("Server Action: registerUser", { user });
+  // ビジネスロジックの呼び出し
+  await UserService.getInstance().create({
+    id: user.userId,
+    name: user.userName,
+    password: user.password,
+    confirmPassword: user.confirmPassword,
+    birthday: new Date(user.birthday),
+    isAdmin: user.isAdmin ?? false,
+  });
+  // ユーザ登録したため詳細画面の再評価
+  revalidatePath("/users");
+}
+
+/**
  * ユーザの更新処理
+ * @param user
  */
 export async function updateUser(
   user: UserRegistrationFormInput,
@@ -13,9 +36,9 @@ export async function updateUser(
   // ビジネスロジックの呼び出し
   await UserService.getInstance().update({
     id: user.userId,
+    name: user.userName,
     password: user.password,
     confirmPassword: user.confirmPassword,
-    name: user.userName,
     birthday: new Date(user.birthday),
     isAdmin: user.isAdmin ?? false,
   });

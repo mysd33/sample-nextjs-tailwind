@@ -1,32 +1,29 @@
 // Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
+import { UserRegistrationFormInput } from "@/app/users/_lib/UserRegistrationFormInput";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
 import SubmitButton from "@/components/button/SubmitButton";
+import InformationModalDialog from "@/components/dialog/InformationModalDialog";
 import FormArea from "@/components/form/FormArea";
 import InputDate from "@/components/form/InputDate";
 import InputItem from "@/components/form/InputItem";
 import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
+import { registerUser } from "@/lib/users/action";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import * as z from "zod";
-
-interface UserRegistrationFormInput {
-  userId: string;
-  password: string;
-  confirmPassword: string;
-  userName: string;
-  birthday: string;
-  isAdmin?: boolean;
-}
 
 /**
  * ユーザ登録画面
  */
 export default function UserRegistrationViewPart() {
+  // 画面遷移用のフック
+  const router = useRouter();
   // Zodを使った入力チェックのスキーマ定義
   const schema = z
     .object({
@@ -71,13 +68,26 @@ export default function UserRegistrationViewPart() {
     await trigger(["password", "confirmPassword"]);
   };
 
+  // 登録完了ダイアログの表示・非表示状態管理
+  const [isRegstrationCompleteDialogOpen, setIsRegistrationCompleteDialogOpen] =
+    useState(false);
+
   // 入力チェック成功時
-  const onValidSubmit = (data: UserRegistrationFormInput) => {
+  const onValidSubmit = async (data: UserRegistrationFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
     console.log("ユーザ登録データ:", data);
+    await registerUser(data);
+    // 登録完了ダイアログを表示
+    setIsRegistrationCompleteDialogOpen(true);
   };
+  // 登録完了ダイアログのOKボタンクリック時の処理
+  const handleRegistrationCompleteDialogOKButtonClick = () => {
+    // ユーザ一覧画面へ遷移
+    router.push("/users");
+  };
+
   // 入力エラー時
   const onInvalidSubmit = (errors: FieldErrors<UserRegistrationFormInput>) => {
     console.log("入力エラー", errors);
@@ -158,7 +168,14 @@ export default function UserRegistrationViewPart() {
           <SubmitButton disabled={isSubmitting}>ユーザ登録</SubmitButton>
         </ButtonArea>
       </FormArea>
-      {/* TODO: ユーザ作成完了ダイアログの追加 */}
+
+      <InformationModalDialog
+        title="ユーザ情報登録完了"
+        message="ユーザ情報を登録しました。"
+        isOpen={isRegstrationCompleteDialogOpen}
+        setIsOpen={setIsRegistrationCompleteDialogOpen}
+        onOkButtonClicked={handleRegistrationCompleteDialogOKButtonClick}
+      />
     </>
   );
 }

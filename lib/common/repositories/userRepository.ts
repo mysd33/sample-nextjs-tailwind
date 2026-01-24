@@ -89,7 +89,7 @@ export class UserRepository {
     },
     {
       id: "yamada2@xxx.co.jp",
-      name: "山田太郎",
+      name: "山田太郎2",
       birthday: new Date("1990-01-01"),
       password: "password",
       isAdmin: true,
@@ -166,7 +166,7 @@ export class UserRepository {
     },
     {
       id: "yamada3@xxx.co.jp",
-      name: "山田太郎",
+      name: "山田太郎3",
       birthday: new Date("1990-01-01"),
       password: "password",
       isAdmin: true,
