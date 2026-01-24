@@ -40,6 +40,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
     formState: { isSubmitting, errors },
     handleSubmit,
     reset,
+    clearErrors,
   } = useForm<TodoFormInput>({
     resolver: zodResolver(schema),
     mode: "onBlur",
@@ -78,37 +79,39 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
   };
 
   // 完了処理完了時
-  const onFinish = (todoId: string) => {
+  const onFinish = async (todoId: string) => {
     console.log("TODO完了:" + todoId);
     // ビジネスロジック実行
-    finishTodo(todoId)
-      .then((newTodos) => {
-        // TODO一覧を更新
-        setTodos(newTodos);
-        // バナーメッセージの表示
-        setMessage("完了しました。");
-        setMessageLevel("info");
-      })
-      .catch((error) => {
-        // TODO: 業務エラーのハンドリング
-      });
+    try {
+      const newTodos = await finishTodo(todoId);
+      // TODO一覧を更新
+      setTodos(newTodos);
+      // バナーメッセージの表示
+      setMessage("完了しました。");
+      setMessageLevel("info");
+    } catch (error) {
+      // TODO: 業務エラーのハンドリング
+    } finally {
+      clearErrors();
+    }
   };
 
   // 削除処理完了時
-  const onDelete = (todoId: string) => {
+  const onDelete = async (todoId: string) => {
     console.log("TODO削除:" + todoId);
     // ビジネスロジック実行
-    deleteTodo(todoId)
-      .then((newTodos) => {
-        // TODO一覧を更新
-        setTodos(newTodos);
-        // バナーのメッセージ表示
-        setMessage("削除しました。");
-        setMessageLevel("info");
-      })
-      .catch((error) => {
-        //TODO: 業務エラーのハンドリング
-      });
+    try {
+      const newTodos = await deleteTodo(todoId);
+      // TODO一覧を更新
+      setTodos(newTodos);
+      // バナーのメッセージ表示
+      setMessage("削除しました。");
+      setMessageLevel("info");
+    } catch (error) {
+      // TODO: 業務エラーのハンドリング
+    } finally {
+      clearErrors();
+    }
   };
 
   // 初期表示時にTODO一覧を取得
