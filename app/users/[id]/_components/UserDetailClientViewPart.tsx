@@ -16,8 +16,8 @@ import { User } from "@/lib/common/models/user";
 import { deleteUser, updateUser } from "@/lib/users/action";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FieldErrors, useForm, useWatch } from "react-hook-form";
+import { useState } from "react";
+import { FieldErrors, useForm } from "react-hook-form";
 import * as z from "zod";
 
 /**
@@ -61,22 +61,27 @@ export default function UserDetailClientViewPart({
   const {
     register,
     control,
-    trigger,
-    clearErrors,
     formState: { isSubmitting, errors },
     handleSubmit,
+    trigger,
   } = useForm<UserRegistrationFormInput>({
     resolver: zodResolver(schema),
+    mode: "onBlur",
     defaultValues: {
+      // API等から取得したユーザ情報を初期値にセットする
       userId: userProps.id,
       userName: userProps.name,
       birthday: userProps.birthday.toISOString().substring(0, 10),
       isAdmin: userProps.isAdmin,
       password: "",
       confirmPassword: "",
-      // TOOD: API等から取得したユーザ情報を初期値にセットする
     },
   });
+
+  // パスワードおよび確認パスワードフィールド変更時に双方のエラーを再評価
+  const handlePasswordChange = async () => {
+    await trigger(["password", "confirmPassword"]);
+  };
 
   // 更新完了ダイアログの表示・非表示状態管理
   const [isUpdateCompleteDialogOpen, setIsUpdateCompleteDialogOpen] =
@@ -141,24 +146,6 @@ export default function UserDetailClientViewPart({
     // 特に何もしない
     console.log("確認ダイアログのキャンセルボタンがクリックされました。");
   };
-  /* 確認用フィールドが変わったら password のエラーを再評価 */
-  const [password, confirmPassword] = useWatch({
-    control,
-    name: ["password", "confirmPassword"],
-  });
-  useEffect(() => {
-    if (confirmPassword !== undefined) {
-      clearErrors("password");
-      void trigger("password");
-    }
-  }, [confirmPassword, clearErrors, trigger]);
-  useEffect(() => {
-    if (password !== undefined) {
-      clearErrors("confirmPassword");
-      void trigger("confirmPassword");
-    }
-  }, [password, clearErrors, trigger]);
-
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>();
   const [message, setMessage] = useState<string>("");
@@ -195,6 +182,7 @@ export default function UserDetailClientViewPart({
             id="password"
             error={errors.password}
             {...register("password")}
+            onBlur={handlePasswordChange}
           />
         </InputItem>
         <InputItem
@@ -206,6 +194,7 @@ export default function UserDetailClientViewPart({
             id="confirmPassword"
             error={errors.confirmPassword}
             {...register("confirmPassword")}
+            onBlur={handlePasswordChange}
           />
         </InputItem>
         <InputItem

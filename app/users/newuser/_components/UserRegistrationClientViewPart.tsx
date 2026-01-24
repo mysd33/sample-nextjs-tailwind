@@ -10,8 +10,8 @@ import InputPassword from "@/components/form/InputPassword";
 import InputText from "@/components/form/InputText";
 import ToggleSwitch from "@/components/form/ToggleSwitch";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { FieldErrors, useForm, useWatch } from "react-hook-form";
+import { useState } from "react";
+import { FieldErrors, useForm } from "react-hook-form";
 import * as z from "zod";
 
 interface UserRegistrationFormInput {
@@ -58,13 +58,18 @@ export default function UserRegistrationViewPart() {
   const {
     register,
     control,
-    trigger,
-    clearErrors,
     formState: { isSubmitting, errors },
     handleSubmit,
+    trigger,
   } = useForm<UserRegistrationFormInput>({
     resolver: zodResolver(schema),
+    mode: "onBlur",
   });
+
+  // パスワードおよび確認パスワードフィールド変更時に双方のエラーを再評価
+  const handlePasswordChange = async () => {
+    await trigger(["password", "confirmPassword"]);
+  };
 
   // 入力チェック成功時
   const onValidSubmit = (data: UserRegistrationFormInput) => {
@@ -78,23 +83,6 @@ export default function UserRegistrationViewPart() {
     console.log("入力エラー", errors);
     setMessageLevel("validation");
   };
-  /* 確認用フィールドが変わったら password のエラーを再評価 */
-  const [password, confirmPassword] = useWatch({
-    control,
-    name: ["password", "confirmPassword"],
-  });
-  useEffect(() => {
-    if (confirmPassword !== undefined) {
-      clearErrors("password");
-      void trigger("password");
-    }
-  }, [confirmPassword, clearErrors, trigger]);
-  useEffect(() => {
-    if (password !== undefined) {
-      clearErrors("confirmPassword");
-      void trigger("confirmPassword");
-    }
-  }, [password, clearErrors, trigger]);
 
   // バナーメッセージの状態管理
   const [messageLevel, setMessageLevel] = useState<MessageLevel>();
@@ -135,6 +123,7 @@ export default function UserRegistrationViewPart() {
             id="password"
             error={errors.password}
             {...register("password")}
+            onBlur={handlePasswordChange}
           />
         </InputItem>
         <InputItem
@@ -146,6 +135,7 @@ export default function UserRegistrationViewPart() {
             id="confirmPassword"
             error={errors.confirmPassword}
             {...register("confirmPassword")}
+            onBlur={handlePasswordChange}
           />
         </InputItem>
         <InputItem

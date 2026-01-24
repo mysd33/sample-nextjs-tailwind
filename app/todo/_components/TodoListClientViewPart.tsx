@@ -42,6 +42,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
     reset,
   } = useForm<TodoFormInput>({
     resolver: zodResolver(schema),
+    mode: "onBlur",
   });
 
   // TODOリストの状態管理
