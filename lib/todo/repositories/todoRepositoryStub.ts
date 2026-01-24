@@ -1,3 +1,4 @@
+import { generateUUID } from "@/lib/common/utils/idUtils";
 import { Todo } from "../models/todo";
 
 const sleepTime = 300;
@@ -5,19 +6,34 @@ const sleepTime = 300;
 /**
  * Todoリストを管理するRepositoryのクラス
  */
-export class TodoRepository {
-  private readonly API_BASE_URL = "http://localhost:3000";
-  private static instance: TodoRepository;
+export class TodoRepositoryStub {
+  private todos: Todo[] = [
+    // ダミーの初期データ
+    {
+      id: generateUUID(),
+      title: "牛乳を買う",
+      finished: false,
+      createAt: new Date(),
+    },
+    {
+      id: generateUUID(),
+      title: "メールを読む",
+      finished: true,
+      createAt: new Date(),
+    },
+  ];
+
+  private static instance: TodoRepositoryStub;
   private constructor() {}
   /**
    * Todoリストを管理するRepositoryのStubクラスのインスタンスを取得する
    * @returns Todoリストを管理するRepositoryのStubクラスのインスタンス
    **/
-  public static getInstance(): TodoRepository {
-    if (!TodoRepository.instance) {
-      TodoRepository.instance = new TodoRepository();
+  public static getInstance(): TodoRepositoryStub {
+    if (!TodoRepositoryStub.instance) {
+      TodoRepositoryStub.instance = new TodoRepositoryStub();
     }
-    return TodoRepository.instance;
+    return TodoRepositoryStub.instance;
   }
 
   /**
@@ -29,9 +45,9 @@ export class TodoRepository {
     // TODO: 実際には、ユーザ認証処理を呼び出す
     // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo/${id}`);
-    const todo: Todo | undefined = await res.json();
-    return todo ?? null;
+
+    const todo = this.todos.find((todo) => todo.id === id);
+    return todo ? todo : null;
   }
 
   /**
@@ -42,9 +58,9 @@ export class TodoRepository {
     // TODO: 実際には、ユーザ認証処理を呼び出す
     // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo`);
-    const todos: Todo[] = await res.json();
-    return todos;
+
+    // スタブ実装として、piniaのローカルストレージのストアにあるTodoリストを返す
+    return this.todos;
   }
 
   /**
@@ -55,15 +71,15 @@ export class TodoRepository {
     // TODO: 実際には、ユーザ認証処理を呼び出す
     // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    const res = await fetch(`${this.API_BASE_URL}/api/v1/todo`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(todo),
-    });
-    const createdTodo: Todo = await res.json();
-    return createdTodo;
+
+    // 本来サーバ登録時に設定される値をクライアントでダミー値を設定
+    todo.id = generateUUID();
+    todo.finished = false;
+    todo.createAt = new Date();
+
+    // スタブ実装として、piniaのローカルストレージのストアにTodoを追加
+    this.todos.push(todo);
+    return todo;
   }
 
   /**
@@ -73,14 +89,10 @@ export class TodoRepository {
   public async update(todo: Todo): Promise<void> {
     // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
-    await fetch(`${this.API_BASE_URL}/api/v1/todo`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(todo),
-    });
-    return;
+    const index = this.todos.findIndex((t) => t.id === todo.id);
+    if (index !== -1) {
+      this.todos[index] = todo;
+    }
   }
 
   /**
@@ -91,9 +103,9 @@ export class TodoRepository {
     // サーバ処理を疑似するため待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
 
-    await fetch(`${this.API_BASE_URL}/api/v1/todo/${id}`, {
-      method: "DELETE",
-    });
-    return;
+    const index = this.todos.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      this.todos.splice(index, 1);
+    }
   }
 }

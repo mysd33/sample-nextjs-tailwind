@@ -292,6 +292,23 @@ pnpm add -D @tailwindcss/forms
 @plugin '@tailwindcss/forms';
 ```
 
+## MSWのセットアップ
+- 以下のコマンドを実行
+
+```sh
+# MSW(Mock Service Worker)
+pnpm add msw@latest --save-dev
+
+# 警告が出るので、それに従ってpnpm approve-buildsを実行
+pnpm approve-builds
+# mvwを選択する
+? Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) ... 
+❯ ● msw
+Do you approve? (y/N) » true # yを入力
+
+npx msw init public --save
+```
+
 ### Storybookのセットアップ
 > [!WARNING]
 > 今後対応予定
@@ -311,13 +328,9 @@ npx storybook@latest init
 npx storybook@latest add @storybook/addon-styling-webpack
 ```
 
-- MSWをインストールし、Storybookアドオンmsw-storybook-addonをインストール
+- Storybookアドオンmsw-storybook-addonをインストール
 
 ```sh
-# MSW(Mock Service Worker)
-pnpm add msw@latest --save-dev
-npx msw init public --save
-
 # msw-storybook-addon
 pnpm add msw-storybook-addon -D
 ```
