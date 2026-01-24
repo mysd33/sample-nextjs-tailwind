@@ -1,6 +1,9 @@
-import { Page, Pageable } from "@/components/pagination/pagination";
 import { API_BASE_URL } from "@/lib/common/constants/contants";
-import { User } from "@/lib/common/models/user";
+import {
+  PageableResource,
+  PageResource,
+} from "@/lib/common/resources/pageResource";
+import { UserResource } from "@/lib/common/resources/userResource";
 import { generateUUID } from "@/lib/common/utils/idUtils";
 import { Todo } from "@/lib/todo/models/todo";
 import { http, HttpResponse, PathParams } from "msw";
@@ -9,235 +12,235 @@ const sleepTime = 500;
 //const sleepTime = 3000;
 
 // ダミーストア
-const users: User[] = [
+const users: UserResource[] = [
   {
     id: "yamada@xxx.co.jp",
     name: "山田太郎",
-    birthday: new Date("1990-01-01"),
+    birthday: "1990-01-01",
     password: "password",
     isAdmin: true,
   },
   {
     id: "tamura@xxx.co.jp",
     name: "田村一郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura2@xxx.co.jp",
     name: "田村二郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura3@xxx.co.jp",
     name: "田村三郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura4@xxx.co.jp",
     name: "田村四郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura5@xxx.co.jp",
     name: "田村五郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura6@xxx.co.jp",
     name: "田村六郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura7@xxx.co.jp",
     name: "田村七郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura8@xxx.co.jp",
     name: "田村八郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura9@xxx.co.jp",
     name: "田村九郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura10@xxx.co.jp",
     name: "田村十郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "yamada2@xxx.co.jp",
     name: "山田太郎2",
-    birthday: new Date("1990-01-01"),
+    birthday: "1990-01-01",
     password: "password",
     isAdmin: true,
   },
   {
     id: "tamura11@xxx.co.jp",
     name: "田村一郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura12@xxx.co.jp",
     name: "田村二郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura13@xxx.co.jp",
     name: "田村三郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura14@xxx.co.jp",
     name: "田村四郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura15@xxx.co.jp",
     name: "田村五郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura16@xxx.co.jp",
     name: "田村六郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura17@xxx.co.jp",
     name: "田村七郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura18@xxx.co.jp",
     name: "田村八郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura19@xxx.co.jp",
     name: "田村九郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura20@xxx.co.jp",
     name: "田村十郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "yamada3@xxx.co.jp",
     name: "山田太郎3",
-    birthday: new Date("1990-01-01"),
+    birthday: "1990-01-01",
     password: "password",
     isAdmin: true,
   },
   {
     id: "tamura21@xxx.co.jp",
     name: "田村一郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura22@xxx.co.jp",
     name: "田村二郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura23@xxx.co.jp",
     name: "田村三郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura24@xxx.co.jp",
     name: "田村四郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura25@xxx.co.jp",
     name: "田村五郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura26@xxx.co.jp",
     name: "田村六郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura27@xxx.co.jp",
     name: "田村七郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura28@xxx.co.jp",
     name: "田村八郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura29@xxx.co.jp",
     name: "田村九郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
   {
     id: "tamura30@xxx.co.jp",
     name: "田村十郎",
-    birthday: new Date("1986-11-05"),
+    birthday: "1986-11-05",
     password: "password",
     isAdmin: false,
   },
@@ -356,7 +359,7 @@ export const handlers = [
   ),
 
   // TODO: 本来は認証の仕組みを用意するが、ログインAPIのモックは適当
-  http.post<never, { id: string; password: string }, User | null>(
+  http.post<never, { id: string; password: string }, UserResource | null>(
     `${API_BASE_URL}/api/v1/login`,
     async ({ request }) => {
       // サーバ処理を疑似するため、0.5秒待機
@@ -372,7 +375,7 @@ export const handlers = [
     },
   ),
   // ユーザの取得
-  http.get<PathParams, never, User | null>(
+  http.get<PathParams, never, UserResource | null>(
     `${API_BASE_URL}/api/v1/users/:id`,
     async ({ params }) => {
       // サーバ処理を疑似するため、0.5秒待機
@@ -384,7 +387,7 @@ export const handlers = [
   ),
 
   // ユーザの一覧取得（クエリパラメータ: ページネーションpageSize, pageNumber）
-  http.get<never, never, Page<User>>(
+  http.get<never, never, PageResource<UserResource>>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
       // サーバ処理を疑似するため、0.5秒待機
@@ -395,17 +398,20 @@ export const handlers = [
       const offset = pageNumber * pageSize;
       const pagedUsers = users.slice(offset, offset + pageSize);
       const totalSize = users.length;
-      const page = new Page(
-        new Pageable(pageSize, pageNumber),
-        pagedUsers,
-        totalSize,
-      );
+      const page: PageResource<UserResource> = {
+        pageable: {
+          pageSize: pageSize,
+          pageNumber: pageNumber,
+        } as PageableResource,
+        content: pagedUsers,
+        totalElements: totalSize,
+      };
       console.log("Mocked User List:", page);
       return HttpResponse.json(page);
     },
   ),
   // ユーザの登録
-  http.post<never, User, never>(
+  http.post<never, UserResource, never>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
       // サーバ処理を疑似するため、0.5秒待機
@@ -416,7 +422,7 @@ export const handlers = [
     },
   ),
   // ユーザの更新
-  http.put<never, User, never>(
+  http.put<never, UserResource, never>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
       // サーバ処理を疑似するため、0.5秒待機

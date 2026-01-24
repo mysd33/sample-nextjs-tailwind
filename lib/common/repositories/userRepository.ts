@@ -2,6 +2,8 @@ import { User } from "@/lib/common/models/user";
 import { BusinessError } from "@/lib/framework/errors";
 import { Page, Pageable } from "../../../components/pagination/pagination";
 import { API_BASE_URL } from "../constants/contants";
+import { PageResource } from "../resources/pageResource";
+import { UserResource } from "../resources/userResource";
 /**
  * ユーザ情報を管理するRepositoryクラス
  */
@@ -64,11 +66,15 @@ export class UserRepository {
       { cache: "no-store" },
     );
 
-    // TODO: サーバから取得したPageはisFirstメソッドなどのメソッドを扱えないため暫定対処で再度Pageオブジェクトを生成して返す
-    const page: Page<User> = await res.json();
+    // サーバから取得したリソースデータではisFirstメソッドなどのメソッドを扱えないため
+    // 再度Pageオブジェクトを生成して返す
+    const page: PageResource<UserResource> = await res.json();
     return new Page<User>(
-      new Pageable(page.pageSize, page.pageNumber),
-      page.content,
+      new Pageable(page.pageable.pageSize, page.pageable.pageNumber),
+      page.content.map((userResource) => ({
+        ...userResource,
+        birthday: new Date(userResource.birthday),
+      })),
       page.totalElements,
     );
   }
@@ -87,8 +93,8 @@ export class UserRepository {
     if (!res.ok) {
       return null;
     }
-    const user: User = await res.json();
-    // TODO: サーバから取得したUserはDate型が扱えないため暫定対処で再度Userオブジェクトを生成して返す
+    const user: UserResource = await res.json();
+    // サーバから取得したリソースデータではDate型が扱えないため暫定対処で再度Userオブジェクトを生成して返す
     // userがnull出ない場合のみ処理を行うように修正
     if (user) {
       return {
