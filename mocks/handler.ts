@@ -358,23 +358,6 @@ export const handlers = [
     },
   ),
 
-  // ログイン
-  // TODO: BetterAuthに移行完了後、削除予定
-  http.post<never, { id: string; password: string }, UserResource | null>(
-    `${API_BASE_URL}/api/v1/login`,
-    async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
-      await new Promise((resolve) => setTimeout(resolve, sleepTime));
-      const { id, password } = await request.json();
-
-      const user = users.find((u) => u.id === id && u.password === password);
-      if (user) {
-        return HttpResponse.json(user);
-      } else {
-        return HttpResponse.json(null, { status: 401 });
-      }
-    },
-  ),
   // ユーザの取得
   http.get<PathParams, never, UserResource | null>(
     `${API_BASE_URL}/api/v1/users/:id`,

@@ -20,5 +20,5 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   // 対象のパスを指定
-  matcher: ["/todo", "/users"],
+  matcher: ["/menu", "/todo", "/users"],
 };

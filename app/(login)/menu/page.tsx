@@ -2,6 +2,7 @@ import MenuButton from "@/components/button/MenuButton";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
 import { Metadata } from "next";
+import LogoutButtonClientViewPart from "./_components/LogoutButtonClientViewPart";
 
 // タイトル等のページごとのメタデータの設定
 const title = "TODO管理アプリ メニュー";
@@ -22,8 +23,8 @@ export default function MenuView() {
           <MenuButton forwardViewURL="/todoFileUpload">TODO一括登録</MenuButton>
           {/* TODO: 管理者ユーザのみ表示するように修正 */}
           <MenuButton forwardViewURL="/users">ユーザ管理</MenuButton>
-          {/* TODO: ログアウト処理を実装するように修正 */}
-          <MenuButton forwardViewURL="/">ログアウト</MenuButton>
+          {/* ログアウトボタン */}
+          <LogoutButtonClientViewPart />
         </div>
       </MainContainer>
     </>
