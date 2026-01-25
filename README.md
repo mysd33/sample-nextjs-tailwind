@@ -683,9 +683,10 @@ git config core.ignorecase false
     ```
 
 
-### Next.jsのMCPサーバ
+## MCPサーバ
+### Next.jsの開発サーバへのMCPサーバの設定
 - [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)をインストール・設定することで、自動的にコーディングエージェントNext.jsのインスタンスに接続し有効になります。
-- [公式ガイド](https://nextjs.org/docs/app/guides/mcp)を参考に設定してください。
+- [Next.jsのドキュメント](https://nextjs.org/docs/app/guides/mcp)を参考に設定してください。
 
 - next-devtools-mcpのインストール
 
@@ -707,12 +708,43 @@ git config core.ignorecase false
     ```    
 - あとは、`pnpm dev`(npm run dev)で開発用サーバーを起動すると、MCPサーバも起動する。
 
+### （参考）VSCodeのMCPサーバの設定
+- Next.jsやBetter AuthMCPサーバに対応しており、[next-devtools-mcpのドキュメント](https://github.com/vercel/next-devtools-mcp)、[Better Authのドキュメント](https://www.better-auth.com/docs/introduction#mcp)を参考に設定してください。
+- [VSCodeの拡張機能としてMCPを使用する](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)にはmcp.jsonにBetter Authの設定を追加します。
+    - 利用には、GitHub Copilotが必要です。
+    - 組織により、MCPサーバの利用が制限されている場合があります。組織のポリシーを確認してください。
+        - 設定の「Chat」 › 「Mcp: Access」が、どうなっているか確認してください。
+- ここでは、プロジェクトごとの設定として、[.vscode/mcp.json](.vscode/mcp.json)に以下を追記した例になります。
 
-# Agent Skills
+    ```json
+    {
+        "servers": {
+            "next-devtools": {
+                "command": "npx",
+                "args": [
+                    "-y",
+                    "next-devtools-mcp@latest"
+                ],
+                "type": "stdio"
+            },
+            "better-auth": {
+                "command": "npx",
+                "args": [
+                    "-y",
+                    "@better-auth/cli",
+                    "mcp"
+                ],
+                "type": "stdio"
+            }
+        }
+    }
+    ```
+
+## Agent Skills
 - [Agent Skills](https://agentskills.io/home)は、AIエージェントの能力を特定のタスクに合わせて拡張・専門化するためのオープンな標準仕様です。
     - Codex、Claude Code、Cursor、GitHub Copilot Agent…等のコーディングエージェントで利用できると思います。
 
-## Next.jsのAgent Skills
+### Next.jsのAgent Skills
 
 - Vercel社は、React、Next.jsの実装での最適化されたナレッジをAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。以下のスキルを提供しています。
     - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
@@ -783,7 +815,7 @@ Ok to proceed? (y) y
 
         ![Web Design Guidelinesの利用例](docs/img/AgentSkill2.png)
 
-## Better AuthのAgent Skills
+### Better AuthのAgent Skills
 - Btter Authも、Agent Skillsを提供しています。
     - [Better Auth Agent Skills](https://www.better-auth.com/docs/introduction#skills)
     - 2つのスキルが提供されています。        

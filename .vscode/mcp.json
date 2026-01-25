@@ -1,0 +1,21 @@
+{	
+    "servers": {
+        "next-devtools": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "next-devtools-mcp@latest"
+                ],
+            "type": "stdio"
+        },
+        "better-auth": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@better-auth/cli",
+                "mcp"
+                ],
+            "type": "stdio"
+        }
+    }
+}
