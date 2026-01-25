@@ -28,6 +28,17 @@
     
     ![ソフトウェアアーキテクチャ図2](docs/img/architecture_with_server_validation.png)
 
+- ユーザの認証・認可には、[Better Auth](https://www.better-auth.com/)を使用しています。Better Authの使用にはDBが必要になります。ここでは簡単のため、sqlliteを使っています。
+    - 認証
+    
+        ![認証](docs/img/authentication.png)
+
+    - 認可
+    
+        ![認可](docs/img/authorization.png)
+        
+
+
 ## サンプルAPの動作確認方法
 - 前提条件
     - [Node.js](https://nodejs.org/ja)がインストールされていること
