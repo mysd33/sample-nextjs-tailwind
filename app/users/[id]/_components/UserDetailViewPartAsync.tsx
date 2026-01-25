@@ -1,13 +1,10 @@
-import { User } from "@/lib/common/models/user";
+import { UserService } from "@/lib/users/services/userService";
 import UserDeletedFallbackDialog from "./UserDeletedFallback";
 import UserDetailClientViewPart from "./UserDetailClientViewPart";
 
-export default async function UserDetailViewPartAsync({
-  userPromise,
-}: {
-  userPromise: Promise<User | null>;
-}) {
-  const user = await userPromise;
+export default async function UserDetailViewPartAsync({ id }: { id: string }) {
+  const user = await UserService.getInstance().findOne(id);
+
   if (!user) {
     /*
      * ユーザ削除後に表示するフォールバックダイアログ
