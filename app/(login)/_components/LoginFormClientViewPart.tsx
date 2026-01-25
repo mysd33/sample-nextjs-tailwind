@@ -7,7 +7,8 @@ import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { LoginFormInput } from "../_lib/loginFormInput";
@@ -17,6 +18,15 @@ import LoginInputItem from "./LoginInputItem";
  * ログイン画面のフォーム部分
  */
 export default function LoginFormClientViewPart() {
+  const router = useRouter();
+  const session = authClient.useSession(); // セッション情報の自動取得・更新
+  useEffect(() => {
+    if (session) {
+      // ログイン済の場合はメニュー画面へ遷移
+      router.push("/menu");
+    }
+  }, [router, session]);
+
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({
     userId: z.string().min(1, "ユーザIDは必須入力です。"),
