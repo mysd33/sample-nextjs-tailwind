@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { AuthenticationService } from "./services/authenticationService";
 
+// TODO: BetterAuthに移行完了後、削除予定
 /**
  * ログイン処理
  * @param id ユーザID

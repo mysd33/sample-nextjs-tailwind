@@ -5,7 +5,7 @@ import SubmitButton from "@/components/button/SubmitButton";
 import LoginFormArea from "@/components/form/LoginFormArea";
 import LoginInputPassword from "@/components/form/LoginInputPassword";
 import LoginInputText from "@/components/form/LoginInputText";
-import { login } from "@/lib/login/actions";
+import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -37,12 +37,32 @@ export default function LoginFormClientViewPart() {
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
-  const onValidSubmit = (data: LoginFormInput) => {
+  const onValidSubmit = async (form: LoginFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
 
-    // ビジネスロジックの呼び出し
+    // Better Authを使ったログイン処理
+    await authClient.signIn.email(
+      {
+        email: form.userId,
+        password: form.password,
+        callbackURL: "/menu",
+      },
+      {
+        onError: (ctx) => {
+          // ログイン失敗時にはバナーメッセージを表示
+          // TODO: エラーコードをもとにメッセージのカスタマイズする
+          // 参考: https://www.better-auth.com/docs/concepts/client#error-codes
+          setMessage(`[${ctx.error.code}]: ${ctx.error.message}`);
+          // warnレベルだが、ログインエラーは赤で表示させたいのでerrorで設定
+          setMessageLevel("error");
+        },
+      },
+    );
+
+    // TODO: Better Auth完全移行後削除
+    /*
     login(data.userId, data.password) //
       .catch((error: Error) => {
         // TODO: 仮置きのエラーハンドリング
@@ -52,6 +72,7 @@ export default function LoginFormClientViewPart() {
         // warnレベルだが、ログインエラーは赤で表示させたいのでerrorで設定
         setMessageLevel("error");
       });
+    */
   };
 
   // 入力エラー時

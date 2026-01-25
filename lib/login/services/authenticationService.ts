@@ -1,5 +1,6 @@
 import { UserRepository } from "@/lib/common/repositories/userRepository";
 
+// TODO: BetterAuthに移行完了後、削除予定
 /**
  * 認証機能を提供するServiceクラス
  */

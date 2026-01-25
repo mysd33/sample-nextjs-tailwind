@@ -51,6 +51,13 @@
 pnpm install
 ```
 
+- テストユーザのDBを準備
+    - プロジェクト直下に`sqlite.db`というファイルが生成される
+
+```sh
+npx @better-auth/cli migrate
+```
+
 - 開発用サーバーの起動
 
 ```sh
@@ -397,50 +404,133 @@ export default config
 
 - 参考: [Better Authのドキュメント](https://www.better-auth.com/docs/installation)
 
-```sh
-# Better Auth
-pnpm add better-auth
+- 以下のコマンドでBetter Auth等をインストール
 
-# Better AuthでDBが必要なためとりあえず動作確認用にsqlite3をインストール
-pnpm add better-sqlite3
+    ```sh
+    # Better Auth
+    pnpm add better-auth
 
-pnpm approve-builds
-√ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · better-sqlite3
-? The next packages will now be built: better-sqlite3.
-Do you approve? (y/N) » true # yを入力
+    # Better AuthでDBが必要なため、とりあえず動作確認用にsqliteをインストール
+    pnpm add better-sqlite3
 
-pnpm i --save-dev @types/better-sqlite3
+    pnpm approve-builds
+    √ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · better-sqlite3
+    ? The next packages will now be built: better-sqlite3.
+    Do you approve? (y/N) » true # yを入力
 
-# Better Auth用のDBを生成
-npx @better-auth/cli generate
-```
+    pnpm i --save-dev @types/better-sqlite3
+    ```
+
+- [公式サイトの手順](https://www.better-auth.com/docs/installation#set-environment-variables)を参考に.envに環境変数をセット
+
+    ```
+    BETTER_AUTH_SECRET=…  # Better Authのサイトで「Generate Secret」ボタンをクリックして生成した値をセット
+    BETTER_AUTH_URL=http://localhost:3000   # Base URL of your app
+    ```
+
+- [公式サイトの手順](https://www.better-auth.com/docs/installation#configure-databas)を参考に、[lib/auth.ts](./lib/auth.ts)を作成し、Better AuthのDB設定を記載 
+
+    ```ts
+    // 簡単のため、sqliteを使用する例ですが、本番ではPostgreSQLやMySQL等を使用するとよい
+    import { betterAuth } from "better-auth";
+    import Database from "better-sqlite3";
+
+    export const auth = betterAuth({
+        database: new Database("./sqlite.db"),
+    })
+    ```
+
+- [公式サイトの手順（Migrate）](https://www.better-auth.com/docs/installation#configure-database)を参考に、以下のコマンドで、Better Auth用のDBを生成
+    - プロジェクト直下に`sqlite.db`というファイルが生成される
+
+    ```sh
+    npx @better-auth/cli migrate
+    ```
+
+- [公式サイトの手順](https://www.better-auth.com/docs/installation#authentication-methods)を参考に、認証方法を設定
+    - ここでは、Email/Password認証を使う例
+    
+    ```ts
+    export const auth = betterAuth({
+        database: new Database("./sqlite.db"),
+        // 以下追加
+        emailAndPassword: {
+            enabled: true,
+        },
+    })  
+    ```
+
+- [公式サイトの手順(next-js-app-router)](https://www.better-auth.com/docs/installation#mount-handler)を参考に、[/app/api/auth/[...all]/route.ts](./app/api/auth/[...all]/route.ts)を作成し、以下を記載
+
+    ```ts
+    import { auth } from "@/lib/auth";
+    import { toNextJsHandler } from "better-auth/next-js";
+
+    export const { POST, GET } = toNextJsHandler(auth);
+    ```
+- [公式サイトの手順(react)](https://www.better-auth.com/docs/installation#create-client-instance)を参考に、[lib/auth-client.ts](./lib/auth-client.ts)を作成し、以下を記載
+
+    ```ts
+    import { createAuthClient } from "better-auth/react";
+
+    export const authClient = createAuthClient({
+        baseUrl: process.env.BETTER_AUTH_URL || "http://localhost:3000", // Your app's base URL
+    });
+    ```
+
+- [公式サイトのガイド](https://www.better-auth.com/docs/integrations/next#auth-protection)を参考に[proxy.ts](./proxy.ts)に、認証済でのアクセスを許容するコードを追加
+
+    ```ts
+    export async function proxy(request: NextRequest) {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    // TODO: 本番向けには、ページルートごとにより細かくアクセス制御するように要修正
+    // THIS IS NOT SECURE!
+    // This is the recommended approach to optimistically redirect users
+    // We recommend handling auth checks in each page/route
+    if (!session) {
+        return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    return NextResponse.next();
+    }
+
+    export const config = {
+        // アクセス対象のパスを指定
+        matcher: ["/todo", "/users"],
+    };    
+    ```
+
+- その後は、[基本的な利用方法のページ](https://www.better-auth.com/docs/authentication/email-password)を参考にするとよい。
 
 
 ### その他、ライブラリインストール
 - 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
     
-```sh
-# clsx
-pnpm add clsx
+    ```sh
+    # clsx
+    pnpm add clsx
 
-# React Hook Form
-pnpm add react-hook-form
+    # React Hook Form
+    pnpm add react-hook-form
 
-# React Hook Form Resolvers
-pnpm add @hookform/resolvers
+    # React Hook Form Resolvers
+    pnpm add @hookform/resolvers
 
-# Zod
-pnpm add zod
+    # Zod
+    pnpm add zod
 
-# uuid
-pnpm add uuid
+    # uuid
+    pnpm add uuid
 
-# Headlress UI
-pnpm add @headlessui/react
+    # Headlress UI
+    pnpm add @headlessui/react
 
-# Heroicons
-pnpm add @heroicons/react
-```
+    # Heroicons
+    pnpm add @heroicons/react
+    ```
 
 
 > [!WARNING]
@@ -604,6 +694,9 @@ git config core.ignorecase false
 # Agent Skills
 - [Agent Skills](https://agentskills.io/home)は、AIエージェントの能力を特定のタスクに合わせて拡張・専門化するためのオープンな標準仕様です。
     - Codex、Claude Code、Cursor、GitHub Copilot Agent…等のコーディングエージェントで利用できると思います。
+
+## Next.jsのAgent Skills
+
 - Vercel社は、React、Next.jsの実装での最適化されたナレッジをAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。以下のスキルを提供しています。
     - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
         - 参考： [Introducing: React Best Practices](https://vercel.com/blog/introducing-react-best-practices)
@@ -672,3 +765,14 @@ Ok to proceed? (y) y
         - 「UIをレビューして」と依頼すると、自動的に「Web Design Guidelines」スキルが参照され、Webインターフェースのベストプラクティスに基づいてレビューや改善提案を行ってくれました。
 
         ![Web Design Guidelinesの利用例](docs/img/AgentSkill2.png)
+
+## Better AuthのAgent Skills
+- Btter Authも、Agent Skillsを提供しています。
+    - [Better Auth Agent Skills](https://www.better-auth.com/docs/introduction#skills)
+    - 2つのスキルが提供されています。        
+        - better-auth-best-practices
+        - create-auth-skill (Skill for creating auth layers in TypeScript/JavaScript a...)
+
+    ```sh
+    npx skills add better-auth/skills
+    ```        

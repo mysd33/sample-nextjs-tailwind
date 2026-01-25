@@ -358,7 +358,8 @@ export const handlers = [
     },
   ),
 
-  // TODO: 本来は認証の仕組みを用意するが、ログインAPIのモックは適当
+  // ログイン
+  // TODO: BetterAuthに移行完了後、削除予定
   http.post<never, { id: string; password: string }, UserResource | null>(
     `${API_BASE_URL}/api/v1/login`,
     async ({ request }) => {
