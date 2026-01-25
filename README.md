@@ -51,7 +51,7 @@
 pnpm install
 ```
 
-- テストユーザのDBを準備
+- BetterAuthで使用するテストユーザのDBのセットアップ
     - プロジェクト直下に`sqlite.db`というファイルが生成される
 
 ```sh
@@ -77,6 +77,11 @@ pnpm build
 ```sh
 pnpm start
 ```
+
+- ブラウザで[http://localhost:3000](http://localhost:3000)アクセス
+    - 最初に一度だけ「テストユーザ登録」ボタンを押してテストユーザを作成してから操作してください。
+
+
 
 ## VSCodeでデバッグ実行
 - [Next.jsのドキュメント](https://nextjs.org/docs/app/guides/debugging#debugging-with-vs-code)を参考に[.vscode/launch.json](.vscode/launch.json)を作成しています。
@@ -199,21 +204,22 @@ pnpm start
 | 二重送信防止                        | React Hook FormのisSubmittingの状態管理機能を用いて、ボタンクリック時にイベント処理終了までボタンを非活性化（disable）することで、ボタンのダブルクリック等により同じ処理が誤って複数回実行され誤動作することを防止する。                                                                                                                            | -    | -                             |
 | 入力チェック（クライアント）                        | クライアントにおけるフォームデータに対する入力チェックはReact Hook FormとZodによる単項目チェック、相関項目チェック機能を提供する。ただし、クライアントコンポーネントでの利用に制限されるので、プログレッシブエンハンスメント対応が難ししくなる制約がある。                                                                                                                                                                       | -    | -                             |
 | 画面遷移制御                        | Next.jsのAppRouterにより、指定されたURLパスに対応する画面へ遷移する機能を提供する。なお、参照系の画面等では、Streaming、layout、loading、<Link>によるプリフェッチやクライアントサイド遷移の仕組み等により、サーバレンダリングを利用しつつも、画面全体をリロードすることなく、SPAらしい画面遷移を実現する。                                                                                     | -    | -                             |
+| モーダル管理                        | HeadlessUIのモーダルダイアログの機能により、確認、完了ダイアログの表示、制御を実装支援する機能を提供する。                                                                                                                                                                                               | -    | -                             |
+| 認証・認可                         | 　Better Authを利用したユーザやAPIの認証・認可機能を提供する。          | ○    | [※Better-Authのセットアップ手順参照](#better-authのインストール)                             |
+| HTTPクライアント | 拡張feachにより、APIのキャッシュ機能を生かした、フロントエンド（BFF）サーバからバックエンドサーバへの通信（GET/POST/PUT/DELETE、ファイルアップロード、ダウンロード）を提供する。バックエンドサーバのエラーレスポンスの形態に応じて集約例外ハンドリング機能と連動する例外をスローする。                                                                                                                    | ○    | （仮）http-client                |
 | エラー（例外） | エラーコード（メッセージID）やメッセージを管理可能な共通的な入力エラー、ビジネスエラー、システムエラー用のTypeScriptのErrorオブジェクトを提供する。 | ○ |  errors |
+
 
 - 以下は、今後追加を検討中。
 
 | 機能                            | 機能概要と実現方式                                                                                                                                                                                                                                                | 拡張実装 | 拡張実装の格納モジュール                  |
 |-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|-------------------------------|
 | 入力チェック（サーバ）                        | サーバにおけるフォームデータに対する入力チェックについてはZodによる単項目チェック、相関項目チェック機能を提供する。あくまでバックエンドに入力チェック、業務ロジック、DBアクセスを完全に寄せて、BFFサーバとして使用する場合は、開発生産性も配慮しても省略可能とするが、直接、DBアクセスや外部システムのWeb API等を呼び出す場合には、必ずサーバ側での入力チェックを実施し、安全性を担保する。                                                                                                   | -    | -                             |
-| モーダル管理                        | HeadlessUIのモーダルダイアログの機能により、確認、完了ダイアログの表示、制御を実装支援する機能を提供する。                                                                                                                                                                                               | -    | -                             |
-| HTTPクライアント | 拡張feachにより、APIのキャッシュ機能を生かした、フロントエンド（BFF）サーバからバックエンドサーバへの通信（GET/POST/PUT/DELETE、ファイルアップロード、ダウンロード）を提供する。バックエンドサーバのエラーレスポンスの形態に応じて集約例外ハンドリング機能と連動する例外をスローする。                                                                                                                    | ○    | （仮）http-client                |
 | 集約例外ハンドリング                    | App Routerのerror.tsxや、Error Boundaryにより、サーバからのエラーレスポンスを透過的に業務エラー、システムエラー等として扱い、例外の種類に応じて、専用エラー画面に遷移するといったシステム共通の集約的なエラー処理を実装支援する機能を提供する。                                                                                                                                                | ○    | （仮）errorhandler |
 | ロギング                          | BFFサーバ上に設定したログレベル、フォーマットに応じたAPログを出力する機能を提供する。                                                                                                                                                                                                            | -    | -                             |
 | メッセージ管理                       | 画面やダイアログに表示するメッセージを一元管理する機能を提供する。                                                                                                                                                                                                                        | ○    | messages                      |
 | セッション管理<br/>（グローバル状態管理）       | zustandにより、クライアント側で必要な、認証済のユーザ情報等、画面間で引継ぎアクセス可能な状態（グローバルな状態）を管理する機能を提供する。<br/>また、画面をリロードするなどしても状態を維持できるよう、Webストレージに保存し管理できるようにする。                                                                                                                        | -    | -                             |
 | リトライ・サーキットブレーカ等<br>（レジリエンス）                  | 　Cockatielを利用し、リトライ・サーキットブレーカ等のレジリエンス機能を提供する。          | -    | -                             |
-| 認証・認可                         | 　Better Authを利用したユーザやAPIの認証・認可機能を提供する。          | -    | -                             |
 | RDBアクセス                         | 　TBD          | -    | -                             |
 | RDBトランザクション管理 | サービス（ビジネスロジック）の実行前後にRDBのトランザクション開始・終了を自動で実施する機能を提供する。 | ○ | TBD |
 | DynamoDBアクセス | AWS SDKを利用しDynamoDBへアクセスする汎化したAPIを提供する。 | ○ | TBD |
@@ -239,6 +245,8 @@ pnpm start
         - モーダルダイアログに使用する
     - [@heroicons/react](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react)
         - アイコンに使用する
+    - [Better Auth](https://www.better-auth.com/)
+        - 認証・認可に使用する
     
 
 - React関連ライブラリ（追加検討中）
@@ -336,72 +344,7 @@ npx msw init public --save
     }
     ```    
 
-### Storybookのセットアップ
-> [!WARNING]
-> 今後対応予定
-
-
-- 以下のコマンドを実行
-
-```sh
-# storybookの初期化
-npx storybook@latest init
-```
-
-- 「stories」、「storybook-static」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
-
-```sh
-# TailwindCSSと統合するための設定を追加
-npx storybook@latest add @storybook/addon-styling-webpack
-```
-
-- Storybookアドオンmsw-storybook-addonをインストール
-
-```sh
-# msw-storybook-addon
-pnpm add msw-storybook-addon -D
-```
-
-- .storybook/preview.jsに、以下を追記
-
-```js
-TBD: 今後整理
-```
-
-- .storybook/main.jsに、以下を追記
-
-```ts
-…
-const config: StorybookConfig = {
-  …
-  framework: {
-    …  
-  },
-  //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
-  staticDirs: ['../public'],
-}
-export default config
-
-```
-
-### Github Pagesを使ってStorybookを公開する設定
-> [!WARNING]
-> 今後対応予定
-
-- Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
-
-    - 「.github/workflows」フォルダにGitHub Actionsのワークフローを作成
-        - [ワークフローの記載例（deploy-github-pages.yml）](.github/workflows/deploy-github-pages.yml)
-
-    - GitHubのリポジトリの「Settings」の「Pages」にて、GitHub Pagesの設定を行う
-        - 「Build and deployment」の「Source」を「GitHub Actions」に設定
-        - ワークフローが正常に終了すると、「https://(ユーザ名).github.io/(リポジトリ名)」というURLでStorybookが公開される
-            - 本サンプルでは「[https://mysd33.github.io/sample-vue-tailwind](https://mysd33.github.io/sample-vue-tailwind)」というURLで公開されている
-
 ### Better Authのインストール
-> [!WARNING]
-> 今後対応予定
-
 - 参考: [Better Authのドキュメント](https://www.better-auth.com/docs/installation)
 
 - 以下のコマンドでBetter Auth等をインストール
@@ -499,15 +442,15 @@ export default config
 
     export const config = {
         // アクセス対象のパスを指定
-        matcher: ["/todo", "/users"],
+        matcher: ["/menu", "/todo", "/users"],
     };    
     ```
 
-- その後は、[基本的な利用方法のページ](https://www.better-auth.com/docs/authentication/email-password)を参考にするとよい。
+- その後は、`authClient`のサインアップ、サインイン、サインアウトといったAPIを操作するため[基本的な利用方法のページ](https://www.better-auth.com/docs/authentication/email-password)を参考にするとよい。
 
 
-### その他、ライブラリインストール
-- 以下のコマンドで、上記の手順ではインストールされないライブラリをインストール
+### 各種ライブラリインストール
+- 以下のコマンドで、上記の手順ではインストールされない各種ライブラリをインストール
     
     ```sh
     # clsx
@@ -534,31 +477,94 @@ export default config
 
 
 > [!WARNING]
-> 今後対応予定
+> 以降は、今後対応予定
 
 - 以下は、それぞれ、サンプルでの利用可否を検討中
 
-```sh
-# react-error-boundary
-pnpm add react-error-boundary
-```
+    ```sh
+    # react-error-boundary
+    pnpm add react-error-boundary
+    ```
 
-```sh
-# SWR
-pnpm add swr
-```
+    ```sh
+    # SWR
+    pnpm add swr
+    ```
 
 - 以下は、いずれかの利用を検討中
 
-```sh
-# Zustand
-pnpm add zustand
-```
+    ```sh
+    # Zustand
+    pnpm add zustand
+    ```
+
+    ```sh
+    # Jotai
+    pnpm add jotai
+    ```
+
+### Storybookのセットアップ
+> [!WARNING]
+> 今後対応予定
+
+
+- 以下のコマンドを実行
 
 ```sh
-# Jotai
-pnpm add jotai
+# storybookの初期化
+npx storybook@latest init
 ```
+
+- 「stories」、「storybook-static」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
+
+```sh
+# TailwindCSSと統合するための設定を追加
+npx storybook@latest add @storybook/addon-styling-webpack
+```
+
+- Storybookアドオンmsw-storybook-addonをインストール
+
+```sh
+# msw-storybook-addon
+pnpm add msw-storybook-addon -D
+```
+
+- .storybook/preview.jsに、以下を追記
+
+```js
+TBD: 今後整理
+```
+
+- .storybook/main.jsに、以下を追記
+
+```ts
+…
+const config: StorybookConfig = {
+  …
+  framework: {
+    …  
+  },
+  //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
+  staticDirs: ['../public'],
+}
+export default config
+
+```
+
+### Github Pagesを使ってStorybookを公開する設定
+> [!WARNING]
+> 今後対応予定
+
+- Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
+
+    - 「.github/workflows」フォルダにGitHub Actionsのワークフローを作成
+        - [ワークフローの記載例（deploy-github-pages.yml）](.github/workflows/deploy-github-pages.yml)
+
+    - GitHubのリポジトリの「Settings」の「Pages」にて、GitHub Pagesの設定を行う
+        - 「Build and deployment」の「Source」を「GitHub Actions」に設定
+        - ワークフローが正常に終了すると、「https://(ユーザ名).github.io/(リポジトリ名)」というURLでStorybookが公開される
+            - 本サンプルでは「[https://mysd33.github.io/sample-vue-tailwind](https://mysd33.github.io/sample-vue-tailwind)」というURLで公開されている
+
 
 
 

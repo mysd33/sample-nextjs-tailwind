@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { LoginFormInput } from "../_lib/LoginFormInput";
+import { LoginFormInput } from "../_lib/loginFormInput";
 import LoginInputItem from "./LoginInputItem";
 
 /**

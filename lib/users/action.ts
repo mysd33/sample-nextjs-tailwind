@@ -1,5 +1,5 @@
 "use server";
-import { UserRegistrationFormInput } from "@/app/users/_lib/UserRegistrationFormInput";
+import { UserRegistrationFormInput } from "@/app/users/_lib/userRegistrationFormInput";
 import { revalidatePath } from "next/cache";
 import { UserService } from "./services/userService";
 

@@ -1,6 +1,6 @@
 // Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
-import { UserRegistrationFormInput } from "@/app/users/_lib/UserRegistrationFormInput";
+import { UserRegistrationFormInput } from "@/app/users/_lib/userRegistrationFormInput";
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
 import SubmitButton from "@/components/button/SubmitButton";
