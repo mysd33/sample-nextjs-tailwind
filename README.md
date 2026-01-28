@@ -515,23 +515,21 @@ npx msw init public --save
     ```
 
 ### Storybookのセットアップ
-> [!WARNING]
-> 今後対応予定
-
-
 - 以下のコマンドを実行
 
 ```sh
-# storybookの初期化
-npx storybook@latest init
+# storybookのインストール
+pnpm create storybook@latest
+
+# ウィザードに沿ってインストール
+# Plyright with Chromiumもインストールされる
 ```
 
-- 「stories」、「storybook-static」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
+- 「stories」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
 
-```sh
-# TailwindCSSと統合するための設定を追加
-npx storybook@latest add @storybook/addon-styling-webpack
-```
+
+> [!WARNING]
+> 以降は、今後対応予定
 
 - Storybookアドオンmsw-storybook-addonをインストール
 
@@ -563,9 +561,6 @@ export default config
 ```
 
 ### Github Pagesを使ってStorybookを公開する設定
-> [!WARNING]
-> 今後対応予定
-
 - Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
 
     - 「.github/workflows」フォルダにGitHub Actionsのワークフローを作成
