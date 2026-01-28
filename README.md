@@ -39,7 +39,7 @@
         
 
 
-## サンプルAPの動作確認方法
+## 1. サンプルAPの動作確認方法
 - 前提条件
     - [Node.js](https://nodejs.org/ja)がインストールされていること
         - wingetの例
@@ -94,20 +94,20 @@ pnpm start
 
 
 
-## VSCodeでデバッグ実行
+## 2. VSCodeでデバッグ実行
 - [Next.jsのドキュメント](https://nextjs.org/docs/app/guides/debugging#debugging-with-vs-code)を参考に[.vscode/launch.json](.vscode/launch.json)を作成しています。
 
-### サーバサイドのデバッグ実行
+### 2.1. サーバサイドのデバッグ実行
 - 「Next.js: debug server-side」を選択してデバッグ実行すると、サーバがデバッグ実行され、VSCodeでサーバサイドのコードに設定したブレークポイントで止めることができます。
 
-### クライアントサイドのデバッグ実行    
+### 2.2. クライアントサイドのデバッグ実行    
 - サーバ起動後、「Next.js: debug client-side」をさらに選択してデバッグ実行するとChromeが起動します。VSCodeでクライアントサイドのコードにブレークポイントを設定して止めることができます。
 
-### サーバサイドとクライアントサイドの両方のデバッグ実行
+### 2.3. サーバサイドとクライアントサイドの両方のデバッグ実行
 - 「Next.js: debug full stack」を選択してデバッグ実行すると、サーバサイドとクライアントサイドの両方のコードにブレークポイントを設定してデバッグ実行できます。
     - Next.jsのドキュメントに記載の設定だとうまく動かなかったので試行錯誤で修正しています。
 
-## Storybookの起動方法
+## 3. Storybookの起動方法
 - GitHub Pagesに[Storybook](https://mysd33.github.io/sample-nextjs-tailwind/)をデプロイして見られるように対応していますが、ローカルで起動する場合は以下の通り。
 
 ```sh
@@ -117,11 +117,11 @@ pnpm storybook
 - ブラウザで[http://localhost:6006/](http://localhost:6006/)にアクセス
 
 
-## Vitestによるユニットテストの実行方法
+## 4. Vitestによるユニットテストの実行方法
 > [!WARNING]
 > 今後対応予定
 
-## 画面一覧
+## 5. 画面一覧
 > [!NOTE]
 > 比較として、完全にHTML、CSSを一致させているわけではなく、だいたいのレイアウト、色が一致するようにしているだけです。ご注意ください。
 
@@ -142,12 +142,12 @@ pnpm storybook
 | ユーザ登録画面 | ユーザを新規登録するための画面。 | [画面](docs/img/screen/screen6.png) | [Storybook]() | [ソースコード](./app/users/newuser/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/regist.html) |
 | ユーザ詳細画面 | ユーザの詳細情報の表示と情報更新するための画面。 | [画面](docs/img/screen/screen7.png) | [Storybook]() | [ソースコード](./app/users/[id]/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/user/userDetail.html) |
 
-## 画面遷移図
+## 6. 画面遷移図
 - Next.jsのAppRouterにより以下の画面遷移が実現されています。
 
 ![画面遷移図](docs/img/screen-flow.png)
 
-## メッセージ表示
+## 7. メッセージ表示
 > [!WARNING]
 > 対応中
 
@@ -165,7 +165,7 @@ pnpm storybook
 | サーバ業務エラーメッセージ（バナー表示）         | [画面](docs/img/screen/server-business-error.png) |
 | サーバシステムエラー時エラーページ表示  | [画面](docs/img/screen/server-system-error.png) |      
 
-## 画面部品
+## 8. 画面部品
 > [!WARNING]
 > 対応中
 
@@ -204,7 +204,7 @@ pnpm storybook
 | 確認用モーダルダイアログ | 確認ダイアログ | [ソースコード](./components/dialog/ConfirmModalDialog.tsx) | TBD |
 | 情報モーダルダイアログ | 完了時等の情報ダイアログ | [ソースコード](./components/dialog/InformationModalDialog.tsx) | TBD |
 
-## ソフトウェアフレームワーク機能
+## 9. ソフトウェアフレームワーク機能
 - 本サンプルアプリケーションでは、ソフトウェアフレームワーク実装例も同梱している。簡単のため、アプリケーションと同じプロジェクトでソース管理しています。
     - 拡張実装したソースコードは、[lib/framework](lib/framework)フォルダ配下に格納されている。
     - 本格的な開発を実施する場合には、業務アプリケーションと別のGitリポジトリとして管理し、CodeArtifactやSonatype NEXUSといったライブラリリポジトリサーバでnpmを管理し、package.jsonから参照するようにすべきであるし、テストやCI/CD等もちゃんとすべきであるが、ここでは、あえて同じプロジェクトに格納してノウハウを簡単に参考にしてもらいやすいようにしている。
@@ -241,7 +241,7 @@ pnpm storybook
 | DynamoDBトランザクション管理 | サービス（ビジネスロジック）の実行前後にDynamoDBのトランザクション開始・終了を自動で実施する機能を提供する。 | ○ | TBD |
 
 
-## 追加したプラグイン・ライブラリ
+## 10. 追加したプラグイン・ライブラリ
 
 - React関連ライブラリ
     - [Next.js (App Router)](https://nextjs.org/docs)
@@ -295,10 +295,10 @@ pnpm storybook
         - APIのモックサーバーを立てるために使用
 
 
-## (参考) ブランクプロジェクトのセットアップ方法
+## 11. (参考) ブランクプロジェクトのセットアップ方法
 - Vue.jsとTailwind CSSを使ったブランクプロジェクトの作成手順は以下の通り
 
-### Next.jsのプロジェクト作成
+### 11.1. Next.jsのプロジェクト作成
 
 - pnpmを使ってプロジェクトを作成
 
@@ -307,7 +307,7 @@ pnpm create next-app@latest sample-nextjs-tailwind
 # 推奨設定で進める
 ```
 
-### tailwindcss/formsのインストール
+### 11.2. tailwindcss/formsのインストール
 - 以下のコマンドを実行
 
 ```sh
@@ -322,7 +322,7 @@ pnpm add -D @tailwindcss/forms
 @plugin '@tailwindcss/forms';
 ```
 
-## MSWのセットアップ
+### 11.3. MSWのセットアップ
 - 以下のコマンドを実行
 
 ```sh
@@ -359,7 +359,7 @@ npx msw init public --save
     }
     ```    
 
-### Better Authのインストール
+### 11.4. Better Authのインストール
 - 参考: [Better Authのドキュメント](https://www.better-auth.com/docs/installation)
 
 - 以下のコマンドでBetter Auth等をインストール
@@ -464,7 +464,7 @@ npx msw init public --save
 - その後は、`authClient`のサインアップ、サインイン、サインアウトといったAPIを操作するため[基本的な利用方法のページ](https://www.better-auth.com/docs/authentication/email-password)を参考にするとよい。
 
 
-### 各種ライブラリインストール
+### 11.5. 各種ライブラリインストール
 - 以下のコマンドで、上記の手順ではインストールされない各種ライブラリをインストール
     
     ```sh
@@ -518,7 +518,7 @@ npx msw init public --save
     pnpm add jotai
     ```
 
-### Storybookのセットアップ
+### 11.6. Storybookのセットアップ
 - 以下のコマンドを実行
 
 ```sh
@@ -563,7 +563,7 @@ export default config
 
 ```
 
-### Github Pagesを使ってStorybookを公開する設定
+### 11.7. Github Pagesを使ってStorybookを公開する設定
 - Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
 
     - 「.github/workflows」フォルダにGitHub Actionsのワークフローを作成
@@ -577,7 +577,7 @@ export default config
 
 
 
-## (参考) gitの設定
+## 12. (参考) gitの設定
 - TypeScriptでは一般的にファイル名をキャメルケースが良いとされている。Vueのコンポーネントはパスカルケースが一般的である。
 - 小文字と大文字を誤ったファイル名を後で変更するときに、gitのデフォルトでは、大文字と小文字を区別しないので、gitの設定を変更しておかないと、import文のファイル名が変更されているのに、gitサーバ上のファイル名が大文字のままといった問題が発生しうる。
 
@@ -596,12 +596,12 @@ core.ignorecase=true
 git config core.ignorecase false
 ```
 
-## (参考) インストールするとよいツール
-### Chrome拡張機能
+## 13. (参考) インストールするとよいツール
+### 13.1. Chrome拡張機能
 - [React.js devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
     - React.jsのコンポーネント構造や状態を確認できる
 
-### VSCodeの拡張機能
+### 13.2. VSCodeの拡張機能
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
     - setting.jsonに以下を追記
         - VSCodeで、vueファイルもインテリセンスが効くようにtailwindCSS.includeLanguagesを設定
@@ -681,8 +681,8 @@ git config core.ignorecase false
     ```
 
 
-## MCPサーバ
-### Next.jsの開発サーバへのMCPサーバの設定
+## 14. MCPサーバ
+### 14.1. Next.jsの開発サーバへのMCPサーバの設定
 - [next-devtools-mcp](https://github.com/vercel/next-devtools-mcp)をインストール・設定することで、自動的にコーディングエージェントNext.jsのインスタンスに接続し有効になります。
 - [Next.jsのドキュメント](https://nextjs.org/docs/app/guides/mcp)を参考に設定してください。
 
@@ -706,7 +706,7 @@ git config core.ignorecase false
     ```    
 - あとは、`pnpm dev`(npm run dev)で開発用サーバーを起動すると、MCPサーバも起動する。
 
-### （参考）VSCodeのMCPサーバの設定
+### 14.2. （参考）VSCodeのMCPサーバの設定
 - Next.jsやBetter AuthMCPサーバに対応しており、[next-devtools-mcpのドキュメント](https://github.com/vercel/next-devtools-mcp)、[Better Authのドキュメント](https://www.better-auth.com/docs/introduction#mcp)を参考に設定してください。
 - [VSCodeの拡張機能としてMCPを使用する](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)にはmcp.jsonにBetter Authの設定を追加します。
     - 利用には、GitHub Copilotが必要です。
@@ -738,11 +738,11 @@ git config core.ignorecase false
     }
     ```
 
-## Agent Skills
+## 15. Agent Skills
 - [Agent Skills](https://agentskills.io/home)は、AIエージェントの能力を特定のタスクに合わせて拡張・専門化するためのオープンな標準仕様です。
     - Codex、Claude Code、Cursor、GitHub Copilot Agent…等のコーディングエージェントで利用できると思います。
 
-### Next.jsのAgent Skills
+### 15.1. Next.jsのAgent Skills
 
 - Vercel社は、React、Next.jsの実装での最適化されたナレッジをAIエージェントやLLM向けに整理し、[Agent Skills](https://github.com/vercel-labs/agent-skills)という形でパッケージ化して提供しています。以下のスキルを提供しています。
     - [React Best Practices](https://github.com/vercel-labs/agent-skills/tree/main?tab=readme-ov-file#react-best-practices)
@@ -813,7 +813,7 @@ Ok to proceed? (y) y
 
         ![Web Design Guidelinesの利用例](docs/img/AgentSkill2.png)
 
-### Better AuthのAgent Skills
+### 15.2. Better AuthのAgent Skills
 - Btter Authも、Agent Skillsを提供しています。
     - [Better Auth Agent Skills](https://www.better-auth.com/docs/introduction#skills)
     - 2つのスキルが提供されています。        
