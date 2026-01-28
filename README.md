@@ -544,17 +544,16 @@ pnpm add msw-storybook-addon -D
 TBD: 今後整理
 ```
 
-- .storybook/main.jsに、以下を追記
+- .storybook/main.tsに、以下を追記
 
 ```ts
 …
 const config: StorybookConfig = {
   …
-  framework: {
-    …  
-  },
+  framework: "@storybook/nextjs-vite",
+  
   //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
-  staticDirs: ['../public'],
+  staticDirs: ["../public"],
 }
 export default config
 
