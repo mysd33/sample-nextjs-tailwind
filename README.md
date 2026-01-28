@@ -108,25 +108,29 @@ pnpm start
     - Next.jsのドキュメントに記載の設定だとうまく動かなかったので試行錯誤で修正しています。
 
 ## Storybookの起動方法
-> [!WARNING]
-> 今後対応予定
+- GitHub Pagesに[Storybook](https://mysd33.github.io/sample-nextjs-tailwind/)をデプロイして見られるように対応していますが、ローカルで起動する場合は以下の通り。
 
-- GitHub PagesにStorybookをデプロイして見られるように対応する予定です。
+```sh
+pnpm storybook
+```
+
+- ブラウザで[http://localhost:6006/](http://localhost:6006/)にアクセス
+
 
 ## Vitestによるユニットテストの実行方法
 > [!WARNING]
 > 今後対応予定
 
 ## 画面一覧
-> [!WARNING]
-> 対応中
-
 > [!NOTE]
 > 比較として、完全にHTML、CSSを一致させているわけではなく、だいたいのレイアウト、色が一致するようにしているだけです。ご注意ください。
 
 - 作成している画面は以下の通り。
 
-- GitHub PagesにStorybookをデプロイしてプレビュー見られるようにする予定です。
+- 現状、GitHub Pagesに[Storybook](https://mysd33.github.io/sample-nextjs-tailwind/)をデプロイしてプレビュー見られます。
+
+> [!WARNING]
+> 現在、各画面のStoryBookは作成中です。
 
 | 画面名 | 説明 | 画面イメージ | Storybook | Vue+TailWindソースコード | （参考比較）Thymeleaf+Bootstrapソースコード |
 | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -168,7 +172,7 @@ pnpm start
 - [components/](components/)フォルダに入っています。
 - 作成している画面部品は以下の通り。
 
-- GitHub PagesにStorybookをデプロイしてプレビュー見られるようにする予定です。
+- GitHub Pagesに[Storybook](https://mysd33.github.io/sample-nextjs-tailwind/)をデプロイして見られるように対応しました。
 
 > [!WARNING]
 > 現在、各部品のStoryBookは作成中です。
