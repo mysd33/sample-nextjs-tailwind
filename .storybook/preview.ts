@@ -10,6 +10,7 @@ const preview: Preview = {
       },
     },
     // App Routerの設定
+    // https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true
     nextjs: {
       appDirectory: true,
     },
