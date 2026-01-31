@@ -3,6 +3,7 @@ import SubmitButton from "./SubmitButton";
 
 const meta = {
   component: SubmitButton,
+  title: "components/button/SubmitButton",
   tags: ["autodocs"],
   argTypes: {
     size: {

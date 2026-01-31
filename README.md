@@ -193,10 +193,10 @@ pnpm storybook
 | トグルスイッチ | トグルの入力部品　| [ソースコード](./components/form/ToggleSwitch.tsx) | TBD |
 | ファイル入力 | ファイルアップロード入力部品 | [ソースコード]() | TBD |
 | ボタン領域 | ボタンを並べて表示する領域 | [ソースコード](./components/button/ButtonArea.tsx) | TBD |
-| ボタンの基底部品 | ボタン共通の基底のコンポーネント| [ソースコード](./components/button/BaseButton.tsx) | TBD |
+| ボタンの基底部品 | ボタン共通の基底のコンポーネント| [ソースコード](./components/button/BaseButton.tsx) | [Storybook](https://mysd33.github.io/sample-nextjs-tailwind/?path=/docs/components-button-basebutton--docs) |
 | メニューボタン | メニュー画面のレイアウトに合わせたリンクボタン | [ソースコード](./components/button/MenuButton.tsx) | TBD |
 | リンクボタン | 画面遷移のリンクボタン | [ソースコード](./components/button/LinkButton.tsx) | TBD |
-| 送信ボタン | フォームの送信ボタン | [ソースコード](./components/button/SubmitButton.tsx) | TBD |
+| 送信ボタン | フォームの送信ボタン | [ソースコード](./components/button/SubmitButton.tsx) | [Storybook](https://mysd33.github.io/sample-nextjs-tailwind/?path=/docs/components-button-submitbutton--docs) |
 | アクションボタン | フォーム以外でのロジック実行ボタン | [ソースコード]() | TBD |
 | テーブル | テーブルの表示領域、ヘッダー部、データ部 | [ソースコード](./components/table) | TBD |
 | ページネーションリンク | ページネーションのリンクボタン | [ソースコード](./components/pagination/PaginationLink.tsx) | TBD |

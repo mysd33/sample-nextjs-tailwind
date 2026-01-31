@@ -3,6 +3,7 @@ import BaseButton from "./BaseButton";
 
 const meta = {
   component: BaseButton,
+  title: "components/button/BaseButton",
   tags: ["autodocs"],
 } satisfies Meta<typeof BaseButton>;
 
