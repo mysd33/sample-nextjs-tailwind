@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import BaseButton from "./BaseButton";
 
+/**
+ * ## 基本のボタンのコンポーネント
+ *
+ */
 const meta = {
   component: BaseButton,
   title: "components/button/BaseButton",

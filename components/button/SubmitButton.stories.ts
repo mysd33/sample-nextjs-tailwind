@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import SubmitButton from "./SubmitButton";
 
+/**
+ * ## 送信ボタンのコンポーネント
+ *
+ * - フォームの送信ボタンを提供するコンポーネントです。
+ * - ボタンのサイズ、重要（危険）な操作かといった属性を設定できます。
+ */
 const meta = {
   component: SubmitButton,
   title: "components/button/SubmitButton",
