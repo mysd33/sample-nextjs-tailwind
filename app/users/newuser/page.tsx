@@ -17,7 +17,7 @@ export default function UserRegistrationView() {
   return (
     <>
       <HeaderArea title={title}>
-        <LinkButton outline={true} forwardViewURL="/users">
+        <LinkButton outline={true} href="/users">
           ユーザ一覧に戻る
         </LinkButton>
       </HeaderArea>

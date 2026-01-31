@@ -30,7 +30,7 @@ export default function Error({
         {/*
         <BaseButton onClick={() => reset()}>元のページへ戻る</BaseButton>
         */}
-        <LinkButton className="mt-3" forwardViewURL="/">
+        <LinkButton className="mt-3" href="/">
           トップページへ戻る
         </LinkButton>
       </MainContainer>

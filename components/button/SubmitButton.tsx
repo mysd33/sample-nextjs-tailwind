@@ -1,17 +1,6 @@
-import BaseButton from "./BaseButton";
+import BaseButton, { BaseButtonProps } from "./BaseButton";
 
-interface Props {
-  /**
-   * ボタンのサイズ（sm, md, lg）
-   */
-  size?: "sm" | "md" | "lg" | undefined;
-  /**
-   * 重要な（危険）な操作を行うボタンかどうか
-   */
-  danger?: boolean;
-}
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
+type ButtonProps = Omit<BaseButtonProps, "outline">;
 
 /**
  * 送信ボタン

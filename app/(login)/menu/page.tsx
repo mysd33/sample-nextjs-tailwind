@@ -19,10 +19,10 @@ export default function MenuView() {
       <HeaderArea title={title} />
       <MainContainer>
         <div className="mx-auto flex flex-col">
-          <MenuButton forwardViewURL="/todo">TODO管理</MenuButton>
-          <MenuButton forwardViewURL="/todoFileUpload">TODO一括登録</MenuButton>
+          <MenuButton href="/todo">TODO管理</MenuButton>
+          <MenuButton href="/todoFileUpload">TODO一括登録</MenuButton>
           {/* TODO: 管理者ユーザのみ表示するように修正 */}
-          <MenuButton forwardViewURL="/users">ユーザ管理</MenuButton>
+          <MenuButton href="/users">ユーザ管理</MenuButton>
           {/* ログアウトボタン */}
           <LogoutButtonClientViewPart />
         </div>

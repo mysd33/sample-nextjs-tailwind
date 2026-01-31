@@ -38,7 +38,7 @@ export default async function UserListTableDataRowsAsync({
           <TableDataCol>{calcAge(user.birthday)}</TableDataCol>
           <TableDataCol>{user.isAdmin ? "○" : "-"}</TableDataCol>
           <TableDataCol>
-            <LinkButton forwardViewURL={`users/${user.id}`}>詳細</LinkButton>
+            <LinkButton href={`users/${user.id}`}>詳細</LinkButton>
           </TableDataCol>
         </TableDataRow>
       ))}

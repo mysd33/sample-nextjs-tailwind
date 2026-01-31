@@ -126,7 +126,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
   return (
     <>
       <HeaderArea title={title}>
-        <LinkButton outline={true} forwardViewURL="/menu">
+        <LinkButton outline={true} href="/menu">
           メニューに戻る
         </LinkButton>
       </HeaderArea>

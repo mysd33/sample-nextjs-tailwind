@@ -17,7 +17,7 @@ export default async function PaginationViewPartAsync({
       {/* 元々のPaginationLink */}
       <PaginationLink
         page={page}
-        forwardViewURL="/users"
+        href="/users"
         pageNumberParamName="pageNumber"
         pageSizeParamName="pageSize"
       />

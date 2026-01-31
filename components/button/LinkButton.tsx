@@ -3,10 +3,6 @@ import Link from "next/link";
 
 interface Props {
   /**
-   * 遷移先のURLパス
-   */
-  forwardViewURL?: string;
-  /**
    * ボタンのサイズ（sm, md, lg）
    */
   size?: "sm" | "md" | "lg" | undefined;
@@ -20,40 +16,28 @@ interface Props {
   danger?: boolean;
 }
 
-type LinkButtonProps = Props &
-  Omit<React.ComponentProps<typeof Link>, "href" | "className" | "children"> & {
-    className?: string;
-    children: React.ReactNode;
-  };
+type LinkButtonProps = Props & React.ComponentProps<typeof Link>;
 
 /**
  * リンクボタン
  */
-export default function LinkButton({
-  forwardViewURL,
-  size,
-  outline,
-  danger,
-  className,
-  children,
-  ...linkProps
-}: LinkButtonProps) {
-  if (!forwardViewURL) {
+export default function LinkButton(props: LinkButtonProps) {
+  if (!props.href) {
     return (
       <span
-        className={`${buildBaseButtonClassName({ size, outline, danger, className })} pointer-events-none opacity-60`}
+        className={`${buildBaseButtonClassName({ size: props.size, outline: props.outline, danger: props.danger, className: props.className })} pointer-events-none opacity-60`}
         aria-disabled="true">
-        {children}
+        {props.children}
       </span>
     );
   }
 
   /* buttonとaタグの違いが出てしまうのため、BaseButtonとclassNameのロジックのみを共通化 */
   const buttonClassName = buildBaseButtonClassName({
-    size,
-    outline,
-    danger,
-    className,
+    size: props.size,
+    outline: props.outline,
+    danger: props.danger,
+    className: props.className,
   });
 
   /*
@@ -74,8 +58,8 @@ export default function LinkButton({
   */
   return (
     <>
-      <Link href={forwardViewURL} {...linkProps} className={buttonClassName}>
-        {children}
+      <Link {...props} className={buttonClassName}>
+        {props.children}
       </Link>
     </>
   );

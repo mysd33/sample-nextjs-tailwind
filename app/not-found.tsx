@@ -13,7 +13,7 @@ export default function NotFoundView() {
         <div>
           <h1 className="text-2xl">[404] Not Found</h1>
         </div>
-        <LinkButton className="mt-3" forwardViewURL="/">
+        <LinkButton className="mt-3" href="/">
           トップページへ戻る
         </LinkButton>
       </MainContainer>

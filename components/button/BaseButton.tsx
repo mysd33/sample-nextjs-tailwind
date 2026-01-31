@@ -13,7 +13,8 @@ interface Props {
   danger?: boolean;
 }
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props;
+export type BaseButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  Props;
 
 type ButtonStyleOptions = Pick<Props, "size" | "outline" | "danger"> & {
   className?: string;
@@ -84,7 +85,7 @@ export default function BaseButton({
   className,
   children,
   ...rest
-}: ButtonProps) {
+}: BaseButtonProps) {
   const buttonClassName = buildBaseButtonClassName({
     size,
     outline,

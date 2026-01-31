@@ -20,7 +20,7 @@ interface Props<T> {
   /**
    * リンクの遷移先URL（省略時は#）
    */
-  forwardViewURL?: string;
+  href?: string;
 
   /**
    * ページ番号のクエリパラメータ名（デフォルト: pageNumber）
@@ -63,8 +63,8 @@ export default function PaginationLink<T>(props: Props<T>) {
             href={
               props.page.isFirst()
                 ? "#"
-                : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=0&${pageSizeParamName}=${props.page.pageSize}`
+                : props.href
+                  ? `${props.href}?${pageNumberParamName}=0&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -81,8 +81,8 @@ export default function PaginationLink<T>(props: Props<T>) {
             href={
               props.page.isFirst()
                 ? "#"
-                : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber - 1}&${pageSizeParamName}=${props.page.pageSize}`
+                : props.href
+                  ? `${props.href}?${pageNumberParamName}=${props.page.pageNumber - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -100,8 +100,8 @@ export default function PaginationLink<T>(props: Props<T>) {
             <Link
               key={pageIndex}
               href={
-                props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${pageIndex - 1}&${pageSizeParamName}=${props.page.pageSize}`
+                props.href
+                  ? `${props.href}?${pageNumberParamName}=${pageIndex - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
               }
               aria-current={
@@ -120,8 +120,8 @@ export default function PaginationLink<T>(props: Props<T>) {
             href={
               props.page.isLast()
                 ? "#"
-                : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.pageNumber + 1}&${pageSizeParamName}=${props.page.pageSize}`
+                : props.href
+                  ? `${props.href}?${pageNumberParamName}=${props.page.pageNumber + 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(
@@ -138,8 +138,8 @@ export default function PaginationLink<T>(props: Props<T>) {
             href={
               props.page.isLast()
                 ? "#"
-                : props.forwardViewURL
-                  ? `${props.forwardViewURL}?${pageNumberParamName}=${props.page.getTotalPages() - 1}&${pageSizeParamName}=${props.page.pageSize}`
+                : props.href
+                  ? `${props.href}?${pageNumberParamName}=${props.page.getTotalPages() - 1}&${pageSizeParamName}=${props.page.pageSize}`
                   : "#"
             }
             className={clsx(

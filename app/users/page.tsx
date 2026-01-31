@@ -49,7 +49,7 @@ export default async function UserListView({
   return (
     <>
       <HeaderArea title={title}>
-        <LinkButton outline={true} forwardViewURL="/menu">
+        <LinkButton outline={true} href="/menu">
           メニューに戻る
         </LinkButton>
       </HeaderArea>
@@ -107,7 +107,7 @@ export default async function UserListView({
         <ButtonArea>
           {/* TODO: CSV出力は未実装 */}
           <BaseButton>CSV出力</BaseButton>
-          <LinkButton forwardViewURL="users/newuser">新規ユーザ登録</LinkButton>
+          <LinkButton href="users/newuser">新規ユーザ登録</LinkButton>
         </ButtonArea>
       </MainContainer>
     </>
