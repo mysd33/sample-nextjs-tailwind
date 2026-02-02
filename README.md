@@ -132,7 +132,7 @@ pnpm storybook
 > [!WARNING]
 > 現在、各画面のStoryBookは作成中です。
 
-| 画面名 | 説明 | 画面イメージ | Storybook | Vue+TailWindソースコード | （参考比較）Thymeleaf+Bootstrapソースコード |
+| 画面名 | 説明 | 画面イメージ | Storybook | React+TailWindソースコード | （参考比較）Thymeleaf+Bootstrapソースコード |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | ログイン画面 | トップページの画面で、ユーザがログインするための画面。 | [画面](docs/img/screen/screen1.png) | [Storybook](https://mysd33.github.io/sample-nextjs-tailwind/?path=/docs/login-page--docs) | [ソースコード](./app/(login)/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/login/login.html) |
 | メニュー画面 | メニュー画面。ログインユーザのロールによって管理者メニューの表示有無が切り替わる。 | [画面](docs/img/screen/screen2.png) | [Storybook]() | [ソースコード](./app/(login)/menu/page.tsx) | [ソースコード](https://github.com/mysd33/sample-bff/blob/main/src/main/resources/templates/menu/menu.html) |
@@ -282,8 +282,9 @@ pnpm storybook
     - [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms)          
 
 > [!NOTE]
-> 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。
-> 本サンプルAPでは、Vue.jsのサンプルAPとの比較を優先しているため、MUIは使用していません。
+> 本サンプルではTailwind CSSを使ってコンポーネントを作成しているが、簡単にUIコンポーネントを使う場合は、[MUI (Material-UI)](https://mui.com/)、[Material Icons](https://mui.com/material-ui/material-icons/)を利用すると、既製品のUIコンポーネントを使うことができます。  
+> また、最近では[shadcn/ui](https://ui.shadcn.com/)のように、Tailwind CSSベースで、コードベースで自分でカスタマイズできる便利なUIコンポーネント集もあります。  
+> ですが、本サンプルAPでは、SpringBoot/Thymeleaf（Bootstrap）、Vue+TailwindCSSのサンプルAPとの比較を優先しているため、これらはは使用していません。
 
 - Storybook
     - [Storybook](https://storybook.js.org/)
@@ -538,7 +539,8 @@ npx msw init public --save
     pnpm add msw-storybook-addon -D
     ```
 
-- [.storybook/main.ts](.storybook/main.ts)に、staticDirsやReact Server Componentsの設定を追記
+- [.storybook/main.ts](.storybook/main.ts)に、staticDirsや、[React Server Components](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#react-server-components-rsc)の設定を追記
+    - [React Server Components](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#react-server-components-rsc)は、まだ実験的(experimental)な機能であるが、本来サーバでないと動作しないasync/awaitを使ったサーバコンポーネントに、自動的にSuspenseのラッパーを設定し、ブラウザ（Storybook）上でも画面表示にすることができるようになる
 
     ```ts
     …
@@ -556,7 +558,7 @@ npx msw init public --save
     export default config
     ```
 
-- [.storybook/preview.ts](.storybook/preview.ts)に、[msw-storybook-addonの設定](https://github.com/mswjs/msw-storybook-addon?tab=readme-ov-file#configure-the-addon)や[App Routerの設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true)を追記
+- [.storybook/preview.ts](.storybook/preview.ts)に、[Tailwind CSSを有効にする設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#tailwind)や[msw-storybook-addonによるMSWの設定](https://github.com/mswjs/msw-storybook-addon?tab=readme-ov-file#configure-the-addon)や[App Routerの設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true)を追記
 
     ```ts
     import type { Preview } from "@storybook/nextjs-vite";
@@ -603,13 +605,13 @@ npx msw init public --save
     - GitHubのリポジトリの「Settings」の「Pages」にて、GitHub Pagesの設定を行う
         - 「Build and deployment」の「Source」を「GitHub Actions」に設定
         - ワークフローが正常に終了すると、「https://(ユーザ名).github.io/(リポジトリ名)」というURLでStorybookが公開される
-            - 本サンプルでは「[https://mysd33.github.io/sample-vue-tailwind](https://mysd33.github.io/sample-vue-tailwind)」というURLで公開されている
+            - 本サンプルでは「[https://mysd33.github.io/sample-nextjs-tailwind](https://mysd33.github.io/sample-nextjs-tailwind)」というURLで公開されている
 
 
 
 
 ## 12. (参考) gitの設定
-- TypeScriptでは一般的にファイル名をキャメルケースが良いとされている。Vueのコンポーネントはパスカルケースが一般的である。
+- TypeScriptでは一般的にファイル名をキャメルケースが良いとされている。ReactのUIコンポーネントはパスカルケースが一般的である。
 - 小文字と大文字を誤ったファイル名を後で変更するときに、gitのデフォルトでは、大文字と小文字を区別しないので、gitの設定を変更しておかないと、import文のファイル名が変更されているのに、gitサーバ上のファイル名が大文字のままといった問題が発生しうる。
 
 - 以下のコマンドで行うことで、大文字小文字を区別するように設定できる。
@@ -635,7 +637,7 @@ git config core.ignorecase false
 ### 13.2. VSCodeの拡張機能
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
     - setting.jsonに以下を追記
-        - VSCodeで、vueファイルもインテリセンスが効くようにtailwindCSS.includeLanguagesを設定
+        - VSCodeで、tsxファイルもインテリセンスが効くようにtailwindCSS.includeLanguagesを設定
         - cssファイル中の@pluginや@applyに警告がでないように、files.associationsを設定
 
     ```json
