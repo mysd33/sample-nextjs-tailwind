@@ -597,7 +597,7 @@ npx msw init public --save
 
 
 ### 11.7. Github Pagesを使ってStorybookを公開する設定
-- Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
+- Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)を参考に以下の設定を行う。
 
     - 「.github/workflows」フォルダにGitHub Actionsのワークフローを作成
         - [ワークフローの記載例（deploy-github-pages.yml）](.github/workflows/deploy-github-pages.yml)
@@ -606,8 +606,6 @@ npx msw init public --save
         - 「Build and deployment」の「Source」を「GitHub Actions」に設定
         - ワークフローが正常に終了すると、「https://(ユーザ名).github.io/(リポジトリ名)」というURLでStorybookが公開される
             - 本サンプルでは「[https://mysd33.github.io/sample-nextjs-tailwind](https://mysd33.github.io/sample-nextjs-tailwind)」というURLで公開されている
-
-
 
 
 ## 12. (参考) gitの設定
