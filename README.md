@@ -521,47 +521,63 @@ npx msw init public --save
 ### 11.6. Storybookのセットアップ
 - 以下のコマンドを実行
 
-```sh
-# storybookのインストール
-pnpm create storybook@latest
+    ```sh
+    # storybookのインストール
+    pnpm create storybook@latest
 
-# ウィザードに沿ってインストール
-# Plyright with Chromiumもインストールされる
-```
+    # ウィザードに沿ってインストール
+    # Plyright with Chromiumもインストールされる
+    ```
 
 - 「stories」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
 
 
+- .storybook/main.tsに、staticDirsの設定を追記
+
+    ```ts
+    …
+    const config: StorybookConfig = {
+      …
+      framework: "@storybook/nextjs-vite",
+    
+      //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
+      staticDirs: ["../public"],
+    }
+    export default config
+    ```
+
+- .storybook/preview.tsに、[App Routerの設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true)を追記
+
+    ```ts
+    import type { Preview } from "@storybook/nextjs-vite";
+    import "../app/globals.css";
+
+    const preview: Preview = {
+      parameters: {
+        controls: {
+            …
+        },
+        
+        // App Routerの設定
+        nextjs: {
+        appDirectory: true,
+        },
+        …
+    },
+    };
+    …
+    ```
+
 > [!WARNING]
-> 以降は、今後対応予定
+> MSWとの連携の設定は、今後対応予定
 
 - Storybookアドオンmsw-storybook-addonをインストール
 
-```sh
-# msw-storybook-addon
-pnpm add msw-storybook-addon -D
-```
+    ```sh
+    # msw-storybook-addon
+    pnpm add msw-storybook-addon -D
+    ```
 
-- .storybook/preview.jsに、以下を追記
-
-```js
-TBD: 今後整理
-```
-
-- .storybook/main.tsに、以下を追記
-
-```ts
-…
-const config: StorybookConfig = {
-  …
-  framework: "@storybook/nextjs-vite",
-  
-  //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
-  staticDirs: ["../public"],
-}
-export default config
-
-```
 
 ### 11.7. Github Pagesを使ってStorybookを公開する設定
 - Github Pagesを使ってStorybookを公開したい場合は、[Storybookのドキュメント](https://storybook.js.org/docs/sharing/publish-storybook#publish-storybook-to-other-services)や[Deploy Storybook to GitHub Pagesのドキュメント](https://github.com/bitovi/github-actions-storybook-to-github-pages)を参考に以下の設定を行う。
