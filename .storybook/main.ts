@@ -18,5 +18,9 @@ const config: StorybookConfig = {
   ],
   framework: "@storybook/nextjs-vite",
   staticDirs: ["../public"],
+  // React Server Component対応のため、experimentalRSCをtrueに設定
+  features: {
+    experimentalRSC: true,
+  },
 };
 export default config;

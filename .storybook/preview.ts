@@ -1,7 +1,21 @@
 import type { Preview } from "@storybook/nextjs-vite";
+import { initialize, InitializeOptions, mswLoader } from "msw-storybook-addon";
 import "../app/globals.css";
 
+// MSWの初期化
+const options =
+  // GitHub Pagesでホストしている場合は、404エラーにならないようmockServiceWorker.jsのアドレスを調整
+  location.hostname !== "mysd33.github.io"
+    ? ({ onUnhandledRequest: "bypass" } as InitializeOptions)
+    : ({
+        onUnhandledRequest: "bypass",
+        serviceWorker: { url: "/sample-nextjs-tailwind/mockServiceWorker.js" },
+      } as InitializeOptions);
+initialize(options);
+
 const preview: Preview = {
+  // MSWのAddonのLoaderに追加
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {

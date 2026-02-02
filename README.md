@@ -531,51 +531,66 @@ npx msw init public --save
 
 - 「stories」フォルダは、サンプルのコンポーネントとストーリーなので、学習後、不要になったら削除してよい
 
-
-- .storybook/main.tsに、staticDirsの設定を追記
-
-    ```ts
-    …
-    const config: StorybookConfig = {
-      …
-      framework: "@storybook/nextjs-vite",
-    
-      //publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
-      staticDirs: ["../public"],
-    }
-    export default config
-    ```
-
-- .storybook/preview.tsに、[App Routerの設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true)を追記
-
-    ```ts
-    import type { Preview } from "@storybook/nextjs-vite";
-    import "../app/globals.css";
-
-    const preview: Preview = {
-      parameters: {
-        controls: {
-            …
-        },
-        
-        // App Routerの設定
-        nextjs: {
-        appDirectory: true,
-        },
-        …
-    },
-    };
-    …
-    ```
-
-> [!WARNING]
-> MSWとの連携の設定は、今後対応予定
-
 - Storybookアドオンmsw-storybook-addonをインストール
 
     ```sh
     # msw-storybook-addon
     pnpm add msw-storybook-addon -D
+    ```
+
+- [.storybook/main.ts](.storybook/main.ts)に、staticDirsやReact Server Componentsの設定を追記
+
+    ```ts
+    …
+    const config: StorybookConfig = {
+        …
+        framework: "@storybook/nextjs-vite",
+    
+        // publicフォルダのmockServiceWorker.jsを認識できるよう、staticDirsを追記
+        staticDirs: ["../public"],
+        // React Server Component対応のため、experimentalRSCをtrueに設定
+        features: {
+            experimentalRSC: true,
+        },      
+    }
+    export default config
+    ```
+
+- [.storybook/preview.ts](.storybook/preview.ts)に、[msw-storybook-addonの設定](https://github.com/mswjs/msw-storybook-addon?tab=readme-ov-file#configure-the-addon)や[App Routerの設定](https://storybook.js.org/docs/get-started/frameworks/nextjs-vite#set-nextjsappdirectory-to-true)を追記
+
+    ```ts
+    import type { Preview } from "@storybook/nextjs-vite";
+    import { initialize, mswLoader } from "msw-storybook-addon";
+    // グローバルCSSのインポート(Tailwind CSSのスタイルを有効化するため)
+    import "../app/globals.css";
+    
+    // MSWの初期化
+    const options =
+    // GitHub Pagesでホストしている場合は、404エラーにならないようmockServiceWorker.jsのアドレスを調整
+    location.hostname !== "mysd33.github.io"
+        ? ({ onUnhandledRequest: "bypass" } as InitializeOptions)
+        : ({
+            onUnhandledRequest: "bypass",
+            serviceWorker: { url: "/sample-nextjs-tailwind/mockServiceWorker.js" },
+        } as InitializeOptions);
+    initialize(options);
+
+    const preview: Preview = {
+        // MSWのAddonのLoaderに追加
+        loaders: [mswLoader],        
+        parameters: {
+            controls: {
+                …
+            },
+        
+        // App Routerの設定
+        nextjs: {
+            appDirectory: true,
+        },
+        …
+    },
+    };
+    …
     ```
 
 
