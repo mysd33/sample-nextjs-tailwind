@@ -21,23 +21,28 @@ type LinkButtonProps = Props & React.ComponentProps<typeof Link>;
 /**
  * リンクボタン
  */
-export default function LinkButton(props: LinkButtonProps) {
-  if (!props.href) {
+export default function LinkButton({
+  size,
+  outline,
+  danger,
+  ...rest
+}: LinkButtonProps) {
+  if (!rest.href) {
     return (
       <span
-        className={`${buildBaseButtonClassName({ size: props.size, outline: props.outline, danger: props.danger, className: props.className })} pointer-events-none opacity-60`}
+        className={`${buildBaseButtonClassName({ size: size, outline: outline, danger: danger, className: rest.className })} pointer-events-none opacity-60`}
         aria-disabled="true">
-        {props.children}
+        {rest.children}
       </span>
     );
   }
 
   /* buttonとaタグの違いが出てしまうのため、BaseButtonとclassNameのロジックのみを共通化 */
   const buttonClassName = buildBaseButtonClassName({
-    size: props.size,
-    outline: props.outline,
-    danger: props.danger,
-    className: props.className,
+    size: size,
+    outline: outline,
+    danger: danger,
+    className: rest.className,
   });
 
   /*
@@ -58,8 +63,8 @@ export default function LinkButton(props: LinkButtonProps) {
   */
   return (
     <>
-      <Link {...props} className={buttonClassName}>
-        {props.children}
+      <Link {...rest} className={buttonClassName}>
+        {rest.children}
       </Link>
     </>
   );
