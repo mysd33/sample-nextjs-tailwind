@@ -9,3 +9,5 @@ onlyBuiltDependencies:
   - better-sqlite3
   - esbuild
   - msw
+
+minimumReleaseAge: 10080  

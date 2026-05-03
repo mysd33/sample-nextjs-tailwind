@@ -59,7 +59,7 @@
 - 必要なパッケージをインストール
 
 ```sh
-pnpm install
+pnpm ci
 ```
 
 - BetterAuthで使用するテストユーザのDBのセットアップ
