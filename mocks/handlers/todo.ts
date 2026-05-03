@@ -89,7 +89,7 @@ export const handlers = [
 
   // TODOの削除
   http.delete<PathParams, never, never>(
-    "/api/v1/todo/:id",
+    `${API_BASE_URL}/api/v1/todo/:id`,
     async ({ params }) => {
       // サーバ処理を疑似するため、0.5秒待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
