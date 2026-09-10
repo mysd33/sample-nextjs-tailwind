@@ -18,6 +18,7 @@ import {
 import { Todo } from "@/lib/todo/models/todo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useEffect, useState } from "react";
+import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import TodoItem from "./TodoItem";
@@ -26,9 +27,22 @@ export interface TodoFormInput {
 }
 
 /**
- * Todo管理画面
+ * Todo管理画面（useErrorBoundaryにコンテキストを提供するためErrorBoundaryでラップする）
  */
 export default function TodoListClientViewPart({ title }: { title: string }) {
+  return (
+    <ErrorBoundary
+      fallbackRender={({ error }) => {
+        throw error;
+      }}>
+      <TodoListContent title={title} />
+    </ErrorBoundary>
+  );
+}
+
+function TodoListContent({ title }: { title: string }) {
+  const { showBoundary } = useErrorBoundary();
+  // TODO: 別ファイルに切り出す
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({
     todoTitle: z.string().min(1, "Todoタイトルは必須入力です。"),
@@ -71,6 +85,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
       })
       .catch((error) => {
         // TODO: 業務エラーのハンドリング
+        showBoundary(error);
       });
   };
 
@@ -92,6 +107,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
       setMessageLevel("info");
     } catch (error) {
       // TODO: 業務エラーのハンドリング
+      showBoundary(error);
     } finally {
       clearErrors();
     }
@@ -110,6 +126,7 @@ export default function TodoListClientViewPart({ title }: { title: string }) {
       setMessageLevel("info");
     } catch (error) {
       // TODO: 業務エラーのハンドリング
+      showBoundary(error);
     } finally {
       clearErrors();
     }

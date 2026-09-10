@@ -18,6 +18,8 @@ export class TodoRepository {
     return TodoRepository.instance;
   }
 
+  // TODO :fetchコマンドをラップして共通のエラーハンドリングに対応した関数を作る
+
   /**
    * IDを指定してTodoを取得する
    * @param id ID
@@ -63,6 +65,10 @@ export class TodoRepository {
     });
     if (!res.ok) {
       // TOOD: エラー処理
+      // 500エラーならシステムエラーを返却
+      if (res.status === 500) {
+        throw new Error("システムエラーが発生しました。");
+      }
     }
     const createdTodo: Todo = await res.json();
     return createdTodo;

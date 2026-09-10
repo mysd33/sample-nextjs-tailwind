@@ -5,9 +5,11 @@ import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
 import { useEffect } from "react";
 
+// Note: React hook formで作ったForm送信等でのエラーは、イベントハンドラ中でのエラーのため、現状、この画面までたどり着かない。
+// error.tsxは、ErrorBoundaryの仕組みの一種なので、useStateを使ってerrorをステート更新させて再レンダリングさせるように実装させる必要がある。
+
 /**
  * サーバサイドレンダリング処理やクライアント処理を挟まないサーバアクションでエラーが発生した場合に表示されるエラー画面
- * react hook formで作ったForm送信等はクライアント処理のhandleSubmitが挟まっているためか、この画面までたどり着かない。
  */
 export default function Error({
   error,
