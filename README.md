@@ -254,8 +254,6 @@ pnpm storybook
         - ZodとReact Hook Formを連携するために使用
     - [Zod](https://zod.dev/)
         - 入力チェック（スキーマバリデーション）に使用
-    - [react-error-boundary](https://github.com/bvaughn/react-error-boundary)
-        - ErrorBoundaryによるエラーハンドリングに使用
     - [uuid](https://github.com/uuidjs/uuid)
         - UUIDの生成に使用
     - [Headless UI](https://headlessui.com/v1/react)
@@ -477,9 +475,6 @@ npx msw init public --save
 
     # React Hook Form Resolvers
     pnpm add @hookform/resolvers
-    
-    # react-error-boundary
-    pnpm add react-error-boundary
 
     # Zod
     pnpm add zod

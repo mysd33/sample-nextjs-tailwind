@@ -9,6 +9,7 @@ import InputItem from "@/components/form/InputItem";
 import InputText from "@/components/form/InputText";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
+import { useSafeErrorHandler } from "@/lib/framework/errorboundary";
 import {
   createTodo,
   deleteTodo,
@@ -18,7 +19,6 @@ import {
 import { Todo } from "@/lib/todo/models/todo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useEffect, useState } from "react";
-import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import TodoItem from "./TodoItem";
@@ -27,21 +27,10 @@ export interface TodoFormInput {
 }
 
 /**
- * Todo管理画面（useErrorBoundaryにコンテキストを提供するためErrorBoundaryでラップする）
+ * Todo管理画面
  */
 export default function TodoListClientViewPart({ title }: { title: string }) {
-  return (
-    <ErrorBoundary
-      fallbackRender={({ error }) => {
-        throw error;
-      }}>
-      <TodoListContent title={title} />
-    </ErrorBoundary>
-  );
-}
-
-function TodoListContent({ title }: { title: string }) {
-  const { showBoundary } = useErrorBoundary();
+  const { safeAsync } = useSafeErrorHandler();
   // TODO: 別ファイルに切り出す
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({
@@ -68,26 +57,20 @@ function TodoListContent({ title }: { title: string }) {
   const [message, setMessage] = useState<string>("");
 
   // 入力チェック成功時
-  const onValidSubmit = async (data: TodoFormInput) => {
+  const onValidSubmit = safeAsync(async (data: TodoFormInput) => {
     // バナーメッセージのクリア
     setMessage("");
     setMessageLevel(undefined);
     // ビジネスロジック実行
-    createTodo(data.todoTitle)
-      .then((newTodos) => {
-        // TODO一覧を更新
-        setTodos(newTodos);
-        // バナーメッセージの表示
-        setMessage("作成しました。");
-        setMessageLevel("info");
-        // フォームのリセット
-        reset();
-      })
-      .catch((error) => {
-        // TODO: 業務エラーのハンドリング
-        showBoundary(error);
-      });
-  };
+    const newTodos = await createTodo(data.todoTitle);
+    // TODO一覧を更新
+    setTodos(newTodos);
+    // バナーメッセージの表示
+    setMessage("作成しました。");
+    setMessageLevel("info");
+    // フォームのリセット
+    reset();
+  });
 
   // 入力エラー時
   const onInvalidSubmit = () => {
@@ -95,7 +78,7 @@ function TodoListContent({ title }: { title: string }) {
   };
 
   // 完了処理完了時
-  const onFinish = async (todoId: string) => {
+  const onFinish = safeAsync(async (todoId: string) => {
     console.log("TODO完了:" + todoId);
     // ビジネスロジック実行
     try {
@@ -105,16 +88,13 @@ function TodoListContent({ title }: { title: string }) {
       // バナーメッセージの表示
       setMessage("完了しました。");
       setMessageLevel("info");
-    } catch (error) {
-      // TODO: 業務エラーのハンドリング
-      showBoundary(error);
     } finally {
       clearErrors();
     }
-  };
+  });
 
   // 削除処理完了時
-  const onDelete = async (todoId: string) => {
+  const onDelete = safeAsync(async (todoId: string) => {
     console.log("TODO削除:" + todoId);
     // ビジネスロジック実行
     try {
@@ -124,13 +104,10 @@ function TodoListContent({ title }: { title: string }) {
       // バナーのメッセージ表示
       setMessage("削除しました。");
       setMessageLevel("info");
-    } catch (error) {
-      // TODO: 業務エラーのハンドリング
-      showBoundary(error);
     } finally {
       clearErrors();
     }
-  };
+  });
 
   // 初期表示時にTODO一覧を取得
   useEffect(() => {

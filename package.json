@@ -22,7 +22,6 @@
     "next-devtools-mcp": "^0.3.10",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-error-boundary": "^6.1.4",
     "react-hook-form": "^7.71.1",
     "uuid": "^13.0.0",
     "zod": "^4.3.5"
