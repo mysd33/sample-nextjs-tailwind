@@ -4,7 +4,7 @@ import { Todo } from "@/lib/todo/models/todo";
 import { http, HttpResponse, PathParams } from "msw";
 import todos from "../mock-data/todoData";
 
-const sleepTime = 500;
+const sleepTime = 300;
 //const sleepTime = 3000;
 
 export const handlers = [
@@ -12,7 +12,7 @@ export const handlers = [
   http.get<PathParams, never, Todo>(
     `${API_BASE_URL}/api/v1/todo/:id`,
     async ({ params }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const todo = todos.find((t) => t.id === params.id);
       return HttpResponse.json(todo ?? null);
@@ -20,7 +20,7 @@ export const handlers = [
   ),
   // TODO一覧の取得
   http.get<never, never, Todo[]>(`${API_BASE_URL}/api/v1/todo`, async () => {
-    // サーバ処理を疑似するため、0.5秒待機
+    // サーバ処理を疑似するため、待機
     await new Promise((resolve) => setTimeout(resolve, sleepTime));
     return HttpResponse.json(todos);
   }),
@@ -29,7 +29,7 @@ export const handlers = [
   http.post<never, Todo, never>(
     `${API_BASE_URL}/api/v1/todo`,
     async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const todo = (await request.json()) as Todo;
       // todoタイトルが'validationerror'の時は、業務エラーのレスポンスを返す
@@ -76,7 +76,7 @@ export const handlers = [
   http.put<never, Todo, never>(
     `${API_BASE_URL}/api/v1/todo`,
     async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const todo = (await request.json()) as Todo;
       const index = todos.findIndex((t) => t.id === todo.id);
@@ -91,7 +91,7 @@ export const handlers = [
   http.delete<PathParams, never, never>(
     `${API_BASE_URL}/api/v1/todo/:id`,
     async ({ params }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const id = params.id as string;
       const index = todos.findIndex((t) => t.id === id);

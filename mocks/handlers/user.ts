@@ -7,7 +7,7 @@ import { UserResource } from "@/lib/common/resources/userResource";
 import { http, HttpResponse, PathParams } from "msw";
 import users from "../mock-data/userData";
 
-const sleepTime = 500;
+const sleepTime = 300;
 //const sleepTime = 3000;
 
 export const handlers = [
@@ -15,7 +15,7 @@ export const handlers = [
   http.get<PathParams, never, UserResource | null>(
     `${API_BASE_URL}/api/v1/users/:id`,
     async ({ params }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const id = params.id as string;
       const user = users.find((u) => u.id === id);
@@ -27,7 +27,7 @@ export const handlers = [
   http.get<never, never, PageResource<UserResource>>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const url = new URL(request.url);
       const pageSize = Number(url.searchParams.get("pageSize") ?? "10");
@@ -51,7 +51,7 @@ export const handlers = [
   http.post<never, UserResource, never>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const user = await request.json();
       users.push(user);
@@ -62,7 +62,7 @@ export const handlers = [
   http.put<never, UserResource, never>(
     `${API_BASE_URL}/api/v1/users`,
     async ({ request }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const user = await request.json();
       const index = users.findIndex((u) => u.id === user.id);
@@ -76,7 +76,7 @@ export const handlers = [
   http.delete<PathParams, never, never>(
     `${API_BASE_URL}/api/v1/users/:id`,
     async ({ params }) => {
-      // サーバ処理を疑似するため、0.5秒待機
+      // サーバ処理を疑似するため、待機
       await new Promise((resolve) => setTimeout(resolve, sleepTime));
       const id = params.id as string;
       const index = users.findIndex((u) => u.id === id);
