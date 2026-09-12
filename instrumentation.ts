@@ -3,7 +3,11 @@ export async function register() {
     "--> [instrumentation.ts] register hook called. NEXT_RUNTIME:",
     process.env.NEXT_RUNTIME,
   );
-  if (process.env.NEXT_RUNTIME === "nodejs") {
+  // 開発環境ではMSWを有効化
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_RUNTIME === "nodejs"
+  ) {
     const { server } = await import("@/mocks/server");
     server.listen({
       onUnhandledRequest: "bypass",

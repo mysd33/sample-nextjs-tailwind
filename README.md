@@ -349,14 +349,21 @@ npx msw init public --save
 
     export const server = setupServer(...handlers);
     ```
-- [app/layout.tsx](./app/layout.tsx)に以下を追記
+- [app/instrumentation.ts](./app/instrumentation.ts)に以下を追記
 
     ```ts
     // 開発環境ではMSWを有効化
-    if (process.env.NODE_ENV === "development") {
-        server.listen();
+    if (
+        process.env.NODE_ENV === "development" &&
+        process.env.NEXT_RUNTIME === "nodejs"
+    ) {
+        const { server } = await import("@/mocks/server");
+        server.listen({
+        onUnhandledRequest: "bypass",
+        });
+        console.log("--> [instrumentation.ts] MSW server listening started");
     }
-    ```    
+    ```
 
 ### 11.4. Better Authのインストール
 - 参考: [Better Authのドキュメント](https://www.better-auth.com/docs/installation)
