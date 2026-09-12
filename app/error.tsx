@@ -8,7 +8,7 @@ import { useEffect } from "react";
 // Note: React hook formで作ったForm送信等でのエラー等、ボタンクリック時のイベントハンドラ中でのエラーとなる。
 // error.tsxは、ErrorBoundaryの仕組みの一種のため、そのままだとこの画面までたどり着かない。
 // useStateを使ってerrorをステート更新させて再レンダリングさせるように実装させる必要がある。
-// @/lib/framework/errorboundary/useSafeErrorHandler を使用すると、簡単に実装できる。
+// @/lib/framework/errorboundary/useErrorBoundaryを使用すると、簡単に実装できる。
 
 /**
  * サーバサイドレンダリング処理やクライアント処理を挟まないサーバアクションでエラーが発生した場合に表示されるエラー画面

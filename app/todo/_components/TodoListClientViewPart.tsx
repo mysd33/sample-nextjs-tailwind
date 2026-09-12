@@ -1,6 +1,5 @@
 // Form部分は、react-hook-formやuseStateを使用するためクライアントコンポーネント
 "use client";
-
 import MessageBanner, { MessageLevel } from "@/components/banner/MessageBanner";
 import ButtonArea from "@/components/button/ButtonArea";
 import LinkButton from "@/components/button/LinkButton";
@@ -9,7 +8,7 @@ import InputItem from "@/components/form/InputItem";
 import InputText from "@/components/form/InputText";
 import HeaderArea from "@/components/layout/HeaderArea";
 import MainContainer from "@/components/layout/MainContainer";
-import { useSafeErrorHandler } from "@/lib/framework/errorboundary";
+import { useErrorBoundary } from "@/lib/framework/errorboundary";
 import {
   createTodo,
   deleteTodo,
@@ -30,7 +29,7 @@ export interface TodoFormInput {
  * Todo管理画面
  */
 export default function TodoListClientViewPart({ title }: { title: string }) {
-  const { safeAsync } = useSafeErrorHandler();
+  const { safeAsync } = useErrorBoundary();
   // TODO: 別ファイルに切り出す
   // Zodを使った入力チェックのスキーマ定義
   const schema = z.object({

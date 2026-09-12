@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
  * React の ErrorBoundaryに対応した安全なエラーハンドリングのためのカスタムフック
  * @returns 安全に非同期・同期関数を実行するための関数を含むオブジェクト
  */
-export const useSafeErrorHandler = () => {
+export const useErrorBoundary = () => {
   const [error, setError] = useState<Error | null>(null);
 
   // ステート更新時にエラーがあればスローする
